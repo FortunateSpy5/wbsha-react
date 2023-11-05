@@ -1,0 +1,67 @@
+@import "../colors";
+@import "../general";
+
+.about-section {
+	background: $bg-primary;
+	color: $color-primary;
+
+	.content {
+		padding-top: 3rem;
+		padding-bottom: 3rem;
+		display: flex;
+		flex-direction: column;
+
+		.title {
+			font-size: 1.5rem;
+			text-transform: uppercase;
+		}
+
+		.text {
+			padding: 0.5rem 0;
+			text-align: justify;
+
+			p {
+				margin-top: 0;
+				margin-bottom: 1rem;
+			}
+		}
+
+		.button {
+			margin-top: 0.5rem;
+		}
+		.image {
+			margin-top: 2rem;
+
+			img {
+				object-fit: cover;
+				width: 100%;
+				height: auto;
+				box-shadow: $box-shadow-primary;
+			}
+		}
+	}
+
+	@media screen and (min-width: 992px) {
+		.content {
+			flex-direction: row;
+
+			> div {
+				flex-grow: 1;
+			}
+
+			.image {
+				flex-grow: 2;
+				margin-left: 5rem;
+				margin-top: 0;
+				width: 200%;
+
+				img {
+					object-fit: fill;
+					width: 100%;
+					max-height: 100%;
+					min-height: 360px;
+				}
+			}
+		}
+	}
+}

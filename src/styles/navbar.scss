@@ -1,0 +1,150 @@
+@import "colors";
+@import "variables";
+@import "general";
+
+@keyframes nav-animation {
+	0% {
+		opacity: 0;
+		height: 0;
+	}
+	100% {
+		opacity: 0;
+		height: calc(8 * 2.4rem);
+	}
+}
+
+@keyframes socials {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.navbar {
+	z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: $bg-primary;
+	box-shadow: $box-shadow-primary;
+
+	.container.active {
+		.links {
+			display: flex;
+			animation: nav-animation $nav-delay ease-out;
+		}
+
+		.socials {
+			animation: socials $nav-delay ease-out;
+			display: inherit;
+		}
+	}
+
+	> .container {
+		.bt-container {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			padding: 1rem 0;
+		}
+
+		.brand {
+			color: $color-primary;
+			font-size: 1.25rem;
+			display: flex;
+			align-items: center;
+
+			img {
+				margin-right: 0.5rem;
+				height: 2rem;
+			}
+		}
+
+		.brand:visited {
+			color: $color-primary;
+		}
+
+		.toggler {
+			fill: $color-primary;
+			margin-left: auto;
+		}
+
+		.links {
+			display: none;
+			flex-direction: column;
+
+			.link {
+				color: $color-primary;
+				padding-bottom: 1.2rem;
+			}
+
+			.link:visited {
+				color: $color-primary;
+			}
+
+			.link:hover {
+				transition: all $delay-primary linear;
+				color: $color-focused;
+			}
+		}
+
+		.socials {
+			margin-bottom: 0.8rem;
+			display: none;
+
+			.social {
+				margin-right: 1.2rem;
+				transition: all $delay-primary linear;
+			}
+
+			.social:hover {
+				fill: $color-focused;
+			}
+		}
+
+		@media only screen and (min-width: 992px) {
+			display: flex;
+			justify-content: space-between;
+
+			.bt-container {
+				display: inline-block;
+			}
+
+			.toggler {
+				display: none;
+			}
+
+			.links {
+				display: flex;
+				flex-direction: row;
+
+				.link {
+					padding: 0 0.5rem;
+					height: 100%;
+					display: flex;
+					align-items: center;
+				}
+			}
+
+			.socials {
+				display: inherit;
+				align-items: center;
+				margin-bottom: 0;
+
+				.social {
+					display: flex;
+					height: 100%;
+					align-items: center;
+					margin-right: 0;
+				}
+
+				.social:nth-child(2) {
+					padding: 0 0.8rem;
+				}
+			}
+		}
+	}
+}

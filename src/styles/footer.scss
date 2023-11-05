@@ -1,0 +1,128 @@
+@import "colors";
+@import "variables";
+@import "general";
+
+.footer {
+	box-shadow: $box-shadow-secondary;
+	background: $bg-secondary;
+	color: $color-secondary;
+
+	.top {
+		text-align: center;
+		fill: $color-secondary;
+		text-transform: uppercase;
+		padding: 0.5rem;
+		font-size: 1.2rem;
+		transition: all $delay-primary linear;
+	}
+
+	.top:hover {
+		cursor: pointer;
+		color: $color-focused;
+		fill: $color-focused;
+	}
+
+	.content {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+
+		.section {
+			padding: 0 2rem;
+		}
+
+		.heading {
+			font-size: 1.2rem;
+			text-transform: uppercase;
+			font-weight: 600;
+			margin-bottom: 0.2rem;
+			color: $color-focused;
+		}
+
+		.socials {
+			display: flex;
+			flex-direction: column;
+			color: $color-secondary;
+
+			.brand {
+				color: $color-focused;
+				font-size: 1.5rem;
+				margin-bottom: 0.2rem;
+			}
+
+			.brand:hover {
+				text-decoration: none;
+			}
+
+			.social {
+				color: $color-secondary;
+				fill: $color-secondary;
+				display: flex;
+				margin: 0.3rem 0;
+				transition: all $delay-primary linear;
+
+				svg {
+					margin-right: 0.5rem;
+				}
+			}
+
+			.social:visited {
+				color: $color-secondary;
+			}
+
+			.social:hover {
+				color: $color-focused;
+				fill: $color-focused;
+			}
+		}
+
+		.navigation {
+			color: $color-secondary;
+
+			.link {
+				color: $color-secondary;
+				display: block;
+				margin: 0.1rem 0;
+				transition: all $delay-primary linear;
+			}
+
+			.link:visited {
+				color: $color-secondary;
+			}
+
+			.link:hover {
+				color: $color-focused;
+			}
+		}
+
+		.contact {
+			.unit {
+				display: flex;
+
+				.icon {
+					fill: $color-secondary;
+					margin-right: 0.5rem;
+				}
+			}
+		}
+	}
+
+	.bottom {
+		display: flex;
+		text-align: center;
+
+		div {
+			width: 50%;
+			padding: 1.5rem 1rem 1rem 1rem;
+
+			a {
+				color: $color-focused;
+			}
+
+			a:hover {
+				color: $color-focused;
+				cursor: pointer;
+			}
+		}
+	}
+}

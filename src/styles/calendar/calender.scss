@@ -1,0 +1,6 @@
+@import "../colors";
+@import "../../../../node_modules/react-big-calendar/lib/sass/styles";
+
+.rbc-event {
+  background-color: $bg-focused;
+}

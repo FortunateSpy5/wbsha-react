@@ -1,0 +1,36 @@
+@import "../colors";
+@import "../variables";
+@import "../general";
+
+.container.section-title {
+    padding-bottom: 1rem;
+    display: flex;
+
+    .title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+    }
+
+    .link {
+        margin-left: auto;
+        transition: all $delay-primary linear;
+        display: flex;
+        align-items: center;
+
+        a {
+            margin-right: 0.25rem;
+            transition: all $delay-primary linear;
+            color: $color-primary;
+            font-size: 1.25rem;
+        }
+    }
+
+    .link:hover {
+        fill: $color-focused;
+
+        a {
+            text-decoration: none;
+            color: $color-focused;
+        }
+    }
+}

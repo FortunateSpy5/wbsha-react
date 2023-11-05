@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+body {
+	font-family: "Raleway", sans-serif;
+	box-sizing: border-box;
+	line-height: 1.6;
+}
+
+a:hover,
+a:visited {
+	text-decoration: none;
+}
+
+a {
+	text-decoration: none;
+}
