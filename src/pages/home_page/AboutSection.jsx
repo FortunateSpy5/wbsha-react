@@ -11,18 +11,16 @@ const AboutSection = () => {
 					<div className="title">About Us</div>
 					<div className="text">
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Assumenda, non, reiciendis. A ad architecto,
-							at aut cupiditate doloribus ducimus ipsam libero
-							mollitia nihil praesentium quaerat quos recusandae
-							sint sunt unde?
-						</p>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Amet architecto assumenda, consequatur culpa
-							cum dolore eligendi est illum laborum laudantium
-							molestias, nam nemo qui recusandae repudiandae sit
-							velit? Iste, iure?
+							West Bengal State Handball Association (WBSHA) was
+							founded in 1973. It is affiliated to the Handball
+							Federation of India. The association has its
+							registered office in Kolkata. Handball has rapidly
+							spread throughout West Bengal and numerous districts
+							are actively participating in and promoting this
+							sport. The performance of the Bengal team, as well
+							as individual players, has been quite remarkable
+							since the inception of the game in the state in
+							1973.
 						</p>
 					</div>
 					<Button url="/about" text="Know More" />
