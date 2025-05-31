@@ -2,7 +2,7 @@
 	"name": "wbsha-react",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "http://fotunatespy5.github.io/wbsha-react",
+	"homepage": "https://fotunatespy5.github.io/wbsha-react",
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.2",
 		"@testing-library/jest-dom": "^6.1.4",
