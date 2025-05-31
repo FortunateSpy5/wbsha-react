@@ -123,7 +123,7 @@ const Footer = () => {
 				<div>&#169; 2020 West Bengal State Handball Association</div>
 				<div>
 					Website developed by{" "}
-					<a href="https://github.com/FortunateSpy5">FortunateSpy5</a>
+					<a href="https://github.com/FortunateSpy5">Soumotanu Mazumdar</a>
 				</div>
 			</div>
 		</footer>
