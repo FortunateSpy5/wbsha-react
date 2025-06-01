@@ -17,6 +17,8 @@ import {
 	getDownloadURL,
 	deleteObject,
 } from "firebase/storage";
+import "../../styles/admin/admin-page.scss";
+
 
 export const HeroAdmin = () => {
 	const [imageUpload, setImageUpload] = useState(null);
@@ -113,39 +115,50 @@ export const HeroAdmin = () => {
 
 	return (
 		<div className="hero-admin">
-			<h2>Add Hero</h2>
-			<form onSubmit={handleSubmit(onAddHero)}>
-				<input placeholder="Title..." {...register("title")} />
-				<p>{errors.title?.message}</p>
+			<h2 className="hero-admin-title">Add Hero</h2>
+			<form className="hero-admin-form" onSubmit={handleSubmit(onAddHero)}>
 				<input
+					className="hero-admin-input"
+					placeholder="Title..."
+					{...register("title")}
+				/>
+				<p className="hero-admin-error">{errors.title?.message}</p>
+				<input
+					className="hero-admin-input"
 					placeholder="Description..."
 					{...register("description")}
 				/>
-				<p>{errors.description?.message}</p>
-				<input placeholder="Order..." {...register("order")} />
-				<p>{errors.order?.message}</p>
-				<p>{errors.url?.message}</p>
+				<p className="hero-admin-error">{errors.description?.message}</p>
 				<input
+					className="hero-admin-input"
+					placeholder="Order..."
+					{...register("order")}
+				/>
+				<p className="hero-admin-error">{errors.order?.message}</p>
+				<p className="hero-admin-error">{errors.url?.message}</p>
+				<input
+					className="hero-admin-file"
 					type="file"
 					onChange={(event) => setImageUpload(event.target.files[0])}
 				/>
-				{imageUploadError && <p>{imageUploadError}</p>}
-				<input type="submit" />
+				{imageUploadError && (
+					<p className="hero-admin-error">{imageUploadError}</p>
+				)}
+				<input className="hero-admin-submit" type="submit" />
 			</form>
-			<h2>Current Heroes</h2>
+			<h2 className="hero-admin-title">Current Heroes</h2>
 			<div className="hero-list">
 				{heroData.map((hero) => {
 					return (
 						<div key={hero.id} className="hero">
-							<img src={hero.url} alt={hero.title} />
+							<img className="hero-img" src={hero.url} alt={hero.title} />
 							<div className="hero-info">
-								<h3>{hero.title}</h3>
-								<p>{hero.description}</p>
-								<p>{hero.order}</p>
+								<h3 className="hero-title">{hero.title}</h3>
+								<p className="hero-description">{hero.description}</p>
+								<p className="hero-order">{hero.order}</p>
 								<button
-									onClick={() =>
-										onDeleteHero(hero.id, hero.url)
-									}
+									className="hero-delete-btn"
+									onClick={() => onDeleteHero(hero.id, hero.url)}
 								>
 									Delete
 								</button>

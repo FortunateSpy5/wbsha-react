@@ -12,7 +12,7 @@ export const AdminPage = () => {
 		return null;
 	}
 	return (
-		<div className="main-content container">
+		<div className="main-content container admin-content">
 			<p>Admin Page</p>
 			<p>{auth.currentUser?.email}</p>
 			<button onClick={() => auth.signOut()}>Sign out</button>
