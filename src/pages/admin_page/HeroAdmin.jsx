@@ -17,7 +17,7 @@ import {
 	getDownloadURL,
 	deleteObject,
 } from "firebase/storage";
-import "../../styles/admin/admin-page.scss";
+import "../../styles/admin/hero-admin.scss";
 
 
 export const HeroAdmin = () => {
@@ -114,7 +114,7 @@ export const HeroAdmin = () => {
 	};
 
 	return (
-		<div className="hero-admin">
+		<div className="hero-admin container">
 			<h2 className="hero-admin-title">Add Hero</h2>
 			<form className="hero-admin-form" onSubmit={handleSubmit(onAddHero)}>
 				<input

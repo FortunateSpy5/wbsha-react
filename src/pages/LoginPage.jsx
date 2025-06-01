@@ -3,7 +3,6 @@ import { auth, provider } from "../config/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "../styles/login-page.scss";
-import Button from "./general/Button";
 
 export const LoginPage = () => {
 	const navigate = useNavigate();
