@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/wbsha-react/static/css/main.7a9245d4.css",
-    "main.js": "/wbsha-react/static/js/main.a9317229.js",
+    "main.css": "/wbsha-react/static/css/main.eb8ec52a.css",
+    "main.js": "/wbsha-react/static/js/main.542d6219.js",
     "static/media/home_about.jpeg": "/wbsha-react/static/media/home_about.bb48190b81e77aed2396.jpeg",
     "static/media/logo.svg": "/wbsha-react/static/media/logo.9a70e90d218968634537120fa7db81e4.svg",
     "index.html": "/wbsha-react/index.html",
-    "main.7a9245d4.css.map": "/wbsha-react/static/css/main.7a9245d4.css.map",
-    "main.a9317229.js.map": "/wbsha-react/static/js/main.a9317229.js.map"
+    "main.eb8ec52a.css.map": "/wbsha-react/static/css/main.eb8ec52a.css.map",
+    "main.542d6219.js.map": "/wbsha-react/static/js/main.542d6219.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a9245d4.css",
-    "static/js/main.a9317229.js"
+    "static/css/main.eb8ec52a.css",
+    "static/js/main.542d6219.js"
   ]
 }
