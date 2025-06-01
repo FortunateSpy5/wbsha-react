@@ -19,7 +19,6 @@ const HeroSection = () => {
 				});
 			setCarousel(sortedData);
 		};
-		console.log("Hello");
 		getHero();
 	}, []);
 

@@ -3,12 +3,12 @@ import "../styles/about/about-page.scss";
 
 export const AboutPage = () => {
   return (
-    <div class="main-content about-page">
-      <div class="content container">
-        <div class="title">About Us</div>
-        <div class="history">
-          <div class="heading">History of Bengal Handball</div>
-          <div class="text">
+    <div className="main-content about-page">
+      <div className="content container">
+        <div className="page-title">About Us</div>
+        <div className="history">
+          <div className="page-heading">History of Bengal Handball</div>
+          <div className="text">
             <p>Handball in India is governed by the Handball Association India (HAI), which was founded in 1972 by
               Jagat Singh Lohan, a graduate of the YMCA College of Physical Education in Madras. Lohan's efforts
               during the Munich Olympics helped to establish the HAI. The founding member states were Andhra

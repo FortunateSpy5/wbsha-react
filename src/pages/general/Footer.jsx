@@ -112,7 +112,9 @@ const Footer = () => {
 				<div className="other section">
 					<div className="heading">Other Links</div>
 					<div>
-						<br />
+						<Link to="/admin" className="link">
+							Admin
+						</Link>
 						<br />
 						<br />
 						<br />

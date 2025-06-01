@@ -95,6 +95,24 @@
 			}
 		}
 
+		.other {
+			
+			.link {
+				color: $color-secondary;
+				display: block;
+				margin: 0.1rem 0;
+				transition: all $delay-primary linear;
+			}
+
+			.link:visited {
+				color: $color-secondary;
+			}
+
+			.link:hover {
+				color: $color-focused;
+			}
+		}
+
 		.contact {
 			.unit {
 				display: flex;
