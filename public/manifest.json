@@ -9,7 +9,7 @@
         },
         {
             "src": "logo.svg",
-            "type": "image/png"
+            "type": "image/svg"
         }
     ],
     "start_url": ".",
