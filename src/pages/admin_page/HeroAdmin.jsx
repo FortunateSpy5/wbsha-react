@@ -40,7 +40,7 @@ export const HeroAdmin = () => {
 			setHeroData(sortedData);
 		};
 		getHero();
-	}, []);
+	}, [heroRef]);
 
 	const schema = yup.object().shape({
 		title: yup.string().required("Title is required"),
@@ -114,8 +114,8 @@ export const HeroAdmin = () => {
 	};
 
 	return (
-		<div className="hero-admin container">
-			<h2 className="hero-admin-title">Add Hero</h2>
+		<div className="hero-admin">
+			<h2 className="hero-admin-title page-heading">Add Hero</h2>
 			<form className="hero-admin-form" onSubmit={handleSubmit(onAddHero)}>
 				<input
 					className="hero-admin-input"
@@ -144,9 +144,9 @@ export const HeroAdmin = () => {
 				{imageUploadError && (
 					<p className="hero-admin-error">{imageUploadError}</p>
 				)}
-				<input className="hero-admin-submit" type="submit" />
+				<input className="hero-admin-submit button" type="submit" />
 			</form>
-			<h2 className="hero-admin-title">Current Heroes</h2>
+			<h2 className="hero-admin-title page-heading">Current Heroes</h2>
 			<div className="hero-list">
 				{heroData.map((hero) => {
 					return (
@@ -155,7 +155,7 @@ export const HeroAdmin = () => {
 							<div className="hero-info">
 								<h3 className="hero-title">{hero.title}</h3>
 								<p className="hero-description">{hero.description}</p>
-								<p className="hero-order">{hero.order}</p>
+								<p className="hero-order">Order: {hero.order}</p>
 								<button
 									className="hero-delete-btn"
 									onClick={() => onDeleteHero(hero.id, hero.url)}

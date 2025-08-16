@@ -1,0 +1,112 @@
+@import "../_colors";
+@import "../_variables";
+@import "../_general";
+
+.hero-admin {
+  padding: 2rem;
+
+  &-form {
+    position: relative;
+    // width relative to the container
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  &-input,
+  &-file {
+    padding: 0.5rem;
+    border: 1px solid $color-faded;
+    font-size: 1rem;
+    transition: border-color $delay-primary;
+
+    &:focus {
+      outline: none;
+      border-color: $color-focused;
+    }
+  }
+
+  &-file {
+    cursor: pointer;
+  }
+
+  &-submit {
+    border: none;
+    font-size: 1rem;
+    padding: 1rem 1rem;
+  }
+
+  &-error {
+    color: $color-warning;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+  }
+
+  .hero-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .hero {
+    background: $bg-secondary;
+    padding: 1rem;
+    box-shadow: $box-shadow-secondary;
+    transition: transform $delay-primary;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    &-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 0.75rem;
+      box-shadow: $box-shadow-secondary;
+    }
+
+    &-info {
+      text-align: center;
+    }
+
+    &-title {
+      margin: 0.5rem 0;
+      color: $color-focused;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    &-description,
+    &-order {
+      font-size: 0.875rem;
+      color: $color-secondary;
+      margin: 0.25rem 0;
+    }
+
+    &-delete-btn {
+      background: $color-warning;
+      color: $color-secondary;
+      border: none;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      transition: background $delay-primary, transform $delay-primary;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin: 0.5rem 0;
+
+      &:hover {
+        background: darken($color-warning, 10%);
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+  }
+}
+
