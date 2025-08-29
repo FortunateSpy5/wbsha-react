@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { CompetitionsAdmin } from "./admin_page/CompetitionsAdmin";
 import { HeroAdmin } from "./admin_page/HeroAdmin";
 import {CollapsibleAdminSection} from "./general/CollapsibleAdminSection";
 import "../styles/admin/admin-page.scss";
@@ -26,6 +27,10 @@ export const AdminPage = () => {
 				</div>
 				<CollapsibleAdminSection title="Manage Heroes">
 				<HeroAdmin />
+				</CollapsibleAdminSection>
+
+				<CollapsibleAdminSection title="Manage Heroes">
+				<CompetitionsAdmin />
 				</CollapsibleAdminSection>
 			</div>
 		</div>
