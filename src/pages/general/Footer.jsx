@@ -122,7 +122,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<div className="bottom">
-				<div>&#169; 2020 West Bengal State Handball Association</div>
+				<div>&#169; 2024 West Bengal State Handball Association</div>
 				<div>
 					Website developed by{" "}
 					<a href="https://github.com/FortunateSpy5">Soumotanu Mazumdar</a>

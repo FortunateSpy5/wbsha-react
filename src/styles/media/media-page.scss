@@ -1,0 +1,230 @@
+@import "../colors";
+@import "../general";
+@import "../variables";
+
+.media-page {
+	background: $bg-primary;
+	color: $color-primary;
+
+	.content {
+		padding-bottom: 3rem;
+		padding-top: 1.5rem;
+
+		.loading {
+			text-align: center;
+			padding: 2rem 0;
+			font-size: 1.2rem;
+			color: $color-faded;
+		}
+
+		.album-filters {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.75rem;
+			margin-bottom: 2.5rem;
+			margin-top: 1.5rem;
+
+			.filter-btn {
+				background: #fff;
+				border: 1px solid #ddd;
+				color: $color-primary;
+				padding: 0.5rem 1.2rem;
+				font-family: 'Raleway', sans-serif;
+				font-size: 0.9rem;
+				cursor: pointer;
+				border-radius: 20px;
+				transition: all $delay-primary ease;
+
+				&:hover {
+					border-color: $color-focused;
+					color: $color-focused;
+				}
+
+				&.active {
+					background: $bg-focused;
+					border-color: $bg-focused;
+					color: #fff;
+				}
+			}
+		}
+
+		.media-grid {
+			display: grid;
+			grid-template-columns: repeat(1, 1fr);
+			gap: 1.5rem;
+
+			@media only screen and (min-width: 576px) {
+				grid-template-columns: repeat(2, 1fr);
+			}
+
+			@media only screen and (min-width: 992px) {
+				grid-template-columns: repeat(3, 1fr);
+			}
+
+			.media-card {
+				position: relative;
+				border-radius: $border-radius-primary;
+				overflow: hidden;
+				aspect-ratio: 4 / 3;
+				box-shadow: $box-shadow-secondary;
+				cursor: pointer;
+				background: #eee;
+				transition: transform $delay-primary ease, box-shadow $delay-primary ease;
+
+				&:hover {
+					transform: translateY(-4px);
+					box-shadow: $box-shadow-primary;
+
+					img {
+						transform: scale(1.06);
+					}
+
+					.overlay {
+						opacity: 1;
+					}
+				}
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					transition: transform 0.4s ease;
+				}
+
+				.overlay {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background: rgba(0, 0, 0, 0.6);
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					color: #fff;
+					opacity: 0;
+					transition: opacity $delay-primary ease;
+					padding: 1rem;
+					text-align: center;
+
+					.image-title {
+						font-weight: 600;
+						font-size: 1.1rem;
+						margin-bottom: 0.25rem;
+					}
+
+					.image-album {
+						font-size: 0.85rem;
+						color: lighten($color-focused, 20%);
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					}
+				}
+			}
+		}
+
+		.lightbox-modal {
+			position: fixed;
+			z-index: 2000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.95);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			.lightbox-close {
+				position: absolute;
+				top: 1.5rem;
+				right: 2rem;
+				color: #fff;
+				font-size: 3rem;
+				font-weight: 300;
+				background: none;
+				border: none;
+				cursor: pointer;
+				transition: color $delay-primary;
+
+				&:hover {
+					color: $color-focused;
+				}
+			}
+
+			.lightbox-nav {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				color: #fff;
+				font-size: 2.5rem;
+				background: none;
+				border: none;
+				cursor: pointer;
+				padding: 1rem;
+				transition: color $delay-primary;
+
+				&:hover {
+					color: $color-focused;
+				}
+
+				&.prev {
+					left: 1.5rem;
+				}
+
+				&.next {
+					right: 1.5rem;
+				}
+
+				@media only screen and (max-width: 576px) {
+					padding: 0.5rem;
+					font-size: 2rem;
+					
+					&.prev {
+						left: 0.5rem;
+					}
+					
+					&.next {
+						right: 0.5rem;
+					}
+				}
+			}
+
+			.lightbox-content {
+				max-width: 80%;
+				max-height: 80%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				img {
+					max-width: 100%;
+					max-height: 70vh;
+					object-fit: contain;
+					box-shadow: 0 0 20px rgba(0,0,0,0.5);
+				}
+
+				.lightbox-caption {
+					color: #fff;
+					text-align: center;
+					margin-top: 1rem;
+
+					h3 {
+						font-size: 1.2rem;
+						font-weight: 600;
+						margin-bottom: 0.25rem;
+					}
+
+					p {
+						font-size: 0.9rem;
+						color: $color-focused;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					}
+				}
+			}
+		}
+	}
+}

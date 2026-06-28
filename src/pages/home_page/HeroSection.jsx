@@ -7,9 +7,8 @@ const HeroSection = () => {
     const [current, setCurrent] = useState(0);
     const [carousel, setCarousel] = useState([]);
 
-    const heroRef = collection(db, "heroes");
-
     useEffect(() => {
+        const heroRef = collection(db, "heroes");
         // Check if heroes are already cached in sessionStorage
         const cachedHeroes = sessionStorage.getItem("heroes");
         if (cachedHeroes) {
@@ -30,7 +29,7 @@ const HeroSection = () => {
             };
             getHero();
         }
-    }, [heroRef]);
+    }, []);
 
     const leftArrowClick = () => {
         setCurrent((current - 1 + carousel.length) % carousel.length);

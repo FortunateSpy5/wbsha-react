@@ -1,0 +1,134 @@
+@import "../_colors";
+@import "../_variables";
+@import "../_general";
+
+.announcements-admin {
+	padding: 2rem;
+
+	&-form {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-bottom: 2.5rem;
+		
+		.file-upload-group {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+			
+			label {
+				font-size: 0.9rem;
+				color: $color-faded;
+			}
+		}
+	}
+
+	&-input,
+	&-file {
+		padding: 0.5rem;
+		border: 1px solid $color-faded;
+		font-size: 1rem;
+		font-family: 'Raleway', sans-serif;
+		transition: border-color $delay-primary;
+
+		&:focus {
+			outline: none;
+			border-color: $color-focused;
+		}
+	}
+
+	&-textarea {
+		resize: vertical;
+	}
+
+	&-file {
+		cursor: pointer;
+	}
+
+	&-submit {
+		border: none;
+		font-size: 1rem;
+		padding: 1rem 1rem;
+		cursor: pointer;
+		font-family: 'Raleway', sans-serif;
+		
+		&:disabled {
+			background: $color-faded;
+			cursor: not-allowed;
+		}
+	}
+
+	&-error {
+		color: $color-warning;
+		font-size: 0.875rem;
+		margin-top: -0.5rem;
+	}
+
+	.announcements-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+
+	.announcement-item {
+		background: $bg-secondary;
+		padding: 1rem;
+		box-shadow: $box-shadow-secondary;
+		transition: transform $delay-primary;
+
+		&:hover {
+			transform: translateY(-2px);
+		}
+
+		.announcement-info {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+
+		.announcement-title {
+			margin: 0;
+			color: $color-focused;
+			font-size: 1.1rem;
+			font-weight: 600;
+			line-height: 1.4;
+		}
+
+		.announcement-date {
+			font-size: 0.875rem;
+			color: $color-secondary;
+			margin: 0;
+		}
+
+		.announcement-file {
+			font-size: 0.85rem;
+			color: lighten($color-focused, 20%);
+			margin: 0 0 0.5rem 0;
+		}
+
+		.announcement-delete-btn {
+			background: $color-warning;
+			color: $color-secondary;
+			border: none;
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			transition: background $delay-primary, transform $delay-primary;
+			font-size: 0.8rem;
+			font-weight: 500;
+			text-transform: uppercase;
+			align-self: flex-start;
+			margin-top: 0.5rem;
+
+			&:hover {
+				background: darken($color-warning, 10%);
+			}
+
+			&:active {
+				transform: scale(0.9);
+			}
+		}
+	}
+}

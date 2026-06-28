@@ -147,11 +147,32 @@
                     margin: 0.5rem 0 0.5rem 0;
                     padding: 0.5rem 1.2rem;
                     background: $bg-focused;
+                    border: none;
+                    font-family: 'Raleway', sans-serif;
+                    cursor: pointer;
+                    color: $color-secondary;
+                    
+                    &:disabled {
+                        background: $color-faded;
+                        cursor: not-allowed;
+                    }
                 }
 
-                .button:hover {
+                .button:hover:not(:disabled) {
                     background: $bg-primary;
                     color: $color-primary;
+                }
+
+                .submit-success {
+                    color: #4caf50;
+                    margin-bottom: 1rem;
+                    font-size: 0.9rem;
+                }
+
+                .submit-error {
+                    color: $color-warning;
+                    margin-bottom: 1rem;
+                    font-size: 0.9rem;
                 }
 
 

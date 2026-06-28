@@ -3,275 +3,695 @@
 @import "../_general";
 
 .competitions-admin {
-  padding: 2rem;
+	padding: 1.5rem;
 
-  &-title {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: $color-focused;
-    margin-bottom: 1.5rem;
-  }
+	&-title {
+		font-size: 1.4rem;
+		font-weight: 600;
+		color: $color-focused;
+		margin-bottom: 1.5rem;
+	}
 
-  &-form {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-    background: $bg-secondary;
-    padding: 1.5rem;
-    border-radius: $border-radius-primary;
-    box-shadow: $box-shadow-secondary;
-  }
+	&-form {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-bottom: 2.5rem;
+		background: $bg-secondary;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 1.5rem;
+		border-radius: 8px;
+		box-shadow: $box-shadow-secondary;
+		color: $color-secondary;
+	}
 
-  &-input,
-  &-file {
-    padding: 0.5rem;
-    border: 1px solid $color-faded;
-    font-size: 1rem;
-    border-radius: $border-radius-primary;
-    transition: border-color $delay-primary;
+	&-input,
+	&-file {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid $color-faded;
+		font-size: 0.95rem;
+		border-radius: 4px;
+		background: #fff;
+		color: $color-primary;
+		font-family: 'Raleway', sans-serif;
+		transition: border-color $delay-primary;
 
-    &:focus {
-      outline: none;
-      border-color: $color-focused;
-    }
-  }
+		&:focus {
+			outline: none;
+			border-color: $color-focused;
+		}
+	}
 
-  &-file {
-    cursor: pointer;
-  }
+	&-textarea {
+		resize: vertical;
+	}
 
-  &-submit {
-    border: none;
-    font-size: 1rem;
-    padding: 1rem 1rem;
-    background: $bg-focused;
-    color: $color-secondary;
-    border-radius: $border-radius-primary;
-    cursor: pointer;
-    transition: all $delay-primary;
+	&-file {
+		cursor: pointer;
+		background: #fff;
+	}
 
-    &:hover {
-      background: darken($bg-focused, 10%);
-    }
+	&-submit {
+		border: none;
+		font-size: 1rem;
+		padding: 0.75rem 1rem;
+		background: $bg-focused;
+		color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+		font-weight: 600;
+		font-family: 'Raleway', sans-serif;
+		transition: all $delay-primary;
 
-    &:active {
-      transform: scale(0.95);
-    }
-  }
+		&:hover {
+			background: #007dc5;
+		}
 
-  &-error {
-    color: $color-warning;
-    font-size: 0.875rem;
-    margin-top: -0.5rem;
-  }
+		&:disabled {
+			background: $color-faded;
+			cursor: not-allowed;
+		}
+	}
 
-  .competitions-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
+	&-error {
+		color: $color-warning;
+		font-size: 0.85rem;
+		margin-top: -0.5rem;
+	}
 
-  .competition {
-    background: $bg-secondary;
-    padding: 1rem;
-    border-radius: $border-radius-primary;
-    box-shadow: $box-shadow-secondary;
-    transition: transform $delay-primary;
+	.competitions-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		margin-top: 1.5rem;
+	}
+}
 
-    &:hover {
-      transform: translateY(-5px);
-    }
+// Competition card layout with nested sub-tabs
+.competition-admin-card {
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	background: $bg-secondary;
+	box-shadow: $box-shadow-secondary;
+	overflow: hidden;
+	color: $color-secondary;
 
-    &-title {
-      margin: 0.5rem 0;
-      color: $color-focused;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
+	.card-header-bar {
+		background: #0d0d0d;
+		padding: 1rem 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-    &-start-date {
-      font-size: 0.875rem;
-      color: $color-primary;
-      margin: 0.25rem 0;
-    }
+		@media only screen and (max-width: 576px) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.75rem;
+		}
 
-    &-content {
-      font-size: 0.875rem;
-      color: $color-secondary;
-      margin: 0.5rem 0;
-    }
+		.card-comp-title {
+			font-size: 1.2rem;
+			font-weight: 700;
+			color: $color-focused;
+			margin: 0;
+		}
 
-    &-edit-btn,
-    &-delete-btn {
-      background: $color-warning;
-      color: $color-secondary;
-      border: none;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-      transition: background $delay-primary, transform $delay-primary;
-      font-size: 0.875rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      margin: 0.5rem 0;
+		.card-controls {
+			display: flex;
+			gap: 0.5rem;
 
-      &:hover {
-        background: darken($color-warning, 10%);
-      }
+			button {
+				padding: 0.4rem 0.8rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-family: 'Raleway', sans-serif;
+				text-transform: uppercase;
+				transition: background 0.2s;
+			}
 
-      &:active {
-        transform: scale(0.9);
-      }
-    }
+			.btn-edit {
+				background: #334155;
+				color: #f8fafc;
 
-    &-edit-btn {
-      background: $bg-focused;
+				&:hover {
+					background: #475569;
+				}
+			}
 
-      &:hover {
-        background: darken($bg-focused, 10%);
-      }
-    }
-  }
+			.btn-delete {
+				background: $color-warning;
+				color: #fff;
 
-  .add-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
+				&:hover {
+					background: #aa0000;
+				}
+			}
+		}
+	}
 
-    &-btn {
-      background: $bg-focused;
-      color: $color-secondary;
-      border: none;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-      transition: all $delay-primary;
-      font-size: 0.875rem;
-      font-weight: 500;
-      text-transform: uppercase;
+	.nested-tabs-menu {
+		display: flex;
+		background: #121212;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-      &:hover {
-        background: darken($bg-focused, 10%);
-      }
+		@media only screen and (max-width: 576px) {
+			flex-direction: column;
+		}
 
-      &:active {
-        transform: scale(0.95);
-      }
-    }
-  }
+		.nested-tab-btn {
+			background: none;
+			border: none;
+			border-right: 1px solid rgba(255, 255, 255, 0.1);
+			padding: 0.75rem 1.25rem;
+			font-size: 0.9rem;
+			font-weight: 600;
+			font-family: 'Raleway', sans-serif;
+			cursor: pointer;
+			color: #94a3b8;
+			transition: all 0.2s;
 
-  .competition-pic-group {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: $bg-secondary;
-    border-radius: $border-radius-primary;
-    box-shadow: $box-shadow-secondary;
+			&:hover {
+				color: #f8fafc;
+				background: #334155;
+			}
 
-    &-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: $color-focused;
-      margin-bottom: 0.5rem;
-    }
+			&.active {
+				background: $bg-secondary;
+				color: $color-focused;
+				border-bottom: 2px solid $color-focused;
+			}
 
-    .delete-group-btn {
-      background: $color-warning;
-      color: $color-secondary;
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      transition: background $delay-primary, transform $delay-primary;
-      font-size: 0.875rem;
-      font-weight: 500;
-      text-transform: uppercase;
+			@media only screen and (max-width: 576px) {
+				border-right: none;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+				text-align: left;
+			}
+		}
+	}
 
-      &:hover {
-        background: darken($color-warning, 10%);
-      }
+	.nested-tab-content {
+		padding: 1.5rem;
 
-      &:active {
-        transform: scale(0.9);
-      }
-    }
+		// Overview tab styles
+		.details-overview-tab {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+			color: $color-secondary;
 
-    .add-image {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 1rem;
+			pre {
+				font-family: 'Raleway', sans-serif;
+				white-space: pre-line;
+				font-size: 0.9rem;
+				background: rgba(255, 255, 255, 0.05);
+				padding: 1rem;
+				border-radius: 6px;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				margin-top: 0.5rem;
+				color: $color-secondary;
+			}
 
-      &-btn {
-        background: $bg-focused;
-        color: $color-secondary;
-        border: none;
-        padding: 0.7rem 1rem;
-        cursor: pointer;
-        transition: all $delay-primary;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
+			.content-summary {
+				margin-top: 0.5rem;
+				p {
+					font-size: 0.9rem;
+					color: #94a3b8;
+				}
+			}
+		}
 
-        &:hover {
-          background: darken($bg-focused, 10%);
-        }
+		// Albums tab styles
+		.albums-management-tab {
+			.add-album-form {
+				background: rgba(255, 255, 255, 0.03);
+				padding: 1rem;
+				border-radius: 6px;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				margin-bottom: 1.5rem;
+				color: $color-secondary;
 
-        &:active {
-          transform: scale(0.95);
-        }
-      }
-    }
+				h4 {
+					font-size: 0.95rem;
+					font-weight: 700;
+					color: $color-secondary;
+					margin-bottom: 0.75rem;
+				}
 
-    .competition-pics {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+				.input-row {
+					display: flex;
+					gap: 0.5rem;
 
-      .competition-pic {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+					@media only screen and (max-width: 576px) {
+						flex-direction: column;
+					}
 
-        &-img {
-          width: 100%;
-          height: 100px;
-          object-fit: cover;
-          border-radius: $border-radius-primary;
-          box-shadow: $box-shadow-secondary;
-          margin-bottom: 0.5rem;
-        }
+					input {
+						flex: 1;
+						padding: 0.4rem 0.75rem;
+						border: 1px solid $color-faded;
+						border-radius: 4px;
+						background: #fff;
+						color: $color-primary;
+						font-family: 'Raleway', sans-serif;
+					}
 
-        &-title {
-          font-size: 0.875rem;
-          color: $color-primary;
-          margin-bottom: 0.5rem;
-        }
+					.button {
+						padding: 0.4rem 1rem;
+						font-size: 0.85rem;
+						background: $bg-focused;
+						color: #fff;
+						border: none;
+						border-radius: 4px;
+						cursor: pointer;
+						font-weight: 600;
+					}
+				}
+			}
 
-        .delete-pic-btn {
-          background: $color-warning;
-          color: $color-secondary;
-          border: none;
-          padding: 0.5rem 1rem;
-          cursor: pointer;
-          transition: background $delay-primary, transform $delay-primary;
-          font-size: 0.75rem;
-          font-weight: 500;
-          text-transform: uppercase;
+			.admin-album-box {
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 6px;
+				margin-bottom: 1.5rem;
+				padding: 1rem;
+				background: rgba(0, 0, 0, 0.15);
 
-          &:hover {
-            background: darken($color-warning, 10%);
-          }
+				.album-title-bar {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 1rem;
+					border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+					padding-bottom: 0.5rem;
 
-          &:active {
-            transform: scale(0.9);
-          }
-        }
-      }
-    }
-  }
+					h5 {
+						font-size: 1rem;
+						font-weight: 700;
+						color: $color-focused;
+						margin: 0;
+					}
+
+					.delete-album-btn {
+						background: none;
+						border: none;
+						color: $color-warning;
+						font-size: 0.8rem;
+						font-weight: 600;
+						cursor: pointer;
+						font-family: 'Raleway', sans-serif;
+
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+
+				.upload-photo-to-album {
+					background: rgba(255, 255, 255, 0.02);
+					padding: 0.75rem;
+					border-radius: 4px;
+					margin-bottom: 1rem;
+					border: 1px solid rgba(255, 255, 255, 0.05);
+
+					h6 {
+						font-size: 0.85rem;
+						font-weight: 700;
+						color: $color-secondary;
+						margin-bottom: 0.5rem;
+					}
+
+					.upload-row {
+						display: flex;
+						flex-wrap: wrap;
+						gap: 0.5rem;
+						align-items: center;
+
+						input[type="text"] {
+							flex: 1;
+							min-width: 150px;
+							padding: 0.35rem 0.5rem;
+							border: 1px solid $color-faded;
+							border-radius: 4px;
+							font-size: 0.85rem;
+							background: #fff;
+							color: $color-primary;
+							font-family: 'Raleway', sans-serif;
+						}
+
+						input[type="file"] {
+							font-size: 0.8rem;
+							color: $color-secondary;
+						}
+
+						.button {
+							padding: 0.35rem 0.85rem;
+							font-size: 0.8rem;
+							background: $bg-focused;
+							color: #fff;
+							border: none;
+							border-radius: 4px;
+							cursor: pointer;
+							font-weight: 600;
+
+							&:disabled {
+								background: $color-faded;
+							}
+						}
+					}
+				}
+
+				.album-pics-grid,
+				.team-pics-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+					gap: 1rem;
+
+					.admin-pic-thumb {
+						position: relative;
+						border: 1px solid rgba(255, 255, 255, 0.1);
+						border-radius: 4px;
+						overflow: hidden;
+						background: rgba(255, 255, 255, 0.05);
+						aspect-ratio: 1 / 1;
+						display: flex;
+						flex-direction: column;
+
+						img {
+							width: 100%;
+							height: 70%;
+							object-fit: cover;
+						}
+
+						.pic-caption {
+							font-size: 0.75rem;
+							padding: 0.25rem;
+							text-align: center;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							color: $color-secondary;
+							flex-grow: 1;
+						}
+
+						.pic-delete {
+							position: absolute;
+							top: 2px;
+							right: 2px;
+							background: $color-warning;
+							color: #fff;
+							border: none;
+							border-radius: 50%;
+							width: 18px;
+							height: 18px;
+							font-size: 0.8rem;
+							line-height: 18px;
+							text-align: center;
+							cursor: pointer;
+							padding: 0;
+
+							&:hover {
+								background: #aa0000;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Teams tab styles
+		.teams-management-tab {
+			.add-team-admin-form {
+				background: rgba(255, 255, 255, 0.03);
+				padding: 1.25rem;
+				border-radius: 6px;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				margin-bottom: 2rem;
+
+				h4 {
+					font-size: 1rem;
+					font-weight: 700;
+					color: $color-focused;
+					margin-bottom: 1rem;
+					border-left: 3px solid $color-focused;
+					padding-left: 0.5rem;
+				}
+
+				.form-grid {
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+					gap: 1rem;
+					margin-bottom: 1.25rem;
+
+					@media only screen and (max-width: 576px) {
+						grid-template-columns: 1fr;
+					}
+
+					.input-group {
+						display: flex;
+						flex-direction: column;
+						gap: 0.25rem;
+
+						&.full-width {
+							grid-column: 1 / -1;
+						}
+
+						label {
+							font-size: 0.85rem;
+							font-weight: 600;
+							color: $color-secondary;
+						}
+
+						input, textarea {
+							padding: 0.4rem 0.6rem;
+							border: 1px solid $color-faded;
+							border-radius: 4px;
+							background: #fff;
+							color: $color-primary;
+							font-family: 'Raleway', sans-serif;
+							font-size: 0.9rem;
+
+							&:focus {
+								outline: none;
+								border-color: $color-focused;
+							}
+						}
+
+						textarea {
+							resize: vertical;
+						}
+
+						input[type="file"] {
+							color: $color-secondary;
+							background: none;
+							border: none;
+							padding: 0.25rem 0;
+						}
+					}
+				}
+
+				.button {
+					padding: 0.5rem 1.25rem;
+					font-size: 0.9rem;
+					background: $bg-focused;
+					color: #fff;
+					border: none;
+					border-radius: 4px;
+					cursor: pointer;
+					font-weight: 600;
+
+					&:disabled {
+						background: $color-faded;
+					}
+				}
+			}
+
+			.teams-list-admin {
+				h4 {
+					font-size: 1.1rem;
+					font-weight: 700;
+					color: $color-secondary;
+					margin-bottom: 1.25rem;
+				}
+
+				.admin-team-row {
+					border: 1px solid rgba(255, 255, 255, 0.1);
+					border-radius: 6px;
+					padding: 1.25rem;
+					margin-bottom: 1.5rem;
+					background: rgba(0, 0, 0, 0.15);
+
+					.team-row-header {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+						padding-bottom: 0.5rem;
+						margin-bottom: 0.75rem;
+
+						h5 {
+							font-size: 1.05rem;
+							font-weight: 700;
+							color: $color-secondary;
+							margin: 0;
+						}
+
+						.team-title-info {
+							display: flex;
+							align-items: center;
+							gap: 0.75rem;
+							flex-wrap: wrap;
+
+							.team-rank-badge {
+								font-size: 0.75rem;
+								background: rgba(255, 255, 255, 0.1);
+								color: $color-secondary;
+								padding: 0.15rem 0.5rem;
+								border-radius: 12px;
+								font-weight: 600;
+							}
+
+							.team-standing-badge {
+								font-size: 0.75rem;
+								background: #c2e9ff;
+								color: #006cb3;
+								padding: 0.15rem 0.5rem;
+								border-radius: 12px;
+								font-weight: 600;
+							}
+						}
+
+						.delete-team-btn {
+							background: none;
+							border: none;
+							color: $color-warning;
+							font-size: 0.8rem;
+							font-weight: 600;
+							cursor: pointer;
+							font-family: 'Raleway', sans-serif;
+
+							&:hover {
+								text-decoration: underline;
+							}
+						}
+					}
+
+					.team-assets-preview {
+						display: flex;
+						gap: 1.5rem;
+						margin-bottom: 1.25rem;
+
+						@media only screen and (max-width: 576px) {
+							flex-direction: column;
+						}
+
+						.team-squad-photo-preview {
+							width: 150px;
+							flex-shrink: 0;
+							display: flex;
+							flex-direction: column;
+							gap: 0.25rem;
+
+							span {
+								font-size: 0.75rem;
+								font-weight: 600;
+								color: #94a3b8;
+							}
+
+							img {
+								width: 100%;
+								height: 100px;
+								object-fit: cover;
+								border-radius: 4px;
+								border: 1px solid rgba(255, 255, 255, 0.1);
+							}
+						}
+
+						.team-info-preview {
+							flex: 1;
+							display: flex;
+							flex-direction: column;
+							gap: 0.25rem;
+
+							span {
+								font-size: 0.75rem;
+								font-weight: 600;
+								color: #94a3b8;
+							}
+
+							pre {
+								font-family: 'Raleway', sans-serif;
+								white-space: pre-line;
+								font-size: 0.85rem;
+								background: rgba(255, 255, 255, 0.05);
+								padding: 0.75rem;
+								border-radius: 4px;
+								border: 1px solid rgba(255, 255, 255, 0.1);
+								margin: 0;
+								color: $color-secondary;
+							}
+						}
+					}
+
+					.team-gallery-management {
+						background: rgba(255, 255, 255, 0.02);
+						padding: 1rem;
+						border-radius: 6px;
+						border: 1px solid rgba(255, 255, 255, 0.05);
+
+						h6 {
+							font-size: 0.85rem;
+							font-weight: 700;
+							color: $color-secondary;
+							margin-bottom: 0.75rem;
+						}
+
+						.upload-row {
+							display: flex;
+							flex-wrap: wrap;
+							gap: 0.5rem;
+							align-items: center;
+							margin-bottom: 1rem;
+
+							input[type="text"] {
+								flex: 1;
+								min-width: 150px;
+								padding: 0.35rem 0.5rem;
+								border: 1px solid $color-faded;
+								border-radius: 4px;
+								font-size: 0.85rem;
+								background: #fff;
+								color: $color-primary;
+								font-family: 'Raleway', sans-serif;
+							}
+
+							input[type="file"] {
+								font-size: 0.8rem;
+								color: $color-secondary;
+							}
+
+							.button {
+								padding: 0.35rem 0.85rem;
+								font-size: 0.8rem;
+								background: $bg-focused;
+								color: #fff;
+								border: none;
+								border-radius: 4px;
+								cursor: pointer;
+								font-weight: 600;
+
+								&:disabled {
+									background: $color-faded;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

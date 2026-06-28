@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/home/contact-section.scss";
-import Button from "../general/Button";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const ContactSection = () => {
+	const [formData, setFormData] = useState({
+		name: "",
+		email: "",
+		phone: "",
+		message: "",
+	});
+	const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.id]: e.target.value });
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (!formData.name || !formData.email || !formData.message) {
+			setSubmitStatus("error");
+			return;
+		}
+		setIsSubmitting(true);
+		try {
+			await addDoc(collection(db, "contactSubmissions"), {
+				...formData,
+				createdAt: new Date(),
+			});
+			setSubmitStatus("success");
+			setFormData({ name: "", email: "", phone: "", message: "" });
+		} catch (error) {
+			console.error("Error submitting form:", error);
+			setSubmitStatus("error");
+		}
+		setIsSubmitting(false);
+	};
+
 	const renderForm = () => {
 		return (
 			<div className="right">
 				<div className="text">Get in Touch</div>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className="group">
 						<label htmlFor="name">Full Name</label>
 						<input
@@ -16,6 +51,8 @@ const ContactSection = () => {
 							id="name"
 							aria-describedby="Full Name"
 							placeholder="Enter full name"
+							value={formData.name}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="group">
@@ -26,6 +63,8 @@ const ContactSection = () => {
 							id="email"
 							aria-describedby="Email"
 							placeholder="Enter email address"
+							value={formData.email}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="group">
@@ -36,18 +75,38 @@ const ContactSection = () => {
 							id="phone"
 							aria-describedby="Phone Number"
 							placeholder="Enter phone number"
+							value={formData.phone}
+							onChange={handleChange}
 						/>
 					</div>
 					<div className="group">
-						<label htmlFor="password">Message</label>
+						<label htmlFor="message">Message</label>
 						<textarea
 							className="form-control border-0 rounded-0"
 							id="message"
 							rows="5"
 							placeholder="Enter your message"
+							value={formData.message}
+							onChange={handleChange}
 						/>
 					</div>
-					<Button text="Submit" url="#" />
+					{submitStatus === "success" && (
+						<div className="submit-success">
+							Thank you! Your message has been sent successfully.
+						</div>
+					)}
+					{submitStatus === "error" && (
+						<div className="submit-error">
+							Please fill in all required fields and try again.
+						</div>
+					)}
+					<button
+						type="submit"
+						className="button"
+						disabled={isSubmitting}
+					>
+						{isSubmitting ? "Sending..." : "Submit"}
+					</button>
 				</form>
 			</div>
 		);
@@ -60,11 +119,11 @@ const ContactSection = () => {
 					<div className="title">Contact Us</div>
 					<div className="details">
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing
-							elit. Doloribus eum maiores mollitia nobis
-							recusandae, veniam. Dignissimos eligendi optio quo
-							suscipit voluptatum! Ad dolores ducimus facere
-							laboriosam non pariatur repellat voluptate.
+							Have questions about handball in West Bengal? Want to
+							learn more about upcoming tournaments, player
+							registrations, or coaching programs? Reach out to
+							the West Bengal State Handball Association — we'd
+							love to hear from you.
 						</p>
 						<div className="contacts">
 							<div className="unit">
@@ -111,18 +170,6 @@ const ContactSection = () => {
 									Kolkata - 700087
 								</div>
 							</div>
-							{/* <div className="map-canvas">
-								<iframe
-									title="map"
-									width="100%"
-									height="600"
-									frameBorder="0"
-									scrolling="no"
-									marginHeight="0"
-									marginWidth="0"
-									src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(West%20Bengal%20State%20Handball%20Association)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-								></iframe>
-							</div> */}
 						</div>
 					</div>
 				</div>

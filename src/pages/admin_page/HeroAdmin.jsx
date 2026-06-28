@@ -40,7 +40,8 @@ export const HeroAdmin = () => {
 			setHeroData(sortedData);
 		};
 		getHero();
-	}, [heroRef]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const schema = yup.object().shape({
 		title: yup.string().required("Title is required"),
