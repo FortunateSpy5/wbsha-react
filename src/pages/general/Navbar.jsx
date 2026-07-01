@@ -6,6 +6,7 @@ import logo from "../../assets/logo.svg";
 export const navLinksData = [
 	{ name: "Home", link: "/" },
 	{ name: "About", link: "/about" },
+	{ name: "News", link: "/news" },
 	{ name: "Announcements", link: "/announcements" },
 	{ name: "Competitions", link: "/competitions" },
 	{ name: "Documents", link: "/documents" },

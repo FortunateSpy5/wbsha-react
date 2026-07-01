@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "wbsha-f8e09",
     "public": "build",
     "ignore": [
       "firebase.json",
