@@ -5,6 +5,7 @@ import "../styles/announcements/announcements-page.scss";
 
 export const AnnouncementsPage = () => {
 	const [announcements, setAnnouncements] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 8;
 
@@ -31,6 +32,7 @@ export const AnnouncementsPage = () => {
 			} catch (error) {
 				console.error("Error fetching announcements:", error);
 			}
+			setLoading(false);
 		};
 		fetchAnnouncements();
 	}, []);
@@ -45,8 +47,21 @@ export const AnnouncementsPage = () => {
 		<div className="main-content announcements-page">
 			<div className="content container">
 				<div className="page-title">Announcements</div>
-				{announcements.length === 0 ? (
-					<div className="loading">Loading announcements...</div>
+				{loading ? (
+					<div className="skeleton-announcements-list">
+						{[...Array(4)].map((_, i) => (
+							<div key={i} className="skeleton-announcement-card">
+								<div className="skeleton-top" />
+								<div className="skeleton-title" />
+								<div className="skeleton-excerpt" />
+								<div className="skeleton-link" />
+							</div>
+						))}
+					</div>
+				) : announcements.length === 0 ? (
+					<div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+						No announcements found.
+					</div>
 				) : (
 					<>
 						<div className="announcements-list">

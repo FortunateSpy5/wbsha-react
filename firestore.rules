@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated (admin)
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Rules for public content collections
+    match /heroes/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /competitions/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /news/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /media/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /announcements/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /documents/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Rules for contact form submissions
+    match /contactSubmissions/{document} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

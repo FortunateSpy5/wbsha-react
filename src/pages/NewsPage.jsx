@@ -5,6 +5,7 @@ import "../styles/news/news-page.scss";
 
 export const NewsPage = () => {
 	const [news, setNews] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [expandedNewsId, setExpandedNewsId] = useState(null);
 	const itemsPerPage = 9;
@@ -26,6 +27,7 @@ export const NewsPage = () => {
 			} catch (error) {
 				console.error("Error fetching news:", error);
 			}
+			setLoading(false);
 		};
 		fetchNews();
 	}, []);
@@ -44,8 +46,25 @@ export const NewsPage = () => {
 		<div className="main-content news-page">
 			<div className="content container">
 				<div className="page-title">News</div>
-				{news.length === 0 ? (
-					<div className="loading">Loading news...</div>
+				{loading ? (
+					<div className="skeleton-news-grid">
+						{[...Array(6)].map((_, i) => (
+							<div key={i} className="skeleton-news-card">
+								<div className="skeleton-image" />
+								<div className="skeleton-body">
+									<div className="skeleton-date" />
+									<div className="skeleton-title" />
+									<div className="skeleton-text" />
+									<div className="skeleton-text" />
+									<div className="skeleton-btn" />
+								</div>
+							</div>
+						))}
+					</div>
+				) : news.length === 0 ? (
+					<div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+						No news articles found.
+					</div>
 				) : (
 					<>
 						<div className="news-grid">

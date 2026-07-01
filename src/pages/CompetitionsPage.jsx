@@ -6,6 +6,7 @@ import "../styles/competitions/competitions-page.scss";
 
 export const CompetitionsPage = () => {
 	const [competitions, setCompetitions] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [currentMonth, setCurrentMonth] = useState(new Date());
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 	const [selectedYear, setSelectedYear] = useState("All");
@@ -30,6 +31,7 @@ export const CompetitionsPage = () => {
 			} catch (error) {
 				console.error("Error fetching competitions:", error);
 			}
+			setLoading(false);
 		};
 		fetchCompetitions();
 	}, []);
@@ -185,7 +187,18 @@ export const CompetitionsPage = () => {
 					<h2 className="page-heading">
 						{selectedYear === "All" ? "All Competitions" : `${selectedYear} Competitions`}
 					</h2>
-					{filteredCompetitions.length === 0 ? (
+					{loading ? (
+						<div className="skeleton-competitions-grid">
+							{[...Array(3)].map((_, i) => (
+								<div key={i} className="skeleton-competition-card">
+									<div className="skeleton-badge" />
+									<div className="skeleton-title" />
+									<div className="skeleton-text" />
+									<div className="skeleton-btn" />
+								</div>
+							))}
+						</div>
+					) : filteredCompetitions.length === 0 ? (
 						<div className="loading">No competitions listed for this filter.</div>
 					) : (
 						<div className="competitions-grid">

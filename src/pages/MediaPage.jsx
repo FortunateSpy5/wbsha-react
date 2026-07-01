@@ -5,6 +5,7 @@ import "../styles/media/media-page.scss";
 
 export const MediaPage = () => {
 	const [mediaItems, setMediaItems] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [albums, setAlbums] = useState([]);
 	const [selectedAlbum, setSelectedAlbum] = useState("All");
 	const [lightboxIndex, setLightboxIndex] = useState(null); // Index in the filtered list
@@ -30,6 +31,7 @@ export const MediaPage = () => {
 			} catch (error) {
 				console.error("Error fetching media items:", error);
 			}
+			setLoading(false);
 		};
 		fetchMedia();
 	}, []);
@@ -56,8 +58,18 @@ export const MediaPage = () => {
 		<div className="main-content media-page">
 			<div className="content container">
 				<div className="page-title">Media Gallery</div>
-				{mediaItems.length === 0 ? (
-					<div className="loading">Loading gallery...</div>
+				{loading ? (
+					<div className="skeleton-media-grid">
+						{[...Array(6)].map((_, i) => (
+							<div key={i} className="skeleton-media-card">
+								<div className="skeleton-image" />
+							</div>
+						))}
+					</div>
+				) : mediaItems.length === 0 ? (
+					<div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+						No media items found.
+					</div>
 				) : (
 					<>
 						<div className="album-filters">

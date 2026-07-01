@@ -6,6 +6,7 @@ import "../styles/documents/documents-page.scss";
 
 export const DocumentsPage = () => {
 	const [documents, setDocuments] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [categories, setCategories] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -27,6 +28,7 @@ export const DocumentsPage = () => {
 			} catch (error) {
 				console.error("Error fetching documents:", error);
 			}
+			setLoading(false);
 		};
 		fetchDocuments();
 	}, []);
@@ -39,8 +41,22 @@ export const DocumentsPage = () => {
 		<div className="main-content documents-page">
 			<div className="content container">
 				<div className="page-title">Official Documents</div>
-				{documents.length === 0 ? (
-					<div className="loading">Loading documents...</div>
+				{loading ? (
+					<div className="skeleton-documents-list">
+						{[...Array(4)].map((_, i) => (
+							<div key={i} className="skeleton-document-row">
+								<div className="skeleton-info">
+									<div className="skeleton-title" />
+									<div className="skeleton-meta" />
+								</div>
+								<div className="skeleton-btn" />
+							</div>
+						))}
+					</div>
+				) : documents.length === 0 ? (
+					<div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+						No documents found.
+					</div>
 				) : (
 					<>
 						<div className="category-filters">
