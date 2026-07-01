@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../config/firebase";
+import Button from "./general/Button";
 import "../styles/documents/documents-page.scss";
 
 export const DocumentsPage = () => {
@@ -9,34 +10,25 @@ export const DocumentsPage = () => {
 	const [selectedCategory, setSelectedCategory] = useState("All");
 
 	useEffect(() => {
-		const cached = sessionStorage.getItem("documents_data");
-		if (cached) {
-			const parsed = JSON.parse(cached);
-			setDocuments(parsed);
-			const uniqueCategories = ["All", ...new Set(parsed.map((doc) => doc.category))];
-			setCategories(uniqueCategories);
-		} else {
-			const fetchDocuments = async () => {
-				try {
-					const data = await getDocs(collection(db, "documents"));
-					const mappedData = data.docs.map((doc) => ({
-						...doc.data(),
-						id: doc.id,
-						date: doc.data().date?.toDate() || new Date(doc.data().date)
-					}));
-					// Sort by date descending
-					const sortedData = mappedData.sort((a, b) => b.date - a.date);
-					setDocuments(sortedData);
-					sessionStorage.setItem("documents_data", JSON.stringify(sortedData));
+		const fetchDocuments = async () => {
+			try {
+				const data = await getDocs(collection(db, "documents"));
+				const mappedData = data.docs.map((doc) => ({
+					...doc.data(),
+					id: doc.id,
+					date: doc.data().date?.toDate() || new Date(doc.data().date)
+				}));
+				// Sort by date descending
+				const sortedData = mappedData.sort((a, b) => b.date - a.date);
+				setDocuments(sortedData);
 
-					const uniqueCategories = ["All", ...new Set(sortedData.map((doc) => doc.category))];
-					setCategories(uniqueCategories);
-				} catch (error) {
-					console.error("Error fetching documents:", error);
-				}
-			};
-			fetchDocuments();
-		}
+				const uniqueCategories = ["All", ...new Set(sortedData.map((doc) => doc.category))];
+				setCategories(uniqueCategories);
+			} catch (error) {
+				console.error("Error fetching documents:", error);
+			}
+		};
+		fetchDocuments();
 	}, []);
 
 	const filteredDocuments = selectedCategory === "All"
@@ -75,11 +67,9 @@ export const DocumentsPage = () => {
 											</span>
 										</div>
 									</div>
-									<a
+									<Button
 										href={docItem.fileUrl}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="download-btn button"
+										className="download-btn"
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +88,7 @@ export const DocumentsPage = () => {
 											<line x1="12" y1="15" x2="12" y2="3" />
 										</svg>
 										Download
-									</a>
+									</Button>
 								</div>
 							))}
 						</div>

@@ -10,29 +10,23 @@ const NewsSection = () => {
 
 	useEffect(() => {
 		const newsRef = collection(db, "news");
-		const cachedNews = sessionStorage.getItem("home_news");
-		if (cachedNews) {
-			setNews(JSON.parse(cachedNews));
-		} else {
-			const fetchNews = async () => {
-				try {
-					const data = await getDocs(newsRef);
-					const sortedData = data.docs
-						.map((doc) => ({
-							...doc.data(),
-							id: doc.id,
-							date: doc.data().date?.toDate() || new Date(doc.data().date)
-						}))
-						.sort((a, b) => b.date - a.date)
-						.slice(0, 8); // Latest 8 news items
-					setNews(sortedData);
-					sessionStorage.setItem("home_news", JSON.stringify(sortedData));
-				} catch (error) {
-					console.error("Error fetching news for home page:", error);
-				}
-			};
-			fetchNews();
-		}
+		const fetchNews = async () => {
+			try {
+				const data = await getDocs(newsRef);
+				const sortedData = data.docs
+					.map((doc) => ({
+						...doc.data(),
+						id: doc.id,
+						date: doc.data().date?.toDate() || new Date(doc.data().date)
+					}))
+					.sort((a, b) => b.date - a.date)
+					.slice(0, 6); // Latest 6 news items
+				setNews(sortedData);
+			} catch (error) {
+				console.error("Error fetching news for home page:", error);
+			}
+		};
+		fetchNews();
 	}, []);
 
 	return (
@@ -108,7 +102,7 @@ const newsCollection = (newsList, cardRef) => {
 					<div
 						className="image"
 						style={{
-							backgroundImage: `url(${data.imageUrl})`,
+							backgroundImage: `url("${data.imageUrl}")`,
 							filter: "brightness(90%)",
 						}}
 					/>

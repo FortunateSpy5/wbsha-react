@@ -80,6 +80,7 @@ export const AnnouncementsAdmin = () => {
 			if (fileInput) fileInput.value = "";
 
 			sessionStorage.removeItem("announcements_data");
+			sessionStorage.removeItem("home_announcements");
 
 			fetchAnnouncements();
 		} catch (error) {
@@ -105,6 +106,7 @@ export const AnnouncementsAdmin = () => {
 			await deleteDoc(doc(db, "announcements", id));
 			
 			sessionStorage.removeItem("announcements_data");
+			sessionStorage.removeItem("home_announcements");
 
 			fetchAnnouncements();
 		} catch (error) {

@@ -1,0 +1,148 @@
+@import "../colors";
+@import "../variables";
+@import "../general";
+
+.competitions-section-home {
+	background: $bg-primary;
+	padding-top: 4rem;
+	padding-bottom: 2rem;
+
+	.competitions-fullwidth-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		width: 100%;
+		min-height: 350px;
+		margin-top: 2rem;
+		box-shadow: $box-shadow-secondary;
+
+		@media only screen and (min-width: 768px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.home-comp-card {
+		position: relative;
+		overflow: hidden;
+		min-height: 300px;
+		background: #0f172a;
+		background-size: cover;
+		background-position: center;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 2.5rem 2rem;
+		border-right: 1px solid rgba(255, 255, 255, 0.1);
+		transition: all 0.3s ease;
+
+		&:last-child {
+			border-right: none;
+		}
+
+		@media only screen and (max-width: 767px) {
+			border-right: none;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.card-bg-image {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+			background-position: center;
+			z-index: 1;
+			transition: transform 0.5s ease;
+		}
+
+		.card-bg-gradient {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+			z-index: 2;
+			transition: opacity 0.3s ease;
+		}
+
+		.card-info {
+			position: relative;
+			z-index: 3;
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.comp-dates-badge {
+			font-size: 0.75rem;
+			font-weight: 700;
+			color: #38bdf8;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.comp-title {
+			font-size: 1.4rem;
+			font-weight: 700;
+			line-height: 1.3;
+			margin: 0;
+		}
+
+		.comp-venue {
+			font-size: 0.85rem;
+			color: #94a3b8;
+		}
+
+		.comp-desc {
+			font-size: 0.9rem;
+			color: #cbd5e1;
+			line-height: 1.5;
+			margin: 0.5rem 0 1rem 0;
+		}
+
+		.view-details-btn {
+			align-self: flex-start;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: #38bdf8;
+			text-decoration: none;
+			transition: transform 0.2s, color 0.2s;
+
+			&:hover {
+				color: #fff;
+				transform: translateX(4px);
+			}
+		}
+
+		&:hover {
+			transform: scale(1.02);
+			z-index: 5;
+			box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+
+			.card-bg-gradient {
+				background: linear-gradient(135deg, lighten(#1e2959, 5%), #0f172a);
+			}
+
+			.card-bg-image {
+				transform: scale(1.06);
+			}
+		}
+
+		&.has-banner {
+			.card-bg-gradient {
+				background: linear-gradient(to bottom, rgba(15, 23, 42, 0.35) 0%, rgba(15, 23, 42, 0.85) 100%);
+			}
+
+			&:hover {
+				.card-bg-gradient {
+					background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.92) 100%);
+				}
+				.card-bg-image {
+					transform: scale(1.06);
+				}
+			}
+		}
+	}
+}

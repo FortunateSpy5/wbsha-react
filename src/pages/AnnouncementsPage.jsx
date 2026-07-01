@@ -9,34 +9,30 @@ export const AnnouncementsPage = () => {
 	const itemsPerPage = 8;
 
 	useEffect(() => {
-		const cached = sessionStorage.getItem("announcements_data");
-		if (cached) {
-			const parsed = JSON.parse(cached).map(item => ({
-				...item,
-				date: new Date(item.date)
-			}));
-			setAnnouncements(parsed);
-		} else {
-			const fetchAnnouncements = async () => {
-				try {
-					const data = await getDocs(collection(db, "announcements"));
-					const mappedData = data.docs.map((doc) => {
-						const docData = doc.data();
-						return {
-							...docData,
-							id: doc.id,
-							date: docData.date?.toDate?.() || new Date(docData.date)
-						};
-					});
-					const sortedData = mappedData.sort((a, b) => b.date - a.date);
-					setAnnouncements(sortedData);
-					sessionStorage.setItem("announcements_data", JSON.stringify(sortedData));
-				} catch (error) {
-					console.error("Error fetching announcements:", error);
-				}
-			};
-			fetchAnnouncements();
-		}
+		const fetchAnnouncements = async () => {
+			try {
+				const data = await getDocs(collection(db, "announcements"));
+				const mappedData = data.docs.map((doc) => {
+					const docData = doc.data();
+					let parsedDate = new Date();
+					if (docData.date) {
+						parsedDate = docData.date.toDate ? docData.date.toDate() : new Date(docData.date);
+					}
+					return {
+						...docData,
+						id: doc.id,
+						date: parsedDate
+					};
+				});
+				const sortedData = mappedData
+					.filter(item => item.date && !isNaN(item.date.getTime()))
+					.sort((a, b) => b.date - a.date);
+				setAnnouncements(sortedData);
+			} catch (error) {
+				console.error("Error fetching announcements:", error);
+			}
+		};
+		fetchAnnouncements();
 	}, []);
 
 	// Pagination logic

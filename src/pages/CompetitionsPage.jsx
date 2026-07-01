@@ -13,36 +13,25 @@ export const CompetitionsPage = () => {
 	const compRefs = useRef({});
 
 	useEffect(() => {
-		const cached = sessionStorage.getItem("competitions_data");
-		if (cached) {
-			const parsed = JSON.parse(cached).map((item) => ({
-				...item,
-				startDate: new Date(item.startDate),
-				endDate: item.endDate ? new Date(item.endDate) : null,
-			}));
-			setCompetitions(parsed);
-		} else {
-			const fetchCompetitions = async () => {
-				try {
-					const data = await getDocs(collection(db, "competitions"));
-					const mappedData = data.docs.map((doc) => {
-						const docData = doc.data();
-						return {
-							...docData,
-							id: doc.id,
-							startDate: docData.startDate?.toDate?.() || new Date(docData.startDate),
-							endDate: docData.endDate?.toDate?.() || (docData.endDate ? new Date(docData.endDate) : null),
-						};
-					});
-					const sortedData = mappedData.sort((a, b) => b.startDate - a.startDate);
-					setCompetitions(sortedData);
-					sessionStorage.setItem("competitions_data", JSON.stringify(sortedData));
-				} catch (error) {
-					console.error("Error fetching competitions:", error);
-				}
-			};
-			fetchCompetitions();
-		}
+		const fetchCompetitions = async () => {
+			try {
+				const data = await getDocs(collection(db, "competitions"));
+				const mappedData = data.docs.map((doc) => {
+					const docData = doc.data();
+					return {
+						...docData,
+						id: doc.id,
+						startDate: docData.startDate?.toDate?.() || new Date(docData.startDate),
+						endDate: docData.endDate?.toDate?.() || (docData.endDate ? new Date(docData.endDate) : null),
+					};
+				});
+				const sortedData = mappedData.sort((a, b) => b.startDate - a.startDate);
+				setCompetitions(sortedData);
+			} catch (error) {
+				console.error("Error fetching competitions:", error);
+			}
+		};
+		fetchCompetitions();
 	}, []);
 
 	// Calendar calculation logic

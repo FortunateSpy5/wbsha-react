@@ -17,7 +17,7 @@ import { CompetitionDetailPage } from "./pages/CompetitionDetailPage";
 const App = () => {
 	return (
 		<div className="main-container">
-			<BrowserRouter>
+			<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<HomePage />} />

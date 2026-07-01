@@ -80,6 +80,7 @@ export const DocumentsAdmin = () => {
 			if (fileInput) fileInput.value = "";
 
 			sessionStorage.removeItem("documents_data");
+			sessionStorage.removeItem("home_documents");
 
 			fetchDocuments();
 		} catch (error) {
@@ -103,6 +104,7 @@ export const DocumentsAdmin = () => {
 			await deleteDoc(doc(db, "documents", id));
 			
 			sessionStorage.removeItem("documents_data");
+			sessionStorage.removeItem("home_documents");
 
 			fetchDocuments();
 		} catch (error) {

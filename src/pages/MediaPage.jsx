@@ -10,37 +10,28 @@ export const MediaPage = () => {
 	const [lightboxIndex, setLightboxIndex] = useState(null); // Index in the filtered list
 
 	useEffect(() => {
-		const cached = sessionStorage.getItem("media_data");
-		if (cached) {
-			const parsed = JSON.parse(cached);
-			setMediaItems(parsed);
-			const uniqueAlbums = ["All", ...new Set(parsed.map((item) => item.album))];
-			setAlbums(uniqueAlbums);
-		} else {
-			const fetchMedia = async () => {
-				try {
-					const data = await getDocs(collection(db, "media"));
-					const mappedData = data.docs.map((doc) => {
-						const docData = doc.data();
-						return {
-							...docData,
-							id: doc.id,
-							createdAt: docData.createdAt?.toDate?.() || new Date(docData.createdAt)
-						};
-					});
-					// Sort by createdAt descending
-					const sortedData = mappedData.sort((a, b) => b.createdAt - a.createdAt);
-					setMediaItems(sortedData);
-					sessionStorage.setItem("media_data", JSON.stringify(sortedData));
+		const fetchMedia = async () => {
+			try {
+				const data = await getDocs(collection(db, "media"));
+				const mappedData = data.docs.map((doc) => {
+					const docData = doc.data();
+					return {
+						...docData,
+						id: doc.id,
+						createdAt: docData.createdAt?.toDate?.() || new Date(docData.createdAt)
+					};
+				});
+				// Sort by createdAt descending
+				const sortedData = mappedData.sort((a, b) => b.createdAt - a.createdAt);
+				setMediaItems(sortedData);
 
-					const uniqueAlbums = ["All", ...new Set(sortedData.map((item) => item.album))];
-					setAlbums(uniqueAlbums);
-				} catch (error) {
-					console.error("Error fetching media items:", error);
-				}
-			};
-			fetchMedia();
-		}
+				const uniqueAlbums = ["All", ...new Set(sortedData.map((item) => item.album))];
+				setAlbums(uniqueAlbums);
+			} catch (error) {
+				console.error("Error fetching media items:", error);
+			}
+		};
+		fetchMedia();
 	}, []);
 
 	const filteredMedia = selectedAlbum === "All"

@@ -9,32 +9,26 @@ const MediaSection = () => {
 
 	useEffect(() => {
 		const mediaRef = collection(db, "media");
-		const cachedMedia = sessionStorage.getItem("home_media");
-		if (cachedMedia) {
-			setMediaItems(JSON.parse(cachedMedia));
-		} else {
-			const fetchMedia = async () => {
-				try {
-					const data = await getDocs(mediaRef);
-					const sortedData = data.docs
-						.map((doc) => {
-							const docData = doc.data();
-							return {
-								...docData,
-								id: doc.id,
-								createdAt: docData.createdAt?.toDate?.() || new Date(docData.createdAt)
-							};
-						})
-						.sort((a, b) => b.createdAt - a.createdAt)
-						.slice(0, 6); // Latest 6 images
-					setMediaItems(sortedData);
-					sessionStorage.setItem("home_media", JSON.stringify(sortedData));
-				} catch (error) {
-					console.error("Error fetching media for home page:", error);
-				}
-			};
-			fetchMedia();
-		}
+		const fetchMedia = async () => {
+			try {
+				const data = await getDocs(mediaRef);
+				const sortedData = data.docs
+					.map((doc) => {
+						const docData = doc.data();
+						return {
+							...docData,
+							id: doc.id,
+							createdAt: docData.createdAt?.toDate?.() || new Date(docData.createdAt)
+						};
+					})
+					.sort((a, b) => b.createdAt - a.createdAt)
+					.slice(0, 6); // Latest 6 images
+				setMediaItems(sortedData);
+			} catch (error) {
+				console.error("Error fetching media for home page:", error);
+			}
+		};
+		fetchMedia();
 	}, []);
 
 	const renderImages = () => {

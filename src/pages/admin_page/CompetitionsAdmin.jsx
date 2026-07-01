@@ -23,6 +23,7 @@ export const CompetitionsAdmin = () => {
 	const [competitionsData, setCompetitionsData] = useState([]);
 	const [editingCompetition, setEditingCompetition] = useState(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [mainImageFile, setMainImageFile] = useState(null);
 
 	const competitionsRef = collection(db, "competitions");
 
@@ -93,6 +94,18 @@ export const CompetitionsAdmin = () => {
 	const onAddOrUpdateCompetition = async (data) => {
 		setIsSubmitting(true);
 		try {
+			let mainImageUrl = editingCompetition?.mainImageUrl || null;
+
+			if (mainImageFile) {
+				if (editingCompetition?.mainImageUrl) {
+					await deleteObject(ref(storage, editingCompetition.mainImageUrl)).catch(err => console.warn(err));
+				}
+				const fileName = `${Date.now()}_${mainImageFile.name}`;
+				const storageRef = ref(storage, `competitions/banners/${fileName}`);
+				await uploadBytes(storageRef, mainImageFile);
+				mainImageUrl = await getDownloadURL(storageRef);
+			}
+
 			const preparedData = {
 				title: data.title,
 				content: data.content,
@@ -100,6 +113,7 @@ export const CompetitionsAdmin = () => {
 				endDate: data.endDate ? new Date(data.endDate) : null,
 				venue: data.venue || null,
 				results: data.results || null,
+				mainImageUrl,
 			};
 
 			if (editingCompetition) {
@@ -110,8 +124,12 @@ export const CompetitionsAdmin = () => {
 				const newCompetition = { ...preparedData, picGroups: [], teams: [] };
 				await addDoc(competitionsRef, newCompetition);
 			}
+			setMainImageFile(null);
+			const fileInput = document.querySelector("#main-comp-banner");
+			if (fileInput) fileInput.value = "";
 			reset();
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			fetchCompetitions();
 		} catch (error) {
 			console.error("Error adding/updating competition:", error);
@@ -123,6 +141,11 @@ export const CompetitionsAdmin = () => {
 		if (!window.confirm("Are you sure you want to delete this competition?")) return;
 		try {
 			const competition = competitionsData.find((item) => item.id === id);
+
+			// Delete banner photo if it exists
+			if (competition.mainImageUrl) {
+				await deleteObject(ref(storage, competition.mainImageUrl)).catch(err => console.warn(err));
+			}
 
 			// Delete picGroups images
 			for (const group of competition.picGroups || []) {
@@ -146,6 +169,7 @@ export const CompetitionsAdmin = () => {
 
 			await deleteDoc(doc(db, "competitions", id));
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			fetchCompetitions();
 		} catch (error) {
 			console.error("Error deleting competition:", error);
@@ -207,6 +231,18 @@ export const CompetitionsAdmin = () => {
 					{...register("content")}
 				/>
 				<p className="competitions-admin-error">{errors.content?.message}</p>
+
+				<label style={{ fontSize: "0.85rem", fontWeight: "600", color: "#94a3b8", marginTop: "0.5rem" }}>
+					Main Competition Banner Photo (Optional)
+				</label>
+				<input
+					id="main-comp-banner"
+					className="competitions-admin-file"
+					type="file"
+					accept="image/*"
+					onChange={(e) => setMainImageFile(e.target.files[0])}
+				/>
+				<div style={{ marginBottom: "1rem" }} />
 
 				<input
 					className="competitions-admin-submit button"
@@ -281,6 +317,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			await updateDoc(compDocRef, { picGroups: updatedPicGroups });
 			setNewGroupTitle("");
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error adding group:", error);
@@ -297,6 +334,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			const updatedPicGroups = competition.picGroups.filter(g => g.title !== groupTitle);
 			await updateDoc(compDocRef, { picGroups: updatedPicGroups });
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error deleting group:", error);
@@ -326,6 +364,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			const fileInput = document.querySelector(`#file-${competition.id}-${groupTitle.replace(/\s+/g, '')}`);
 			if (fileInput) fileInput.value = "";
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error uploading picture:", error);
@@ -344,6 +383,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			);
 			await updateDoc(compDocRef, { picGroups: updatedPicGroups });
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error deleting picture:", error);
@@ -389,6 +429,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			if (fileInput) fileInput.value = "";
 
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error adding team:", error);
@@ -409,6 +450,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			const updatedTeams = competition.teams.filter(t => t.id !== teamId);
 			await updateDoc(compDocRef, { teams: updatedTeams });
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error deleting team:", error);
@@ -439,6 +481,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			const fileInput = document.querySelector(`#teampic-${competition.id}-${teamId}`);
 			if (fileInput) fileInput.value = "";
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error uploading team photo:", error);
@@ -457,6 +500,7 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			);
 			await updateDoc(compDocRef, { teams: updatedTeams });
 			sessionStorage.removeItem("competitions_data");
+			sessionStorage.removeItem("home_competitions");
 			onRefresh();
 		} catch (error) {
 			console.error("Error deleting team action photo:", error);
@@ -497,6 +541,16 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 			<div className="nested-tab-content">
 				{activeSubTab === "details" && (
 					<div className="details-overview-tab">
+						{competition.mainImageUrl && (
+							<div className="banner-preview" style={{ marginBottom: "1rem" }}>
+								<strong>Banner Photo:</strong>
+								<img 
+									src={competition.mainImageUrl} 
+									alt="banner" 
+									style={{ width: "100%", maxHeight: "150px", objectFit: "cover", borderRadius: "6px", display: "block", marginTop: "0.5rem", border: "1px solid rgba(255,255,255,0.1)" }} 
+								/>
+							</div>
+						)}
 						<p><strong>Dates:</strong> {competition.startDate?.toLocaleDateString()} {competition.endDate && `to ${competition.endDate?.toLocaleDateString()}`}</p>
 						<p><strong>Venue:</strong> {competition.venue || "No venue listed"}</p>
 						{competition.results && (

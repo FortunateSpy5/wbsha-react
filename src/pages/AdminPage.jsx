@@ -9,6 +9,7 @@ import { NewsAdmin } from "./admin_page/NewsAdmin";
 import { MediaAdmin } from "./admin_page/MediaAdmin";
 import { AnnouncementsAdmin } from "./admin_page/AnnouncementsAdmin";
 import { DocumentsAdmin } from "./admin_page/DocumentsAdmin";
+import { ContactSubmissionsAdmin } from "./admin_page/ContactSubmissionsAdmin";
 import "../styles/admin/admin-page.scss";
 
 export const AdminPage = () => {
@@ -24,6 +25,7 @@ export const AdminPage = () => {
 		media: 0,
 		announcements: 0,
 		documents: 0,
+		contactSubmissions: 0,
 	});
 	const [loadingStats, setLoadingStats] = useState(false);
 
@@ -35,13 +37,14 @@ export const AdminPage = () => {
 			const fetchStats = async () => {
 				setLoadingStats(true);
 				try {
-					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap] = await Promise.all([
+					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, submissionsSnap] = await Promise.all([
 						getDocs(collection(db, "heroes")),
 						getDocs(collection(db, "competitions")),
 						getDocs(collection(db, "news")),
 						getDocs(collection(db, "media")),
 						getDocs(collection(db, "announcements")),
 						getDocs(collection(db, "documents")),
+						getDocs(collection(db, "contactSubmissions")),
 					]);
 					setStats({
 						heroes: heroesSnap.size,
@@ -50,6 +53,7 @@ export const AdminPage = () => {
 						media: mediaSnap.size,
 						announcements: annSnap.size,
 						documents: docsSnap.size,
+						contactSubmissions: submissionsSnap.size,
 					});
 				} catch (error) {
 					console.error("Error loading dashboard stats:", error);
@@ -79,6 +83,8 @@ export const AdminPage = () => {
 				return <AnnouncementsAdmin />;
 			case "documents":
 				return <DocumentsAdmin />;
+			case "submissions":
+				return <ContactSubmissionsAdmin />;
 			case "overview":
 			default:
 				return renderOverview();
@@ -124,6 +130,11 @@ export const AdminPage = () => {
 						<div className="stat-card" onClick={() => setActiveTab("documents")}>
 							<div className="stat-title">Official Documents</div>
 							<div className="stat-count">{stats.documents}</div>
+							<div className="stat-action">Manage &rarr;</div>
+						</div>
+						<div className="stat-card" onClick={() => setActiveTab("submissions")}>
+							<div className="stat-title">Form Submissions</div>
+							<div className="stat-count">{stats.contactSubmissions}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
 					</div>
@@ -179,6 +190,12 @@ export const AdminPage = () => {
 							onClick={() => setActiveTab("documents")}
 						>
 							📄 Manage Documents
+						</button>
+						<button 
+							className={`nav-item ${activeTab === "submissions" ? "active" : ""}`}
+							onClick={() => setActiveTab("submissions")}
+						>
+							📩 Contact Submissions
 						</button>
 					</nav>
 					<button className="sidebar-logout" onClick={() => auth.signOut()}>

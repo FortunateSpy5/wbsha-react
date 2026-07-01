@@ -1,0 +1,73 @@
+@import "../colors";
+@import "../variables";
+@import "../general";
+
+.announcements-section {
+	background: $bg-primary;
+	padding: 4rem 0;
+
+	.announcements-grid-home {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+		margin-top: 2rem;
+
+		@media only screen and (min-width: 768px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.home-announcement-card {
+		background: #fff;
+		border-radius: $border-radius-primary;
+		border: 1px solid #e2e8f0;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+
+		.card-top {
+			margin-bottom: 1rem;
+
+			.date-badge {
+				font-size: 0.75rem;
+				font-weight: 700;
+				background: #f1f5f9;
+				color: #475569;
+				padding: 0.25rem 0.6rem;
+				border-radius: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+		}
+
+		.announcement-card-title {
+			font-size: 1.1rem;
+			font-weight: 700;
+			color: #1e293b;
+			margin-bottom: 0.75rem;
+			line-height: 1.4;
+		}
+
+		.announcement-excerpt {
+			font-size: 0.9rem;
+			color: #64748b;
+			line-height: 1.6;
+			margin-bottom: 1.5rem;
+			flex-grow: 1;
+		}
+
+		.download-link {
+			display: inline-block;
+			align-self: flex-start;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: $color-focused;
+			text-decoration: none;
+			transition: color 0.2s;
+
+			&:hover {
+				color: darken($color-focused, 15%);
+			}
+		}
+	}
+}

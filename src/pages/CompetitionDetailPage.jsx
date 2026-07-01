@@ -115,6 +115,12 @@ export const CompetitionDetailPage = () => {
 
 				<div className="page-title">{competition.title}</div>
 
+				{competition.mainImageUrl && (
+					<div className="competition-main-banner" style={{ width: "100%", height: "300px", borderRadius: "8px", overflow: "hidden", marginBottom: "2rem", border: "1px solid #e2e8f0" }}>
+						<img src={competition.mainImageUrl} alt={`${competition.title} Banner`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+					</div>
+				)}
+
 				<div className="competition-meta-details">
 					<div className="meta-item">
 						<strong>Dates: </strong>

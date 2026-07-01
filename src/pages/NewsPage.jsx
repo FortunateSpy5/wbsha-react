@@ -10,34 +10,24 @@ export const NewsPage = () => {
 	const itemsPerPage = 9;
 
 	useEffect(() => {
-		const cached = sessionStorage.getItem("news_data");
-		if (cached) {
-			const parsed = JSON.parse(cached).map(item => ({
-				...item,
-				date: new Date(item.date)
-			}));
-			setNews(parsed);
-		} else {
-			const fetchNews = async () => {
-				try {
-					const data = await getDocs(collection(db, "news"));
-					const mappedData = data.docs.map((doc) => {
-						const docData = doc.data();
-						return {
-							...docData,
-							id: doc.id,
-							date: docData.date?.toDate?.() || new Date(docData.date)
-						};
-					});
-					const sortedData = mappedData.sort((a, b) => b.date - a.date);
-					setNews(sortedData);
-					sessionStorage.setItem("news_data", JSON.stringify(sortedData));
-				} catch (error) {
-					console.error("Error fetching news:", error);
-				}
-			};
-			fetchNews();
-		}
+		const fetchNews = async () => {
+			try {
+				const data = await getDocs(collection(db, "news"));
+				const mappedData = data.docs.map((doc) => {
+					const docData = doc.data();
+					return {
+						...docData,
+						id: doc.id,
+						date: docData.date?.toDate?.() || new Date(docData.date)
+					};
+				});
+				const sortedData = mappedData.sort((a, b) => b.date - a.date);
+				setNews(sortedData);
+			} catch (error) {
+				console.error("Error fetching news:", error);
+			}
+		};
+		fetchNews();
 	}, []);
 
 	// Pagination logic
@@ -61,7 +51,7 @@ export const NewsPage = () => {
 						<div className="news-grid">
 							{currentNews.map((item) => (
 								<div key={item.id} className={`news-card ${expandedNewsId === item.id ? 'expanded' : ''}`}>
-									<div className="news-image" style={{ backgroundImage: `url(${item.imageUrl})` }} />
+									<div className="news-image" style={{ backgroundImage: `url("${item.imageUrl}")` }} />
 									<div className="news-body">
 										<div className="news-date">{new Date(item.date).toLocaleDateString()}</div>
 										<h3 className="news-card-title">{item.title}</h3>
