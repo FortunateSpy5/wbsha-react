@@ -145,12 +145,15 @@
 
                 .button {
                     margin: 0.5rem 0 0.5rem 0;
-                    padding: 0.5rem 1.2rem;
+                    padding: 0.7rem 1.5rem;
                     background: $bg-focused;
                     border: none;
+                    border-radius: 4px;
                     font-family: 'Raleway', sans-serif;
+                    font-weight: 600;
                     cursor: pointer;
-                    color: $color-secondary;
+                    color: #ffffff;
+                    transition: background $delay-primary;
                     
                     &:disabled {
                         background: $color-faded;
@@ -159,8 +162,8 @@
                 }
 
                 .button:hover:not(:disabled) {
-                    background: $bg-primary;
-                    color: $color-primary;
+                    background: darken($bg-focused, 8%);
+                    color: #ffffff;
                 }
 
                 .submit-success {

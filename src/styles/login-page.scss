@@ -1,8 +1,66 @@
 @import "colors";
 @import "general";
+@import "variables";
 
-.about-page {
-    .button {
-        margin-top: 1rem;
-    }
+.login-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: calc(100vh - 8rem);
+	background: $bg-primary;
+	padding: 2rem;
+
+	.login {
+		background: #ffffff;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: $border-radius-primary;
+		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+		padding: 3rem 2.5rem;
+		max-width: 500px;
+		width: 100%;
+		text-align: center;
+	}
+
+	.page-heading {
+		font-size: 1.6rem;
+		font-weight: 700;
+		color: #0f172a;
+		margin-bottom: 1.25rem;
+		text-align: center;
+		text-transform: none;
+	}
+
+	.login-text {
+		font-size: 0.95rem;
+		color: #475569;
+		line-height: 1.6;
+
+		p {
+			margin-bottom: 2.25rem;
+		}
+	}
+
+	.button {
+		display: inline-block;
+		width: 100%;
+		padding: 0.85rem 2rem;
+		font-size: 1rem;
+		font-weight: 600;
+		color: #ffffff;
+		background: $bg-focused;
+		border: none;
+		border-radius: 6px;
+		cursor: pointer;
+		font-family: 'Raleway', sans-serif;
+		box-shadow: 0 4px 6px -1px rgba($color-focused, 0.25);
+		transition: background $delay-primary, transform 0.1s;
+
+		&:hover {
+			background: darken($bg-focused, 8%);
+		}
+
+		&:active {
+			transform: scale(0.98);
+		}
+	}
 }

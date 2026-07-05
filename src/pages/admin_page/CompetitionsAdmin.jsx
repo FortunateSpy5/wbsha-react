@@ -24,6 +24,7 @@ export const CompetitionsAdmin = () => {
 	const [editingCompetition, setEditingCompetition] = useState(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [mainImageFile, setMainImageFile] = useState(null);
+	const [successMessage, setSuccessMessage] = useState(null);
 
 	const competitionsRef = collection(db, "competitions");
 
@@ -119,11 +120,16 @@ export const CompetitionsAdmin = () => {
 			if (editingCompetition) {
 				const competitionDoc = doc(db, "competitions", editingCompetition.id);
 				await updateDoc(competitionDoc, preparedData);
+				setSuccessMessage(`Competition "${data.title}" updated successfully!`);
 				setEditingCompetition(null);
 			} else {
 				const newCompetition = { ...preparedData, picGroups: [], teams: [] };
 				await addDoc(competitionsRef, newCompetition);
+				setSuccessMessage(`Competition "${data.title}" created successfully!`);
 			}
+			setTimeout(() => {
+				setSuccessMessage(null);
+			}, 4000);
 			setMainImageFile(null);
 			const fileInput = document.querySelector("#main-comp-banner");
 			if (fileInput) fileInput.value = "";
@@ -182,6 +188,20 @@ export const CompetitionsAdmin = () => {
 				{editingCompetition ? "Edit Competition Details" : "Create New Competition"}
 			</h2>
 			
+			{successMessage && (
+				<div className="admin-success-banner" style={{
+					background: "#d1fae5",
+					color: "#065f46",
+					padding: "1rem",
+					borderRadius: "4px",
+					marginBottom: "1.5rem",
+					fontWeight: "600",
+					border: "1px solid #a7f3d0"
+				}}>
+					✅ {successMessage}
+				</div>
+			)}
+			
 			<form
 				className="competitions-admin-form"
 				onSubmit={handleSubmit(onAddOrUpdateCompetition)}
@@ -193,21 +213,29 @@ export const CompetitionsAdmin = () => {
 				/>
 				<p className="competitions-admin-error">{errors.title?.message}</p>
 
-				<input
-					className="competitions-admin-input"
-					type="date"
-					placeholder="Start Date..."
-					{...register("startDate")}
-				/>
-				<p className="competitions-admin-error">{errors.startDate?.message}</p>
+				<div className="form-group-row" style={{ display: "flex", gap: "1rem", flexWrap: "wrap", width: "100%" }}>
+					<div className="form-group" style={{ flex: 1, minWidth: "200px", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+						<label style={{ fontSize: "0.9rem", fontWeight: "600", color: "#1e293b" }}>Start Date</label>
+						<input
+							className="competitions-admin-input"
+							type="date"
+							style={{ width: "100%" }}
+							{...register("startDate")}
+						/>
+						<p className="competitions-admin-error">{errors.startDate?.message}</p>
+					</div>
 
-				<input
-					className="competitions-admin-input"
-					type="date"
-					placeholder="End Date (Optional)..."
-					{...register("endDate")}
-				/>
-				<p className="competitions-admin-error">{errors.endDate?.message}</p>
+					<div className="form-group" style={{ flex: 1, minWidth: "200px", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+						<label style={{ fontSize: "0.9rem", fontWeight: "600", color: "#1e293b" }}>End Date (Optional)</label>
+						<input
+							className="competitions-admin-input"
+							type="date"
+							style={{ width: "100%" }}
+							{...register("endDate")}
+						/>
+						<p className="competitions-admin-error">{errors.endDate?.message}</p>
+					</div>
+				</div>
 
 				<input
 					className="competitions-admin-input"

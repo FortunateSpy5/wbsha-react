@@ -10,26 +10,35 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
-		margin-bottom: 2.5rem;
-		
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		padding: 1.5rem;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
 		.file-upload-group {
 			display: flex;
 			flex-direction: column;
-			gap: 0.25rem;
-			
+			gap: 0.5rem;
+
 			label {
 				font-size: 0.9rem;
-				color: $color-faded;
+				font-weight: 600;
+				color: #1e293b;
 			}
 		}
 	}
 
 	&-input,
 	&-file {
-		padding: 0.5rem;
-		border: 1px solid $color-faded;
+		padding: 0.6rem;
+		border: 1px solid #cbd5e1;
 		font-size: 1rem;
+		border-radius: 4px;
+		background: #ffffff;
+		color: #1e293b;
 		font-family: 'Raleway', sans-serif;
 		transition: border-color $delay-primary;
 
@@ -48,12 +57,21 @@
 	}
 
 	&-submit {
+		background: $bg-focused;
+		color: #ffffff;
 		border: none;
 		font-size: 1rem;
-		padding: 1rem 1rem;
+		padding: 0.85rem 1.25rem;
+		border-radius: 4px;
 		cursor: pointer;
 		font-family: 'Raleway', sans-serif;
-		
+		font-weight: 600;
+		transition: all $delay-primary;
+
+		&:hover {
+			background: darken($bg-focused, 8%);
+		}
+
 		&:disabled {
 			background: $color-faded;
 			cursor: not-allowed;
@@ -69,65 +87,84 @@
 	.announcements-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 1.25rem;
 		margin-top: 2rem;
 	}
 
 	.announcement-item {
-		background: $bg-secondary;
-		padding: 1rem;
-		box-shadow: $box-shadow-secondary;
-		transition: transform $delay-primary;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		padding: 1.25rem 1.5rem;
+		border-radius: 8px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		transition: transform $delay-primary ease, box-shadow $delay-primary ease;
 
 		&:hover {
-			transform: translateY(-2px);
+			transform: translateY(-3px);
+			box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 		}
 
 		.announcement-info {
 			display: flex;
 			flex-direction: column;
-			gap: 0.25rem;
+			gap: 0.5rem;
 		}
 
 		.announcement-title {
 			margin: 0;
-			color: $color-focused;
-			font-size: 1.1rem;
-			font-weight: 600;
+			color: #0f172a;
+			font-size: 1.15rem;
+			font-weight: 700;
 			line-height: 1.4;
 		}
 
 		.announcement-date {
-			font-size: 0.875rem;
-			color: $color-secondary;
+			font-size: 0.85rem;
+			color: #475569;
 			margin: 0;
 		}
 
 		.announcement-file {
 			font-size: 0.85rem;
-			color: lighten($color-focused, 20%);
+			font-weight: 600;
+			color: $color-focused;
 			margin: 0 0 0.5rem 0;
 		}
 
+		.announcement-edit-btn,
 		.announcement-delete-btn {
-			background: $color-warning;
-			color: $color-secondary;
+			flex: 1;
 			border: none;
+			border-radius: 4px;
 			padding: 0.5rem 1rem;
 			cursor: pointer;
-			transition: background $delay-primary, transform $delay-primary;
-			font-size: 0.8rem;
-			font-weight: 500;
+			transition: background $delay-primary, transform 0.1s;
+			font-size: 0.75rem;
+			font-weight: 600;
 			text-transform: uppercase;
 			align-self: flex-start;
 			margin-top: 0.5rem;
 
-			&:hover {
-				background: darken($color-warning, 10%);
-			}
-
 			&:active {
-				transform: scale(0.9);
+				transform: scale(0.95);
+			}
+		}
+
+		.announcement-edit-btn {
+			background: rgba($color-focused, 0.1);
+			color: $color-focused;
+
+			&:hover {
+				background: rgba($color-focused, 0.2);
+			}
+		}
+
+		.announcement-delete-btn {
+			background: rgba($color-warning, 0.1);
+			color: $color-warning;
+
+			&:hover {
+				background: rgba($color-warning, 0.2);
 			}
 		}
 	}

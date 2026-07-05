@@ -10,6 +10,7 @@ import { MediaAdmin } from "./admin_page/MediaAdmin";
 import { AnnouncementsAdmin } from "./admin_page/AnnouncementsAdmin";
 import { DocumentsAdmin } from "./admin_page/DocumentsAdmin";
 import { ContactSubmissionsAdmin } from "./admin_page/ContactSubmissionsAdmin";
+import { AboutAdmin } from "./admin_page/AboutAdmin";
 import "../styles/admin/admin-page.scss";
 
 export const AdminPage = () => {
@@ -26,6 +27,7 @@ export const AdminPage = () => {
 		announcements: 0,
 		documents: 0,
 		contactSubmissions: 0,
+		aboutSections: 0,
 	});
 	const [loadingStats, setLoadingStats] = useState(false);
 
@@ -37,7 +39,7 @@ export const AdminPage = () => {
 			const fetchStats = async () => {
 				setLoadingStats(true);
 				try {
-					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, submissionsSnap] = await Promise.all([
+					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, submissionsSnap, aboutSnap] = await Promise.all([
 						getDocs(collection(db, "heroes")),
 						getDocs(collection(db, "competitions")),
 						getDocs(collection(db, "news")),
@@ -45,6 +47,7 @@ export const AdminPage = () => {
 						getDocs(collection(db, "announcements")),
 						getDocs(collection(db, "documents")),
 						getDocs(collection(db, "contactSubmissions")),
+						getDocs(collection(db, "aboutSections")),
 					]);
 					setStats({
 						heroes: heroesSnap.size,
@@ -54,6 +57,7 @@ export const AdminPage = () => {
 						announcements: annSnap.size,
 						documents: docsSnap.size,
 						contactSubmissions: submissionsSnap.size,
+						aboutSections: aboutSnap.size,
 					});
 				} catch (error) {
 					console.error("Error loading dashboard stats:", error);
@@ -85,6 +89,8 @@ export const AdminPage = () => {
 				return <DocumentsAdmin />;
 			case "submissions":
 				return <ContactSubmissionsAdmin />;
+			case "about":
+				return <AboutAdmin />;
 			case "overview":
 			default:
 				return renderOverview();
@@ -107,9 +113,9 @@ export const AdminPage = () => {
 							<div className="stat-count">{stats.heroes}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
-						<div className="stat-card" onClick={() => setActiveTab("competitions")}>
-							<div className="stat-title">Competitions</div>
-							<div className="stat-count">{stats.competitions}</div>
+						<div className="stat-card" onClick={() => setActiveTab("about")}>
+							<div className="stat-title">About Sections</div>
+							<div className="stat-count">{stats.aboutSections}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
 						<div className="stat-card" onClick={() => setActiveTab("news")}>
@@ -117,19 +123,24 @@ export const AdminPage = () => {
 							<div className="stat-count">{stats.news}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
-						<div className="stat-card" onClick={() => setActiveTab("gallery")}>
-							<div className="stat-title">Gallery Images</div>
-							<div className="stat-count">{stats.media}</div>
-							<div className="stat-action">Manage &rarr;</div>
-						</div>
 						<div className="stat-card" onClick={() => setActiveTab("announcements")}>
 							<div className="stat-title">Announcements</div>
 							<div className="stat-count">{stats.announcements}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
+						<div className="stat-card" onClick={() => setActiveTab("competitions")}>
+							<div className="stat-title">Competitions</div>
+							<div className="stat-count">{stats.competitions}</div>
+							<div className="stat-action">Manage &rarr;</div>
+						</div>
 						<div className="stat-card" onClick={() => setActiveTab("documents")}>
 							<div className="stat-title">Official Documents</div>
 							<div className="stat-count">{stats.documents}</div>
+							<div className="stat-action">Manage &rarr;</div>
+						</div>
+						<div className="stat-card" onClick={() => setActiveTab("gallery")}>
+							<div className="stat-title">Gallery Images</div>
+							<div className="stat-count">{stats.media}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
 						<div className="stat-card" onClick={() => setActiveTab("submissions")}>
@@ -162,10 +173,10 @@ export const AdminPage = () => {
 							🖼️ Manage Heroes
 						</button>
 						<button 
-							className={`nav-item ${activeTab === "competitions" ? "active" : ""}`}
-							onClick={() => setActiveTab("competitions")}
+							className={`nav-item ${activeTab === "about" ? "active" : ""}`}
+							onClick={() => setActiveTab("about")}
 						>
-							🏆 Manage Competitions
+							ℹ️ Manage About Page
 						</button>
 						<button 
 							className={`nav-item ${activeTab === "news" ? "active" : ""}`}
@@ -174,22 +185,28 @@ export const AdminPage = () => {
 							📰 Manage News
 						</button>
 						<button 
-							className={`nav-item ${activeTab === "gallery" ? "active" : ""}`}
-							onClick={() => setActiveTab("gallery")}
-						>
-							📷 Manage Gallery
-						</button>
-						<button 
 							className={`nav-item ${activeTab === "announcements" ? "active" : ""}`}
 							onClick={() => setActiveTab("announcements")}
 						>
 							📢 Announcements
 						</button>
 						<button 
+							className={`nav-item ${activeTab === "competitions" ? "active" : ""}`}
+							onClick={() => setActiveTab("competitions")}
+						>
+							🏆 Manage Competitions
+						</button>
+						<button 
 							className={`nav-item ${activeTab === "documents" ? "active" : ""}`}
 							onClick={() => setActiveTab("documents")}
 						>
 							📄 Manage Documents
+						</button>
+						<button 
+							className={`nav-item ${activeTab === "gallery" ? "active" : ""}`}
+							onClick={() => setActiveTab("gallery")}
+						>
+							📷 Manage Gallery
 						</button>
 						<button 
 							className={`nav-item ${activeTab === "submissions" ? "active" : ""}`}

@@ -28,10 +28,16 @@ const Footer = () => {
 	const renderSocials = () => {
 		return socialData.map((item, index) => {
 			return (
-				<Link key={index} to={item.link} className="social">
+				<a
+					key={index}
+					href={item.link}
+					className="social"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					{item.svg}
 					<span>{item.name}</span>
-				</Link>
+				</a>
 			);
 		});
 	};

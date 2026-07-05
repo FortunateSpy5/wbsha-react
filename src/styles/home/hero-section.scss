@@ -91,7 +91,10 @@
 				width: 100%;
 				position: absolute;
 				object-fit: cover;
+				object-position: center 35%;
 				z-index: -1;
+				image-rendering: -webkit-optimize-contrast;
+				image-rendering: high-quality;
 			}
 
 			.caption {
@@ -104,12 +107,9 @@
 				color: $color-secondary;
 				background: linear-gradient(
 						to top,
-						rgba(0, 0, 0, 0.6),
-						rgba(0, 0, 0, 0.2),
-						rgba(0, 0, 0, 0),
-						rgba(0, 0, 0, 0),
-						rgba(0, 0, 0, 0),
-						rgba(0, 0, 0, 0)
+						rgba(0, 0, 0, 0.85) 0%,
+						rgba(0, 0, 0, 0.4) 30%,
+						rgba(0, 0, 0, 0) 60%
 					),
 					linear-gradient(
 						to right,
@@ -157,6 +157,10 @@
 
 		@media screen and (min-width: 576px) {
 			height: 500px;
+		}
+
+		@media screen and (min-width: 992px) {
+			height: 600px;
 		}
 	}
 }

@@ -8,6 +8,9 @@
 - [x] Implement nested tabs in CompetitionsAdmin.jsx (Details, Albums, Teams)
 - [x] Add Team CRUD form & media uploads inside CompetitionsAdmin.jsx (with simplified fields: Name, Group Photo, Standing, Rank, Additional Info)
 - [x] Add team action photos sub-gallery management inside CompetitionsAdmin.jsx
+- [x] Update database schema handling in admin section
+	- [x] Add category dropdown and isFeatured checkbox to NewsAdmin.jsx form
+	- [x] Ensure single-featured post integrity in NewsAdmin.jsx on submit
 - [x] Update competitions-admin.scss with forms, stats grid, and gallery items styles
 
 ## Phase 3: Public CompetitionDetailPage Updates

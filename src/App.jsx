@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import Navbar from "./pages/general/Navbar";
 import Footer from "./pages/general/Footer";
+import ScrollToTop from "./pages/general/ScrollToTop";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/app.scss";
 
@@ -32,6 +33,7 @@ const App = () => {
 	return (
 		<div className="main-container">
 			<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+				<ScrollToTop />
 				<Navbar />
 				<Suspense fallback={<PageLoader />}>
 					<Routes>

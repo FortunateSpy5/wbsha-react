@@ -165,18 +165,23 @@
 				justify-content: flex-end;
 
 				.delete-sub-btn {
-					background: none;
+					background: rgba($color-warning, 0.1);
+					color: $color-warning;
 					border: none;
-					color: #ef4444;
-					font-size: 0.8rem;
+					font-size: 0.75rem;
 					font-weight: 600;
 					cursor: pointer;
-					padding: 0.25rem 0.5rem;
+					padding: 0.4rem 0.8rem;
 					border-radius: 4px;
-					transition: background 0.2s;
+					text-transform: uppercase;
+					transition: background $delay-primary, transform 0.1s;
 
 					&:hover {
-						background: #fef2f2;
+						background: rgba($color-warning, 0.2);
+					}
+
+					&:active {
+						transform: scale(0.95);
 					}
 				}
 			}
@@ -246,20 +251,23 @@
 				}
 
 				.delete-sub-btn-large {
-					background: #fef2f2;
-					border: 1px solid #fee2e2;
-					color: #ef4444;
+					background: rgba($color-warning, 0.1);
+					color: $color-warning;
+					border: none;
 					padding: 0.5rem 1rem;
-					border-radius: 6px;
-					font-size: 0.85rem;
+					border-radius: 4px;
+					font-size: 0.8rem;
 					font-weight: 600;
 					cursor: pointer;
-					transition: all 0.2s;
+					text-transform: uppercase;
+					transition: background $delay-primary, transform 0.1s;
 
 					&:hover {
-						background: #ef4444;
-						color: #fff;
-						border-color: #ef4444;
+						background: rgba($color-warning, 0.2);
+					}
+
+					&:active {
+						transform: scale(0.95);
 					}
 				}
 			}

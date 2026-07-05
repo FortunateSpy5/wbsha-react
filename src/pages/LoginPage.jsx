@@ -16,18 +16,18 @@ export const LoginPage = () => {
 			});
 	};
 	return (
-		<div className="main-content about-page">
-			<div className="content container">
-				<div className="page-title">Authentication</div>
-				<div className="login">
-					<div className="page-heading">Login with Google</div>
-					<div className="login-text">
-						<p>Access to the administrator dashboard is restricted. Only authorized users can access the dashboard. If you are an authorized user, please click on the button below to login with your Google account. This will give you access to the admin dashboard.</p>
-						<div onClick={signInWithGoogle} className="button no-select" text="">Click Here</div>
-					</div>
+		<div className="main-content login-page">
+			<div className="login">
+				<h2 className="page-heading">Dashboard Administration</h2>
+				<div className="login-text">
+					<p>
+						Access to the administrator dashboard is restricted to authorized association members. Please authenticate using your official registered Google account below to proceed.
+					</p>
+					<button onClick={signInWithGoogle} className="button no-select">
+						Login with Google
+					</button>
 				</div>
 			</div>
 		</div>
-
 	);
 };

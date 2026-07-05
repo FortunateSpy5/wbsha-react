@@ -124,14 +124,14 @@
 				border-left: 1px solid #eee;
 
 				.calendar-day-header {
-					background: $bg-secondary;
-					color: $color-secondary;
+					background: #f1f5f9;
+					color: #475569;
 					text-align: center;
 					font-weight: 600;
 					padding: 0.75rem 0.25rem;
 					font-size: 0.9rem;
-					border-right: 1px solid #333;
-					border-bottom: 1px solid #333;
+					border-right: 1px solid #eee;
+					border-bottom: 1px solid #eee;
 				}
 
 				.calendar-day {
@@ -241,12 +241,13 @@
 					}
 
 					.competition-venue {
-						font-size: 0.8rem;
-						background: #eee;
-						color: $color-primary;
-						padding: 0.2rem 0.5rem;
-						border-radius: 4px;
-						font-weight: 500;
+						font-size: 0.75rem;
+						background: lighten($color-focused, 40%);
+						color: darken($color-focused, 15%);
+						padding: 0.15rem 0.6rem;
+						border-radius: 12px;
+						font-weight: 600;
+						text-transform: uppercase;
 						white-space: nowrap;
 					}
 				}

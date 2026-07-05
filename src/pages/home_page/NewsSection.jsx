@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../../styles/home/news-section.scss";
-import { Link } from "react-router-dom";
 import SectionTitle from "./SectionTitle";
+import { NewsDetailModal } from "../general/NewsDetailModal";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const NewsSection = () => {
 	const [news, setNews] = useState([]);
+	const [selectedNews, setSelectedNews] = useState(null);
 
 	useEffect(() => {
 		const newsRef = collection(db, "news");
@@ -37,13 +38,16 @@ const NewsSection = () => {
 					No news updates available.
 				</div>
 			) : (
-				<News newsList={news} />
+				<News newsList={news} onSelectNews={setSelectedNews} />
+			)}
+			{selectedNews && (
+				<NewsDetailModal newsItem={selectedNews} onClose={() => setSelectedNews(null)} />
 			)}
 		</div>
 	);
 };
 
-const News = ({ newsList }) => {
+const News = ({ newsList, onSelectNews }) => {
 	const cardCollectionRef = useRef();
 	const cardRef = useRef();
 
@@ -64,7 +68,7 @@ const News = ({ newsList }) => {
 	return (
 		<div className="news">
 			<div className="news-card-collection" ref={cardCollectionRef}>
-				{newsCollection(newsList, cardRef)}
+				{newsCollection(newsList, cardRef, onSelectNews)}
 			</div>
 			<div className="news-left no-select" onClick={leftArrowClick}>
 				<svg
@@ -90,23 +94,23 @@ const News = ({ newsList }) => {
 	);
 };
 
-const newsCollection = (newsList, cardRef) => {
+const newsCollection = (newsList, cardRef, onSelectNews) => {
 	return newsList.map((data, index) => {
 		return (
 			<div
 				className="news-card"
 				key={data.id || index}
 				ref={index === 0 ? cardRef : null}
+				onClick={() => onSelectNews(data)}
+				style={{ cursor: "pointer" }}
 			>
-				<Link to="/news">
-					<div
-						className="image"
-						style={{
-							backgroundImage: `url("${data.imageUrl}")`,
-							filter: "brightness(90%)",
-						}}
-					/>
-				</Link>
+				<div
+					className="image"
+					style={{
+						backgroundImage: `url("${data.imageUrl}")`,
+						filter: "brightness(90%)",
+					}}
+				/>
 				<div className="text">{data.title}</div>
 			</div>
 		);

@@ -3,12 +3,12 @@
 @import "../_general";
 
 .competitions-admin {
-	padding: 1.5rem;
+	padding: 2rem;
 
 	&-title {
 		font-size: 1.4rem;
-		font-weight: 600;
-		color: $color-focused;
+		font-weight: 700;
+		color: #0f172a;
 		margin-bottom: 1.5rem;
 	}
 
@@ -17,24 +17,23 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
-		margin-bottom: 2.5rem;
-		background: $bg-secondary;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
 		padding: 1.5rem;
 		border-radius: 8px;
-		box-shadow: $box-shadow-secondary;
-		color: $color-secondary;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 	}
 
 	&-input,
 	&-file {
-		padding: 0.5rem 0.75rem;
-		border: 1px solid $color-faded;
-		font-size: 0.95rem;
+		padding: 0.6rem;
+		border: 1px solid #cbd5e1;
+		font-size: 1rem;
 		border-radius: 4px;
-		background: #fff;
-		color: $color-primary;
+		background: #ffffff;
+		color: #1e293b;
 		font-family: 'Raleway', sans-serif;
 		transition: border-color $delay-primary;
 
@@ -50,15 +49,15 @@
 
 	&-file {
 		cursor: pointer;
-		background: #fff;
+		background: #ffffff;
 	}
 
 	&-submit {
 		border: none;
 		font-size: 1rem;
-		padding: 0.75rem 1rem;
+		padding: 0.85rem 1rem;
 		background: $bg-focused;
-		color: #fff;
+		color: #ffffff;
 		border-radius: 4px;
 		cursor: pointer;
 		font-weight: 600;
@@ -66,7 +65,7 @@
 		transition: all $delay-primary;
 
 		&:hover {
-			background: #007dc5;
+			background: darken($bg-focused, 8%);
 		}
 
 		&:disabled {
@@ -91,20 +90,20 @@
 
 // Competition card layout with nested sub-tabs
 .competition-admin-card {
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border: 1px solid #e2e8f0;
 	border-radius: 8px;
-	background: $bg-secondary;
-	box-shadow: $box-shadow-secondary;
+	background: #ffffff;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 	overflow: hidden;
-	color: $color-secondary;
+	color: #334155;
 
 	.card-header-bar {
-		background: #0d0d0d;
+		background: #f8fafc;
 		padding: 1rem 1.5rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-bottom: 1px solid #e2e8f0;
 
 		@media only screen and (max-width: 576px) {
 			flex-direction: column;
@@ -113,9 +112,9 @@
 		}
 
 		.card-comp-title {
-			font-size: 1.2rem;
+			font-size: 1.25rem;
 			font-weight: 700;
-			color: $color-focused;
+			color: #0f172a;
 			margin: 0;
 		}
 
@@ -125,7 +124,7 @@
 
 			button {
 				padding: 0.4rem 0.8rem;
-				font-size: 0.8rem;
+				font-size: 0.75rem;
 				font-weight: 600;
 				border: none;
 				border-radius: 4px;
@@ -136,20 +135,20 @@
 			}
 
 			.btn-edit {
-				background: #334155;
-				color: #f8fafc;
+				background: rgba($color-focused, 0.1);
+				color: $color-focused;
 
 				&:hover {
-					background: #475569;
+					background: rgba($color-focused, 0.2);
 				}
 			}
 
 			.btn-delete {
-				background: $color-warning;
-				color: #fff;
+				background: rgba($color-warning, 0.1);
+				color: $color-warning;
 
 				&:hover {
-					background: #aa0000;
+					background: rgba($color-warning, 0.2);
 				}
 			}
 		}
@@ -157,8 +156,8 @@
 
 	.nested-tabs-menu {
 		display: flex;
-		background: #121212;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		background: #f1f5f9;
+		border-bottom: 1px solid #e2e8f0;
 
 		@media only screen and (max-width: 576px) {
 			flex-direction: column;
@@ -167,29 +166,29 @@
 		.nested-tab-btn {
 			background: none;
 			border: none;
-			border-right: 1px solid rgba(255, 255, 255, 0.1);
+			border-right: 1px solid #e2e8f0;
 			padding: 0.75rem 1.25rem;
-			font-size: 0.9rem;
+			font-size: 0.85rem;
 			font-weight: 600;
 			font-family: 'Raleway', sans-serif;
 			cursor: pointer;
-			color: #94a3b8;
+			color: #64748b;
 			transition: all 0.2s;
 
 			&:hover {
-				color: #f8fafc;
-				background: #334155;
+				color: #0f172a;
+				background: rgba(0, 0, 0, 0.02);
 			}
 
 			&.active {
-				background: $bg-secondary;
+				background: #ffffff;
 				color: $color-focused;
 				border-bottom: 2px solid $color-focused;
 			}
 
 			@media only screen and (max-width: 576px) {
 				border-right: none;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+				border-bottom: 1px solid #e2e8f0;
 				text-align: left;
 			}
 		}
@@ -203,25 +202,25 @@
 			display: flex;
 			flex-direction: column;
 			gap: 0.75rem;
-			color: $color-secondary;
+			color: #334155;
 
 			pre {
 				font-family: 'Raleway', sans-serif;
 				white-space: pre-line;
 				font-size: 0.9rem;
-				background: rgba(255, 255, 255, 0.05);
+				background: #f8fafc;
 				padding: 1rem;
 				border-radius: 6px;
-				border: 1px solid rgba(255, 255, 255, 0.1);
+				border: 1px solid #e2e8f0;
 				margin-top: 0.5rem;
-				color: $color-secondary;
+				color: #1e293b;
 			}
 
 			.content-summary {
 				margin-top: 0.5rem;
 				p {
 					font-size: 0.9rem;
-					color: #94a3b8;
+					color: #64748b;
 				}
 			}
 		}
@@ -229,17 +228,17 @@
 		// Albums tab styles
 		.albums-management-tab {
 			.add-album-form {
-				background: rgba(255, 255, 255, 0.03);
-				padding: 1rem;
+				background: #f8fafc;
+				padding: 1.25rem;
 				border-radius: 6px;
-				border: 1px solid rgba(255, 255, 255, 0.08);
+				border: 1px solid #e2e8f0;
 				margin-bottom: 1.5rem;
-				color: $color-secondary;
+				color: #1e293b;
 
 				h4 {
 					font-size: 0.95rem;
 					font-weight: 700;
-					color: $color-secondary;
+					color: #0f172a;
 					margin-bottom: 0.75rem;
 				}
 
@@ -253,19 +252,19 @@
 
 					input {
 						flex: 1;
-						padding: 0.4rem 0.75rem;
-						border: 1px solid $color-faded;
+						padding: 0.5rem 0.75rem;
+						border: 1px solid #cbd5e1;
 						border-radius: 4px;
-						background: #fff;
-						color: $color-primary;
+						background: #ffffff;
+						color: #1e293b;
 						font-family: 'Raleway', sans-serif;
 					}
 
 					.button {
-						padding: 0.4rem 1rem;
+						padding: 0.5rem 1.25rem;
 						font-size: 0.85rem;
 						background: $bg-focused;
-						color: #fff;
+						color: #ffffff;
 						border: none;
 						border-radius: 4px;
 						cursor: pointer;
@@ -275,25 +274,25 @@
 			}
 
 			.admin-album-box {
-				border: 1px solid rgba(255, 255, 255, 0.1);
+				border: 1px solid #e2e8f0;
 				border-radius: 6px;
 				margin-bottom: 1.5rem;
-				padding: 1rem;
-				background: rgba(0, 0, 0, 0.15);
+				background: #ffffff;
+				overflow: hidden;
 
-				.album-title-bar {
+				.album-header-bar {
+					background: #f8fafc;
+					padding: 0.75rem 1.25rem;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					margin-bottom: 1rem;
-					border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-					padding-bottom: 0.5rem;
+					border-bottom: 1px solid #e2e8f0;
 
-					h5 {
-						font-size: 1rem;
-						font-weight: 700;
-						color: $color-focused;
+					h4 {
 						margin: 0;
+						font-size: 0.95rem;
+						font-weight: 700;
+						color: #0f172a;
 					}
 
 					.delete-album-btn {
@@ -311,112 +310,86 @@
 					}
 				}
 
-				.upload-photo-to-album {
-					background: rgba(255, 255, 255, 0.02);
-					padding: 0.75rem;
-					border-radius: 4px;
-					margin-bottom: 1rem;
-					border: 1px solid rgba(255, 255, 255, 0.05);
+				.album-grid-preview {
+					padding: 1.25rem;
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+					gap: 1rem;
 
-					h6 {
-						font-size: 0.85rem;
-						font-weight: 700;
-						color: $color-secondary;
-						margin-bottom: 0.5rem;
-					}
+					.photo-preview-item {
+						position: relative;
+						aspect-ratio: 1;
+						border-radius: 4px;
+						overflow: hidden;
+						border: 1px solid #cbd5e1;
 
-					.upload-row {
-						display: flex;
-						flex-wrap: wrap;
-						gap: 0.5rem;
-						align-items: center;
-
-						input[type="text"] {
-							flex: 1;
-							min-width: 150px;
-							padding: 0.35rem 0.5rem;
-							border: 1px solid $color-faded;
-							border-radius: 4px;
-							font-size: 0.85rem;
-							background: #fff;
-							color: $color-primary;
-							font-family: 'Raleway', sans-serif;
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
 						}
 
-						input[type="file"] {
-							font-size: 0.8rem;
-							color: $color-secondary;
-						}
-
-						.button {
-							padding: 0.35rem 0.85rem;
-							font-size: 0.8rem;
-							background: $bg-focused;
-							color: #fff;
+						.delete-photo-btn {
+							position: absolute;
+							top: 0.25rem;
+							right: 0.25rem;
+							background: rgba($color-warning, 0.85);
+							color: #ffffff;
 							border: none;
-							border-radius: 4px;
+							width: 22px;
+							height: 22px;
+							border-radius: 50%;
+							font-size: 0.85rem;
+							line-height: 1;
 							cursor: pointer;
-							font-weight: 600;
+							display: flex;
+							align-items: center;
+							justify-content: center;
 
-							&:disabled {
-								background: $color-faded;
+							&:hover {
+								background: $color-warning;
 							}
 						}
 					}
 				}
 
-				.album-pics-grid,
-				.team-pics-grid {
-					display: grid;
-					grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-					gap: 1rem;
+				.add-photo-form-row {
+					border-top: 1px solid #e2e8f0;
+					padding: 0.85rem 1.25rem;
+					background: #f8fafc;
+					display: flex;
+					align-items: center;
+					flex-wrap: wrap;
+					gap: 0.75rem;
 
-					.admin-pic-thumb {
-						position: relative;
-						border: 1px solid rgba(255, 255, 255, 0.1);
+					input[type="text"] {
+						flex: 1;
+						min-width: 150px;
+						padding: 0.4rem 0.6rem;
+						border: 1px solid #cbd5e1;
 						border-radius: 4px;
-						overflow: hidden;
-						background: rgba(255, 255, 255, 0.05);
-						aspect-ratio: 1 / 1;
-						display: flex;
-						flex-direction: column;
+						background: #ffffff;
+						color: #1e293b;
+						font-size: 0.85rem;
+					}
 
-						img {
-							width: 100%;
-							height: 70%;
-							object-fit: cover;
-						}
+					input[type="file"] {
+						font-size: 0.85rem;
+						color: #475569;
+					}
 
-						.pic-caption {
-							font-size: 0.75rem;
-							padding: 0.25rem;
-							text-align: center;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							white-space: nowrap;
-							color: $color-secondary;
-							flex-grow: 1;
-						}
+					.button {
+						padding: 0.4rem 1rem;
+						font-size: 0.8rem;
+						background: $bg-focused;
+						color: #ffffff;
+						border: none;
+						border-radius: 4px;
+						cursor: pointer;
+						font-weight: 600;
 
-						.pic-delete {
-							position: absolute;
-							top: 2px;
-							right: 2px;
-							background: $color-warning;
-							color: #fff;
-							border: none;
-							border-radius: 50%;
-							width: 18px;
-							height: 18px;
-							font-size: 0.8rem;
-							line-height: 18px;
-							text-align: center;
-							cursor: pointer;
-							padding: 0;
-
-							&:hover {
-								background: #aa0000;
-							}
+						&:disabled {
+							background: $color-faded;
 						}
 					}
 				}
@@ -426,79 +399,79 @@
 		// Teams tab styles
 		.teams-management-tab {
 			.add-team-admin-form {
-				background: rgba(255, 255, 255, 0.03);
+				background: #f8fafc;
 				padding: 1.25rem;
 				border-radius: 6px;
-				border: 1px solid rgba(255, 255, 255, 0.08);
+				border: 1px solid #e2e8f0;
 				margin-bottom: 2rem;
+				color: #1e293b;
 
 				h4 {
 					font-size: 1rem;
 					font-weight: 700;
-					color: $color-focused;
+					color: #0f172a;
 					margin-bottom: 1rem;
-					border-left: 3px solid $color-focused;
-					padding-left: 0.5rem;
 				}
 
-				.form-grid {
-					display: grid;
-					grid-template-columns: repeat(2, 1fr);
+				.form-row {
+					display: flex;
+					flex-wrap: wrap;
 					gap: 1rem;
-					margin-bottom: 1.25rem;
+					margin-bottom: 1rem;
 
-					@media only screen and (max-width: 576px) {
-						grid-template-columns: 1fr;
-					}
-
-					.input-group {
+					.form-group {
+						flex: 1;
+						min-width: 180px;
 						display: flex;
 						flex-direction: column;
-						gap: 0.25rem;
-
-						&.full-width {
-							grid-column: 1 / -1;
-						}
+						gap: 0.4rem;
 
 						label {
 							font-size: 0.85rem;
 							font-weight: 600;
-							color: $color-secondary;
+							color: #475569;
 						}
 
-						input, textarea {
-							padding: 0.4rem 0.6rem;
-							border: 1px solid $color-faded;
+						input[type="text"],
+						input[type="number"] {
+							padding: 0.45rem 0.75rem;
+							border: 1px solid #cbd5e1;
 							border-radius: 4px;
-							background: #fff;
-							color: $color-primary;
+							background: #ffffff;
+							color: #1e293b;
 							font-family: 'Raleway', sans-serif;
-							font-size: 0.9rem;
+							outline: none;
 
 							&:focus {
-								outline: none;
 								border-color: $color-focused;
 							}
-						}
-
-						textarea {
-							resize: vertical;
-						}
-
-						input[type="file"] {
-							color: $color-secondary;
-							background: none;
-							border: none;
-							padding: 0.25rem 0;
 						}
 					}
 				}
 
+				.form-row-assets {
+					display: flex;
+					flex-direction: column;
+					gap: 0.4rem;
+					margin-bottom: 1.25rem;
+
+					label {
+						font-size: 0.85rem;
+						font-weight: 600;
+						color: #475569;
+					}
+
+					input[type="file"] {
+						font-size: 0.85rem;
+						color: #475569;
+					}
+				}
+
 				.button {
-					padding: 0.5rem 1.25rem;
-					font-size: 0.9rem;
+					padding: 0.5rem 1.5rem;
+					font-size: 0.85rem;
 					background: $bg-focused;
-					color: #fff;
+					color: #ffffff;
 					border: none;
 					border-radius: 4px;
 					cursor: pointer;
@@ -514,29 +487,29 @@
 				h4 {
 					font-size: 1.1rem;
 					font-weight: 700;
-					color: $color-secondary;
+					color: #0f172a;
 					margin-bottom: 1.25rem;
 				}
 
-				.admin-team-row {
-					border: 1px solid rgba(255, 255, 255, 0.1);
+				.admin-team-profile-card {
+					border: 1px solid #e2e8f0;
 					border-radius: 6px;
 					padding: 1.25rem;
 					margin-bottom: 1.5rem;
-					background: rgba(0, 0, 0, 0.15);
+					background: #ffffff;
 
-					.team-row-header {
+					.team-header-bar {
 						display: flex;
 						justify-content: space-between;
 						align-items: center;
-						border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+						border-bottom: 1px solid #e2e8f0;
 						padding-bottom: 0.5rem;
 						margin-bottom: 0.75rem;
 
 						h5 {
 							font-size: 1.05rem;
 							font-weight: 700;
-							color: $color-secondary;
+							color: #0f172a;
 							margin: 0;
 						}
 
@@ -548,11 +521,12 @@
 
 							.team-rank-badge {
 								font-size: 0.75rem;
-								background: rgba(255, 255, 255, 0.1);
-								color: $color-secondary;
+								background: #f1f5f9;
+								color: #475569;
 								padding: 0.15rem 0.5rem;
 								border-radius: 12px;
 								font-weight: 600;
+								border: 1px solid #cbd5e1;
 							}
 
 							.team-standing-badge {
@@ -607,7 +581,7 @@
 								height: 100px;
 								object-fit: cover;
 								border-radius: 4px;
-								border: 1px solid rgba(255, 255, 255, 0.1);
+								border: 1px solid #e2e8f0;
 							}
 						}
 
@@ -627,26 +601,26 @@
 								font-family: 'Raleway', sans-serif;
 								white-space: pre-line;
 								font-size: 0.85rem;
-								background: rgba(255, 255, 255, 0.05);
+								background: #f8fafc;
 								padding: 0.75rem;
 								border-radius: 4px;
-								border: 1px solid rgba(255, 255, 255, 0.1);
+								border: 1px solid #e2e8f0;
 								margin: 0;
-								color: $color-secondary;
+								color: #1e293b;
 							}
 						}
 					}
 
 					.team-gallery-management {
-						background: rgba(255, 255, 255, 0.02);
+						background: #f8fafc;
 						padding: 1rem;
 						border-radius: 6px;
-						border: 1px solid rgba(255, 255, 255, 0.05);
+						border: 1px solid #e2e8f0;
 
 						h6 {
 							font-size: 0.85rem;
 							font-weight: 700;
-							color: $color-secondary;
+							color: #0f172a;
 							margin-bottom: 0.75rem;
 						}
 
@@ -661,24 +635,24 @@
 								flex: 1;
 								min-width: 150px;
 								padding: 0.35rem 0.5rem;
-								border: 1px solid $color-faded;
+								border: 1px solid #cbd5e1;
 								border-radius: 4px;
 								font-size: 0.85rem;
-								background: #fff;
-								color: $color-primary;
+								background: #ffffff;
+								color: #1e293b;
 								font-family: 'Raleway', sans-serif;
 							}
 
 							input[type="file"] {
-								font-size: 0.8rem;
-								color: $color-secondary;
+								font-size: 0.85rem;
+								color: #475569;
 							}
 
 							.button {
 								padding: 0.35rem 0.85rem;
 								font-size: 0.8rem;
 								background: $bg-focused;
-								color: #fff;
+								color: #ffffff;
 								border: none;
 								border-radius: 4px;
 								cursor: pointer;
@@ -686,6 +660,299 @@
 
 								&:disabled {
 									background: $color-faded;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Matches tab styles
+		.matches-management-tab {
+			.add-match-form {
+				background: #f8fafc;
+				padding: 1.25rem;
+				border-radius: 6px;
+				border: 1px solid #e2e8f0;
+				margin-bottom: 2rem;
+				color: #1e293b;
+
+				h4 {
+					font-size: 1rem;
+					font-weight: 700;
+					color: #0f172a;
+					margin-bottom: 1rem;
+				}
+
+				.form-row {
+					display: flex;
+					flex-wrap: wrap;
+					gap: 1rem;
+					margin-bottom: 1rem;
+
+					.form-group {
+						flex: 1;
+						min-width: 150px;
+						display: flex;
+						flex-direction: column;
+						gap: 0.4rem;
+
+						label {
+							font-size: 0.85rem;
+							font-weight: 600;
+							color: #475569;
+						}
+
+						input, select {
+							padding: 0.45rem 0.75rem;
+							border: 1px solid #cbd5e1;
+							border-radius: 4px;
+							background: #ffffff;
+							color: #1e293b;
+							font-family: 'Raleway', sans-serif;
+							outline: none;
+
+							&:focus {
+								border-color: $color-focused;
+							}
+						}
+					}
+				}
+
+				.button {
+					padding: 0.5rem 1.5rem;
+					font-size: 0.85rem;
+					background: $bg-focused;
+					color: #ffffff;
+					border: none;
+					border-radius: 4px;
+					cursor: pointer;
+					font-weight: 600;
+				}
+			}
+
+			.matches-admin-grid {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+
+				.match-group-block {
+					border: 1px solid #e2e8f0;
+					border-radius: 6px;
+					background: #ffffff;
+					overflow: hidden;
+
+					.group-header {
+						background: #f8fafc;
+						padding: 0.75rem 1.25rem;
+						font-weight: 700;
+						border-bottom: 1px solid #e2e8f0;
+						color: #0f172a;
+						margin: 0;
+					}
+
+					.admin-match-row {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						padding: 1rem 1.25rem;
+						border-bottom: 1px solid #e2e8f0;
+						font-size: 0.95rem;
+						color: #1e293b;
+
+						&:last-child {
+							border-bottom: none;
+						}
+
+						.teams-vs-block {
+							display: flex;
+							align-items: center;
+							gap: 0.75rem;
+							font-weight: 600;
+
+							.score-box {
+								background: #f1f5f9;
+								border: 1px solid #cbd5e1;
+								padding: 0.2rem 0.5rem;
+								border-radius: 4px;
+								font-size: 0.85rem;
+								color: #0f172a;
+							}
+						}
+
+						.match-meta-info {
+							font-size: 0.8rem;
+							color: #64748b;
+							display: flex;
+							gap: 0.75rem;
+							align-items: center;
+						}
+
+						.delete-match-btn {
+							background: none;
+							border: none;
+							color: $color-warning;
+							cursor: pointer;
+							font-weight: 600;
+							font-size: 0.8rem;
+
+							&:hover {
+								text-decoration: underline;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Standings tab styles
+		.standings-management-tab {
+			.add-group-form,
+			.add-standing-row-form {
+				background: #f8fafc;
+				padding: 1.25rem;
+				border-radius: 6px;
+				border: 1px solid #e2e8f0;
+				margin-bottom: 2rem;
+				color: #1e293b;
+
+				h4 {
+					font-size: 1rem;
+					font-weight: 700;
+					color: #0f172a;
+					margin-bottom: 1rem;
+				}
+
+				.form-row {
+					display: flex;
+					flex-wrap: wrap;
+					gap: 1rem;
+					margin-bottom: 1rem;
+
+					.form-group {
+						flex: 1;
+						min-width: 120px;
+						display: flex;
+						flex-direction: column;
+						gap: 0.4rem;
+
+						label {
+							font-size: 0.85rem;
+							font-weight: 600;
+							color: #475569;
+						}
+
+						input, select {
+							padding: 0.45rem 0.75rem;
+							border: 1px solid #cbd5e1;
+							border-radius: 4px;
+							background: #ffffff;
+							color: #1e293b;
+							font-family: 'Raleway', sans-serif;
+							outline: none;
+
+							&:focus {
+								border-color: $color-focused;
+							}
+						}
+					}
+				}
+
+				.button {
+					padding: 0.5rem 1.5rem;
+					font-size: 0.85rem;
+					background: $bg-focused;
+					color: #ffffff;
+					border: none;
+					border-radius: 4px;
+					cursor: pointer;
+					font-weight: 600;
+				}
+			}
+
+			.standings-admin-group {
+				border: 1px solid #e2e8f0;
+				border-radius: 6px;
+				background: #ffffff;
+				overflow: hidden;
+				margin-bottom: 2rem;
+
+				.group-header {
+					background: #f8fafc;
+					padding: 0.75rem 1.25rem;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					border-bottom: 1px solid #e2e8f0;
+
+					h4 {
+						margin: 0;
+						font-size: 1rem;
+						font-weight: 700;
+						color: #0f172a;
+					}
+
+					.delete-group-btn {
+						background: none;
+						border: none;
+						color: $color-warning;
+						font-size: 0.8rem;
+						font-weight: 600;
+						cursor: pointer;
+						font-family: 'Raleway', sans-serif;
+
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+
+				table {
+					width: 100%;
+					border-collapse: collapse;
+					font-size: 0.9rem;
+
+					tr {
+						border-bottom: 1px solid #e2e8f0;
+
+						&:last-child {
+							border-bottom: none;
+						}
+
+						th {
+							background: #f8fafc;
+							color: #475569;
+							font-weight: 700;
+							padding: 0.6rem 0.85rem;
+							text-align: center;
+							border-bottom: 2px solid #e2e8f0;
+
+							&:first-child {
+								text-align: left;
+							}
+						}
+
+						td {
+							padding: 0.6rem 0.85rem;
+							color: #1e293b;
+							text-align: center;
+
+							&:first-child {
+								text-align: left;
+								font-weight: 600;
+							}
+
+							.delete-row-btn {
+								background: none;
+								border: none;
+								color: $color-warning;
+								cursor: pointer;
+								font-size: 1.1rem;
+								line-height: 1;
+
+								&:hover {
+									color: darken($color-warning, 15%);
 								}
 							}
 						}

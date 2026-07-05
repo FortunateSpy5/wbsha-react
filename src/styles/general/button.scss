@@ -4,11 +4,14 @@
 .button {
   display: inline-block;
   background: $bg-secondary;
-  border-radius: 0;
+  border-radius: 4px;
   transition: all $delay-primary linear;
   padding: 0.7rem 1.2rem;
   text-decoration: none;
   color: $color-secondary;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  border: none;
 }
 
 .button:visited {
@@ -19,5 +22,6 @@
 .button:hover {
   text-decoration: none;
   background: $bg-focused;
+  color: #ffffff;
   cursor: pointer;
 }

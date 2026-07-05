@@ -3,110 +3,165 @@
 @import "../_general";
 
 .hero-admin {
-  padding: 2rem;
+	padding: 2rem;
 
-  &-form {
-    position: relative;
-    // width relative to the container
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
+	&-form {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		padding: 1.5rem;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+	}
 
-  &-input,
-  &-file {
-    padding: 0.5rem;
-    border: 1px solid $color-faded;
-    font-size: 1rem;
-    transition: border-color $delay-primary;
+	&-input,
+	&-file {
+		padding: 0.6rem;
+		border: 1px solid #cbd5e1;
+		font-size: 1rem;
+		border-radius: 4px;
+		background: #ffffff;
+		color: #1e293b;
+		font-family: 'Raleway', sans-serif;
+		transition: border-color $delay-primary;
 
-    &:focus {
-      outline: none;
-      border-color: $color-focused;
-    }
-  }
+		&:focus {
+			outline: none;
+			border-color: $color-focused;
+		}
+	}
 
-  &-file {
-    cursor: pointer;
-  }
+	&-file {
+		cursor: pointer;
+	}
 
-  &-submit {
-    border: none;
-    font-size: 1rem;
-    padding: 1rem 1rem;
-  }
+	&-submit {
+		background: $bg-focused;
+		color: #ffffff;
+		border: none;
+		font-size: 1rem;
+		padding: 0.85rem 1.25rem;
+		border-radius: 4px;
+		cursor: pointer;
+		font-family: 'Raleway', sans-serif;
+		font-weight: 600;
+		transition: all $delay-primary;
 
-  &-error {
-    color: $color-warning;
-    font-size: 0.875rem;
-    margin-top: -0.5rem;
-  }
+		&:hover {
+			background: darken($bg-focused, 8%);
+		}
 
-  .hero-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
+		&:disabled {
+			background: $color-faded;
+			cursor: not-allowed;
+		}
+	}
 
-  .hero {
-    background: $bg-secondary;
-    padding: 1rem;
-    box-shadow: $box-shadow-secondary;
-    transition: transform $delay-primary;
+	&-error {
+		color: $color-warning;
+		font-size: 0.875rem;
+		margin-top: -0.5rem;
+	}
 
-    &:hover {
-      transform: translateY(-5px);
-    }
+	.hero-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
 
-    &-img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      margin-bottom: 0.75rem;
-      box-shadow: $box-shadow-secondary;
-    }
+	.hero {
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-radius: 8px;
+		padding: 1.25rem;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		transition: transform $delay-primary ease, box-shadow $delay-primary ease;
+		display: flex;
+		flex-direction: column;
 
-    &-info {
-      text-align: center;
-    }
+		&:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+		}
 
-    &-title {
-      margin: 0.5rem 0;
-      color: $color-focused;
-      font-size: 1.125rem;
-      font-weight: 600;
-    }
+		&-img {
+			width: 100%;
+			height: 150px;
+			object-fit: cover;
+			border-radius: 4px;
+			margin-bottom: 0.85rem;
+			border: 1px solid #e2e8f0;
+		}
 
-    &-description,
-    &-order {
-      font-size: 0.875rem;
-      color: $color-secondary;
-      margin: 0.25rem 0;
-    }
+		&-info {
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
 
-    &-delete-btn {
-      background: $color-warning;
-      color: $color-secondary;
-      border: none;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-      transition: background $delay-primary, transform $delay-primary;
-      font-size: 0.875rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      margin: 0.5rem 0;
+		&-title {
+			margin: 0.5rem 0;
+			color: #0f172a;
+			font-size: 1.15rem;
+			font-weight: 700;
+		}
 
-      &:hover {
-        background: darken($color-warning, 10%);
-      }
+		&-description {
+			font-size: 0.9rem;
+			color: #475569;
+			margin: 0.25rem 0;
+			line-height: 1.5;
+			flex-grow: 1;
+		}
 
-      &:active {
-        transform: scale(0.9);
-      }
-    }
-  }
+		&-order {
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: $color-focused;
+			margin: 0.5rem 0;
+		}
+
+		&-edit-btn,
+		&-delete-btn {
+			flex: 1;
+			border: none;
+			border-radius: 4px;
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			transition: background $delay-primary, transform 0.1s;
+			font-size: 0.75rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			margin-top: auto;
+
+			&:active {
+				transform: scale(0.95);
+			}
+		}
+
+		&-edit-btn {
+			background: rgba($color-focused, 0.1);
+			color: $color-focused;
+
+			&:hover {
+				background: rgba($color-focused, 0.2);
+			}
+		}
+
+		&-delete-btn {
+			background: rgba($color-warning, 0.1);
+			color: $color-warning;
+
+			&:hover {
+				background: rgba($color-warning, 0.2);
+			}
+		}
+	}
 }
-

@@ -18,55 +18,105 @@
 	}
 
 	.home-announcement-card {
-		background: #fff;
-		border-radius: $border-radius-primary;
+		background: #ffffff;
+		border-radius: 12px;
 		border: 1px solid #e2e8f0;
-		padding: 1.5rem;
+		padding: 1.75rem;
 		display: flex;
 		flex-direction: column;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+		transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s;
+		position: relative;
+		overflow: hidden;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 4px;
+			background: linear-gradient(90deg, $color-focused, lighten($color-focused, 15%));
+		}
+
+		&:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+			border-color: rgba($color-focused, 0.25);
+		}
 
 		.card-top {
-			margin-bottom: 1rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1.1rem;
 
 			.date-badge {
 				font-size: 0.75rem;
 				font-weight: 700;
-				background: #f1f5f9;
-				color: #475569;
-				padding: 0.25rem 0.6rem;
-				border-radius: 12px;
+				background: rgba($color-focused, 0.06);
+				color: $color-focused;
+				padding: 0.3rem 0.75rem;
+				border-radius: 6px;
 				text-transform: uppercase;
 				letter-spacing: 0.5px;
+				border: 1px solid rgba($color-focused, 0.12);
+			}
+
+			.new-badge {
+				background: #ef4444;
+				color: #ffffff;
+				font-size: 0.65rem;
+				font-weight: 700;
+				padding: 0.1rem 0.4rem;
+				border-radius: 4px;
+				letter-spacing: 0.5px;
+				animation: pulse-new 1.5s infinite;
+
+				@keyframes pulse-new {
+					0% { opacity: 0.75; }
+					50% { opacity: 1; }
+					100% { opacity: 0.75; }
+				}
 			}
 		}
 
 		.announcement-card-title {
-			font-size: 1.1rem;
+			font-size: 1.15rem;
 			font-weight: 700;
-			color: #1e293b;
+			color: #0f172a;
 			margin-bottom: 0.75rem;
-			line-height: 1.4;
+			line-height: 1.45;
 		}
 
 		.announcement-excerpt {
 			font-size: 0.9rem;
-			color: #64748b;
-			line-height: 1.6;
+			color: #475569;
+			line-height: 1.65;
 			margin-bottom: 1.5rem;
 			flex-grow: 1;
+			text-align: justify;
 		}
 
 		.download-link {
-			display: inline-block;
 			align-self: flex-start;
-			font-size: 0.85rem;
+			display: inline-flex;
+			align-items: center;
+			font-size: 0.8rem;
 			font-weight: 600;
-			color: $color-focused;
+			color: #ef4444;
+			background: rgba(#ef4444, 0.05);
+			padding: 0.45rem 1rem;
+			border-radius: 6px;
 			text-decoration: none;
-			transition: color 0.2s;
+			transition: background-color 0.2s;
+
+			svg {
+				stroke-width: 2.2;
+			}
 
 			&:hover {
-				color: darken($color-focused, 15%);
+				background: rgba(#ef4444, 0.12);
 			}
 		}
 	}

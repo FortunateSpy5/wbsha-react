@@ -1,0 +1,446 @@
+@import "../_colors";
+@import "../_variables";
+@import "../_general";
+
+.about-admin {
+	padding: 2rem;
+
+	&-form {
+		position: relative;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		padding: 1.5rem;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+		border-radius: $border-radius-primary;
+	}
+
+	.form-group-row {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+
+		.form-group {
+			flex: 1;
+			min-width: 200px;
+		}
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		label {
+			font-weight: 600;
+			color: #1e293b;
+			font-size: 0.9rem;
+		}
+	}
+
+	&-input {
+		padding: 0.6rem;
+		border: 1px solid #cbd5e1;
+		background: #ffffff;
+		color: #1e293b;
+		font-size: 1rem;
+		font-family: 'Raleway', sans-serif;
+		transition: border-color $delay-primary;
+		border-radius: 4px;
+
+		&:focus {
+			outline: none;
+			border-color: $color-focused;
+		}
+	}
+
+	&-textarea {
+		resize: vertical;
+		font-family: 'Raleway', sans-serif;
+	}
+
+	// Members Sub-Editor styles
+	.members-sub-editor {
+		border-top: 1px solid #e2e8f0;
+		padding-top: 1.5rem;
+		margin-top: 0.5rem;
+
+		.members-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 1.5rem;
+
+			h4 {
+				margin: 0;
+				font-size: 1.2rem;
+				font-weight: 600;
+				color: #0f172a;
+			}
+
+			.add-member-btn {
+				background: $bg-focused;
+				color: #ffffff;
+				border: none;
+				border-radius: 4px;
+				padding: 0.5rem 1rem;
+				font-size: 0.9rem;
+				font-weight: 600;
+				cursor: pointer;
+				transition: background $delay-primary;
+
+				&:hover {
+					background: darken($bg-focused, 8%);
+				}
+			}
+		}
+
+		.member-form-panel {
+			background: #f1f5f9;
+			border: 1px dashed #cbd5e1;
+			padding: 1.25rem;
+			border-radius: $border-radius-primary;
+			margin-bottom: 2rem;
+
+			h5 {
+				margin: 0 0 1rem 0;
+				font-size: 1.1rem;
+				font-weight: 600;
+				color: $color-focused;
+			}
+
+			.member-form {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.member-img-preview {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				margin-top: 0.5rem;
+
+				img {
+					width: 50px;
+					height: 50px;
+					object-fit: cover;
+					border-radius: 50%;
+					border: 1px solid #cbd5e1;
+				}
+
+				span {
+					font-size: 0.8rem;
+					color: #64748b;
+				}
+			}
+
+			.member-form-actions {
+				display: flex;
+				justify-content: flex-end;
+				gap: 0.75rem;
+				margin-top: 0.5rem;
+
+				button {
+					padding: 0.5rem 1.25rem;
+					font-size: 0.9rem;
+				}
+
+				.save-member-btn {
+					background: $bg-focused;
+					color: #ffffff;
+					border: none;
+					border-radius: 4px;
+					font-weight: 600;
+					cursor: pointer;
+					transition: background $delay-primary;
+
+					&:hover {
+						background: darken($bg-focused, 8%);
+					}
+				}
+
+				.cancel-member-btn {
+					background: transparent;
+					color: #1e293b;
+					border: 1px solid #cbd5e1;
+					border-radius: 4px;
+
+					&:hover {
+						background: rgba(0, 0, 0, 0.05);
+					}
+				}
+			}
+		}
+
+		.no-members-text {
+			color: #64748b;
+			font-style: italic;
+			text-align: center;
+			padding: 1.5rem;
+		}
+
+		.members-admin-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 1rem;
+			margin-top: 1rem;
+		}
+
+		.member-admin-card {
+			background: #ffffff;
+			border: 1px solid #e2e8f0;
+			border-radius: $border-radius-primary;
+			padding: 1rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+
+			.member-img-container {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-bottom: 0.75rem;
+				border: 2px solid $color-focused;
+				background: #f1f5f9;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+
+				.img-placeholder {
+					font-size: 0.75rem;
+					color: #94a3b8;
+				}
+			}
+
+			.member-info {
+				flex-grow: 1;
+				margin-bottom: 0.75rem;
+
+				.member-name {
+					font-weight: 600;
+					color: #0f172a;
+					font-size: 0.95rem;
+				}
+
+				.member-role {
+					color: #64748b;
+					font-size: 0.8rem;
+					margin-top: 0.15rem;
+				}
+
+				.member-order {
+					font-size: 0.75rem;
+					color: $color-focused;
+					margin-top: 0.25rem;
+				}
+			}
+
+			.member-actions {
+				display: flex;
+				gap: 0.5rem;
+				width: 100%;
+
+				.member-btn {
+					flex: 1;
+					padding: 0.35rem;
+					font-size: 0.75rem;
+					border: none;
+					cursor: pointer;
+					border-radius: 4px;
+					font-weight: 500;
+					text-transform: uppercase;
+					transition: background 0.2s;
+
+					&.edit {
+						background: rgba($color-focused, 0.1);
+						color: $color-focused;
+
+						&:hover {
+							background: rgba($color-focused, 0.2);
+						}
+					}
+
+					&.delete {
+						background: rgba($color-warning, 0.1);
+						color: $color-warning;
+
+						&:hover {
+							background: rgba($color-warning, 0.2);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.form-actions {
+		display: flex;
+		gap: 1rem;
+		border-top: 1px solid #e2e8f0;
+		padding-top: 1.25rem;
+		margin-top: 1.5rem;
+
+		button {
+			padding: 0.75rem 2rem;
+		}
+
+		.cancel-btn {
+			background: transparent;
+			color: #1e293b;
+			border: 1px solid #cbd5e1;
+
+			&:hover {
+				background: rgba(0, 0, 0, 0.05);
+			}
+		}
+	}
+
+	// Sections List styles
+	.sections-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.section-item {
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		padding: 1.25rem 1.5rem;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		border-radius: $border-radius-primary;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 2rem;
+
+		@media (max-width: 600px) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+
+		.section-info {
+			flex-grow: 1;
+
+			.section-title {
+				margin: 0 0 0.5rem 0;
+				font-size: 1.2rem;
+				font-weight: 600;
+				color: #0f172a;
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				flex-wrap: wrap;
+
+				.section-badge {
+					font-size: 0.75rem;
+					padding: 0.2rem 0.5rem;
+					border-radius: 20px;
+					background: rgba($color-focused, 0.1);
+					color: $color-focused;
+					font-weight: 500;
+				}
+
+				.order-badge {
+					font-size: 0.75rem;
+					padding: 0.2rem 0.5rem;
+					border-radius: 20px;
+					background: #f1f5f9;
+					color: #475569;
+					border: 1px solid #cbd5e1;
+					font-weight: 500;
+				}
+			}
+
+			.section-desc-excerpt {
+				margin: 0;
+				font-size: 0.9rem;
+				color: #64748b;
+				line-height: 1.5;
+			}
+
+			.section-members-count {
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #0284c7;
+				margin-top: 0.5rem;
+			}
+		}
+
+		.section-item-actions {
+			display: flex;
+			gap: 0.75rem;
+			flex-shrink: 0;
+
+			.section-action-btn {
+				padding: 0.6rem 1.25rem;
+				font-size: 0.85rem;
+				border: none;
+				cursor: pointer;
+				transition: background $delay-primary, transform $delay-primary;
+				font-weight: 600;
+				text-transform: uppercase;
+				border-radius: 4px;
+
+				&.edit {
+					background: $color-focused;
+					color: #ffffff;
+
+					&:hover {
+						background: darken($color-focused, 10%);
+					}
+				}
+
+				&.delete {
+					background: $color-warning;
+					color: #ffffff;
+
+					&:hover {
+						background: darken($color-warning, 10%);
+					}
+				}
+
+				&:active {
+					transform: scale(0.95);
+				}
+			}
+		}
+	}
+
+	.submit-btn {
+		background: $bg-focused !important;
+		color: #ffffff !important;
+		border: none;
+		font-size: 1rem;
+		padding: 0.85rem 1.25rem;
+		border-radius: 4px;
+		cursor: pointer;
+		font-family: 'Raleway', sans-serif;
+		font-weight: 600;
+		transition: all $delay-primary;
+
+		&:hover {
+			background: darken($bg-focused, 8%) !important;
+		}
+
+		&:disabled {
+			background: $color-faded !important;
+			cursor: not-allowed;
+		}
+	}
+}
