@@ -14,6 +14,7 @@ const NewsPage = lazy(() => import("./pages/NewsPage").then(module => ({ default
 const MediaPage = lazy(() => import("./pages/MediaPage").then(module => ({ default: module.MediaPage })));
 const AnnouncementsPage = lazy(() => import("./pages/AnnouncementsPage").then(module => ({ default: module.AnnouncementsPage })));
 const DocumentsPage = lazy(() => import("./pages/DocumentsPage").then(module => ({ default: module.DocumentsPage })));
+const EducationPage = lazy(() => import("./pages/EducationPage").then(module => ({ default: module.EducationPage })));
 const CompetitionsPage = lazy(() => import("./pages/CompetitionsPage").then(module => ({ default: module.CompetitionsPage })));
 const CompetitionDetailPage = lazy(() => import("./pages/CompetitionDetailPage").then(module => ({ default: module.CompetitionDetailPage })));
 
@@ -45,6 +46,7 @@ const App = () => {
 						<Route path="/media" element={<MediaPage />} />
 						<Route path="/announcements" element={<AnnouncementsPage />} />
 						<Route path="/documents" element={<DocumentsPage />} />
+						<Route path="/education" element={<EducationPage />} />
 						<Route path="/competitions" element={<CompetitionsPage />} />
 						<Route path="/competitions/:id" element={<CompetitionDetailPage />} />
 						<Route path="*" element={<HomePage />} />

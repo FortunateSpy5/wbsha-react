@@ -1,0 +1,112 @@
+@import "../colors";
+@import "../variables";
+@import "../general";
+
+.education-section-home {
+	background: $bg-primary;
+	padding: 4rem 0;
+
+	.home-education-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+
+	.home-education-row {
+		background: #fff;
+		border-radius: $border-radius-primary;
+		border: 1px solid #e2e8f0;
+		padding: 1.25rem 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		transition: box-shadow $delay-primary ease;
+
+		&:hover {
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		}
+
+		@media only screen and (max-width: 576px) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+		}
+
+		.edu-icon-title {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.edu-icon {
+			background: #fef3c7;
+			padding: 0.75rem;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+		}
+
+		.edu-meta {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+
+			.edu-title {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: #0f172a;
+				margin: 0;
+			}
+
+			.edu-category {
+				font-size: 0.75rem;
+				font-weight: 600;
+				background: #f1f5f9;
+				color: #475569;
+				padding: 0.15rem 0.5rem;
+				border-radius: 12px;
+				align-self: flex-start;
+				text-transform: uppercase;
+			}
+		}
+
+		.edu-download-btn,
+		.edu-read-btn {
+			font-size: 0.85rem;
+			padding: 0.5rem 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			text-transform: uppercase;
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			border: none;
+			border-radius: 4px;
+			transition: background $delay-primary;
+			white-space: nowrap;
+		}
+
+		.edu-download-btn {
+			background: $bg-focused;
+			color: #fff;
+
+			&:hover {
+				background: #007dc5;
+				color: #fff;
+			}
+		}
+
+		.edu-read-btn {
+			background: #f1f5f9;
+			color: $color-primary;
+
+			&:hover {
+				background: #e2e8f0;
+				color: $color-primary;
+			}
+		}
+	}
+}

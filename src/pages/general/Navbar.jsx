@@ -11,6 +11,7 @@ export const navLinksData = [
 	{ name: "Competitions", link: "/competitions" },
 	{ name: "Documents", link: "/documents" },
 	{ name: "Media", link: "/media" },
+	{ name: "Education", link: "/education" },
 ];
 
 export const socialData = [

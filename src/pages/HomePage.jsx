@@ -5,6 +5,7 @@ import AnnouncementsSection from "./home_page/AnnouncementsSection";
 import CompetitionsSection from "./home_page/CompetitionsSection";
 import DocumentsSection from "./home_page/DocumentsSection";
 import MediaSection from "./home_page/MediaSection";
+import EducationSection from "./home_page/EducationSection";
 import ContactSection from "./home_page/ContactSection";
 import HeroSection from "./home_page/HeroSection";
 
@@ -18,6 +19,7 @@ const HomePage = () => {
 			<CompetitionsSection />
 			<DocumentsSection />
 			<MediaSection />
+			<EducationSection />
 			<ContactSection />
 		</div>
 	);

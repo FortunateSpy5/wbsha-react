@@ -35,6 +35,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+    match /education/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
 
     // Rules for contact form submissions
     match /contactSubmissions/{document} {

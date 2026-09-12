@@ -9,6 +9,7 @@ import { NewsAdmin } from "./admin_page/NewsAdmin";
 import { MediaAdmin } from "./admin_page/MediaAdmin";
 import { AnnouncementsAdmin } from "./admin_page/AnnouncementsAdmin";
 import { DocumentsAdmin } from "./admin_page/DocumentsAdmin";
+import { EducationAdmin } from "./admin_page/EducationAdmin";
 import { ContactSubmissionsAdmin } from "./admin_page/ContactSubmissionsAdmin";
 import { AboutAdmin } from "./admin_page/AboutAdmin";
 import "../styles/admin/admin-page.scss";
@@ -26,6 +27,7 @@ export const AdminPage = () => {
 		media: 0,
 		announcements: 0,
 		documents: 0,
+		education: 0,
 		contactSubmissions: 0,
 		aboutSections: 0,
 	});
@@ -39,13 +41,14 @@ export const AdminPage = () => {
 			const fetchStats = async () => {
 				setLoadingStats(true);
 				try {
-					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, submissionsSnap, aboutSnap] = await Promise.all([
+					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, eduSnap, submissionsSnap, aboutSnap] = await Promise.all([
 						getDocs(collection(db, "heroes")),
 						getDocs(collection(db, "competitions")),
 						getDocs(collection(db, "news")),
 						getDocs(collection(db, "media")),
 						getDocs(collection(db, "announcements")),
 						getDocs(collection(db, "documents")),
+						getDocs(collection(db, "education")),
 						getDocs(collection(db, "contactSubmissions")),
 						getDocs(collection(db, "aboutSections")),
 					]);
@@ -56,6 +59,7 @@ export const AdminPage = () => {
 						media: mediaSnap.size,
 						announcements: annSnap.size,
 						documents: docsSnap.size,
+						education: eduSnap.size,
 						contactSubmissions: submissionsSnap.size,
 						aboutSections: aboutSnap.size,
 					});
@@ -87,6 +91,8 @@ export const AdminPage = () => {
 				return <AnnouncementsAdmin />;
 			case "documents":
 				return <DocumentsAdmin />;
+			case "education":
+				return <EducationAdmin />;
 			case "submissions":
 				return <ContactSubmissionsAdmin />;
 			case "about":
@@ -136,6 +142,11 @@ export const AdminPage = () => {
 						<div className="stat-card" onClick={() => setActiveTab("documents")}>
 							<div className="stat-title">Official Documents</div>
 							<div className="stat-count">{stats.documents}</div>
+							<div className="stat-action">Manage &rarr;</div>
+						</div>
+						<div className="stat-card" onClick={() => setActiveTab("education")}>
+							<div className="stat-title">Education Content</div>
+							<div className="stat-count">{stats.education}</div>
 							<div className="stat-action">Manage &rarr;</div>
 						</div>
 						<div className="stat-card" onClick={() => setActiveTab("gallery")}>
@@ -201,6 +212,12 @@ export const AdminPage = () => {
 							onClick={() => setActiveTab("documents")}
 						>
 							📄 Manage Documents
+						</button>
+						<button 
+							className={`nav-item ${activeTab === "education" ? "active" : ""}`}
+							onClick={() => setActiveTab("education")}
+						>
+							📚 Manage Education
 						</button>
 						<button 
 							className={`nav-item ${activeTab === "gallery" ? "active" : ""}`}
