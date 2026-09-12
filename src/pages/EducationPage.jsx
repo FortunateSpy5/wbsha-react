@@ -4,6 +4,25 @@ import { db } from "../config/firebase";
 import Button from "./general/Button";
 import "../styles/education/education-page.scss";
 
+const DownloadIcon = () => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		style={{ marginRight: "6px", verticalAlign: "middle" }}
+	>
+		<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+		<polyline points="7 10 12 15 17 10" />
+		<line x1="12" y1="15" x2="12" y2="3" />
+	</svg>
+);
+
 export const EducationPage = () => {
 	const [educationItems, setEducationItems] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -35,25 +54,6 @@ export const EducationPage = () => {
 		selectedCategory === "All"
 			? educationItems
 			: educationItems.filter((item) => item.category === selectedCategory);
-
-	const DownloadIcon = () => (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="16"
-			height="16"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			strokeWidth="2"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			style={{ marginRight: "6px", verticalAlign: "middle" }}
-		>
-			<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-			<polyline points="7 10 12 15 17 10" />
-			<line x1="12" y1="15" x2="12" y2="3" />
-		</svg>
-	);
 
 	return (
 		<div className="main-content education-page">
@@ -91,42 +91,48 @@ export const EducationPage = () => {
 						</div>
 
 						<div className="education-list">
-							{filteredItems.map((item) =>
-								item.type === "text" ? (
-									<div key={item.id} className="education-text-block">
-										<div className="text-block-header">
-											<h3 className="text-block-title">{item.title}</h3>
-											<div className="text-block-meta">
-												<span className="category-badge">{item.category}</span>
-												<span className="text-block-date">
-													{new Date(item.date).toLocaleDateString()}
-												</span>
+							{filteredItems.length === 0 ? (
+								<div style={{ textAlign: "center", padding: "3rem", color: "#64748b" }}>
+									No education content found in category "{selectedCategory}".
+								</div>
+							) : (
+								filteredItems.map((item) =>
+									item.type === "text" ? (
+										<div key={item.id} className="education-text-block">
+											<div className="text-block-header">
+												<h3 className="text-block-title">{item.title}</h3>
+												<div className="text-block-meta">
+													<span className="category-badge">{item.category}</span>
+													<span className="text-block-date">
+														{new Date(item.date).toLocaleDateString()}
+													</span>
+												</div>
 											</div>
+											{item.description && (
+												<div className="text-block-content">
+													{item.description.split("\n").map((para, idx) =>
+														para.trim() ? <p key={idx}>{para.trim()}</p> : null
+													)}
+												</div>
+											)}
 										</div>
-										{item.description && (
-											<div className="text-block-content">
-												{item.description.split("\n").map((para, idx) =>
-													para.trim() ? <p key={idx}>{para.trim()}</p> : null
-												)}
+									) : (
+										<div key={item.id} className="education-download-row">
+											<div className="document-info">
+												<h3 className="document-title">{item.title}</h3>
+												<div className="document-meta">
+													<span className="category-badge">{item.category}</span>
+													<span className="document-date">
+														{new Date(item.date).toLocaleDateString()}
+													</span>
+												</div>
 											</div>
-										)}
-									</div>
-								) : (
-									<div key={item.id} className="education-download-row">
-										<div className="document-info">
-											<h3 className="document-title">{item.title}</h3>
-											<div className="document-meta">
-												<span className="category-badge">{item.category}</span>
-												<span className="document-date">
-													{new Date(item.date).toLocaleDateString()}
-												</span>
-											</div>
+											<Button href={item.fileUrl} className="download-btn">
+												<DownloadIcon />
+												Download
+											</Button>
 										</div>
-										<Button href={item.fileUrl} className="download-btn">
-											<DownloadIcon />
-											Download
-										</Button>
-									</div>
+									)
 								)
 							)}
 						</div>
