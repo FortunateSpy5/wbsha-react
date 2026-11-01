@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "../../styles/home/news-section.scss";
 import SectionTitle from "./SectionTitle";
 import { NewsDetailModal } from "../general/NewsDetailModal";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const NewsSection = () => {
@@ -23,7 +23,14 @@ const NewsSection = () => {
 		const newsRef = collection(db, "news");
 		const fetchNews = async () => {
 			try {
-				const data = await getDocs(newsRef);
+				let data;
+				try {
+					const q = query(newsRef, orderBy("date", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(newsRef, limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const sortedData = data.docs
 					.map((doc) => ({
 						...doc.data(),

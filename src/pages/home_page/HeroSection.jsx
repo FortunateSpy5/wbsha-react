@@ -70,6 +70,7 @@ const HeroSection = () => {
                             src={item.url} 
                             alt={item.title} 
                             loading={index === 0 ? "eager" : "lazy"} 
+                            fetchPriority={index === 0 ? "high" : "auto"}
                             decoding="async" 
                         />
                     )}
@@ -88,7 +89,7 @@ const HeroSection = () => {
                 {renderInner()}
                 <div className="indicators">{renderIndicators()}</div>
             </div>
-            <div className="left no-select" onClick={leftArrowClick}>
+            <div className="left no-select" onClick={leftArrowClick} role="button" aria-label="Previous slide" tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && leftArrowClick()}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -98,7 +99,7 @@ const HeroSection = () => {
                     <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
                 </svg>
             </div>
-            <div className="right no-select" onClick={rightArrowClick}>
+            <div className="right no-select" onClick={rightArrowClick} role="button" aria-label="Next slide" tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && rightArrowClick()}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

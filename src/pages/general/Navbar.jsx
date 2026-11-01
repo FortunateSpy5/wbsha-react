@@ -89,7 +89,7 @@ const Navbar = () => {
 			<div className={`container ${active === true ? "active" : ""}`}>
 				<div className="bt-container">
 					<Link to="/" className="brand">
-						<img src={logo} alt="logo" />
+						<img src={logo} alt="WBSHA Logo" width="32" height="32" />
 						WBSHA
 					</Link>
 					<Toggler onTogglerClick={onTogglerClick} />

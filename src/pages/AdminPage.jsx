@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getDocs, collection } from "firebase/firestore";
+import { getCountFromServer, collection } from "firebase/firestore";
 import { CompetitionsAdmin } from "./admin_page/CompetitionsAdmin";
 import { HeroAdmin } from "./admin_page/HeroAdmin";
 import { NewsAdmin } from "./admin_page/NewsAdmin";
@@ -60,26 +60,26 @@ export const AdminPage = () => {
 				setLoadingStats(true);
 				try {
 					const [heroesSnap, compsSnap, newsSnap, mediaSnap, annSnap, docsSnap, eduSnap, submissionsSnap, aboutSnap] = await Promise.all([
-						getDocs(collection(db, "heroes")),
-						getDocs(collection(db, "competitions")),
-						getDocs(collection(db, "news")),
-						getDocs(collection(db, "media")),
-						getDocs(collection(db, "announcements")),
-						getDocs(collection(db, "documents")),
-						getDocs(collection(db, "education")),
-						getDocs(collection(db, "contactSubmissions")),
-						getDocs(collection(db, "aboutSections")),
+						getCountFromServer(collection(db, "heroes")),
+						getCountFromServer(collection(db, "competitions")),
+						getCountFromServer(collection(db, "news")),
+						getCountFromServer(collection(db, "media")),
+						getCountFromServer(collection(db, "announcements")),
+						getCountFromServer(collection(db, "documents")),
+						getCountFromServer(collection(db, "education")),
+						getCountFromServer(collection(db, "contactSubmissions")),
+						getCountFromServer(collection(db, "aboutSections")),
 					]);
 					setStats({
-						heroes: heroesSnap.size,
-						competitions: compsSnap.size,
-						news: newsSnap.size,
-						media: mediaSnap.size,
-						announcements: annSnap.size,
-						documents: docsSnap.size,
-						education: eduSnap.size,
-						contactSubmissions: submissionsSnap.size,
-						aboutSections: aboutSnap.size,
+						heroes: heroesSnap.data().count,
+						competitions: compsSnap.data().count,
+						news: newsSnap.data().count,
+						media: mediaSnap.data().count,
+						announcements: annSnap.data().count,
+						documents: docsSnap.data().count,
+						education: eduSnap.data().count,
+						contactSubmissions: submissionsSnap.data().count,
+						aboutSections: aboutSnap.data().count,
 					});
 				} catch (error) {
 					console.error("Error loading dashboard stats:", error);

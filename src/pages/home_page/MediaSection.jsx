@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/home/media-section.scss";
 import SectionTitle from "./SectionTitle";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const MediaSection = () => {
@@ -21,7 +21,14 @@ const MediaSection = () => {
 		const mediaRef = collection(db, "media");
 		const fetchMedia = async () => {
 			try {
-				const data = await getDocs(mediaRef);
+				let data;
+				try {
+					const q = query(mediaRef, orderBy("createdAt", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(mediaRef, limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const sortedData = data.docs
 					.map((doc) => {
 						const docData = doc.data();

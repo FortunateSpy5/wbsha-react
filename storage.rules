@@ -1,9 +1,12 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    // Helper function to check if user is authenticated (admin)
+    // Helper function to check if user is authenticated as admin
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null && (
+        request.auth.token.email in ['msoumotanu@gmail.com'] ||
+        request.auth.token.admin == true
+      );
     }
 
     match /{allPaths=**} {

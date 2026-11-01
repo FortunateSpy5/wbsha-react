@@ -7,7 +7,7 @@ const Footer = () => {
 	const renderBackToTop = () => {
 		return (
 			<div
-				className="top"
+				className="top" role="button" aria-label="Back to top" tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && window.scrollTo({ top: 0, behavior: "smooth" })}
 				onClick={() => {
 					window.scrollTo({ top: 0, behavior: "smooth" });
 				}}
@@ -32,6 +32,7 @@ const Footer = () => {
 					key={index}
 					href={item.link}
 					className="social"
+					aria-label={item.name}
 					target="_blank"
 					rel="noopener noreferrer"
 				>

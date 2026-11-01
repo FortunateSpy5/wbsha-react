@@ -12,8 +12,8 @@ export const compressImage = async (file, options = {}) => {
 	const {
 		maxWidth = 1920,
 		maxHeight = 1200,
-		quality = 0.82,
-		mimeType = "image/jpeg",
+		quality = 0.80,
+		mimeType = "image/webp",
 	} = options;
 
 	return new Promise((resolve) => {

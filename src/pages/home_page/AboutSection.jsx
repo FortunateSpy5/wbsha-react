@@ -52,9 +52,9 @@ const AboutSection = () => {
                 </div>
                 <div className="image">
                     {imageUrl ? (
-                        <img src={imageUrl} alt="home_about" />
+                        <img src={imageUrl} alt="About WBSHA" loading="lazy" decoding="async" />
                     ) : (
-                        <p>Loading image...</p>
+                        <div className="skeleton-placeholder" style={{ minHeight: "360px", width: "100%", backgroundColor: "#e2e8f0", borderRadius: "8px" }} aria-hidden="true" />
                     )}
                 </div>
             </div>

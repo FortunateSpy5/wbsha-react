@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../styles/home/competitions-section.scss";
 import SectionTitle from "./SectionTitle";
 import { Link } from "react-router-dom";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const CompetitionsSection = () => {
@@ -26,7 +26,14 @@ const CompetitionsSection = () => {
 
 		const fetchCompetitions = async () => {
 			try {
-				const data = await getDocs(collection(db, "competitions"));
+				let data;
+				try {
+					const q = query(collection(db, "competitions"), orderBy("startDate", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(collection(db, "competitions"), limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const mappedData = data.docs.map((doc) => {
 					const docData = doc.data();
 					let parsedStart = new Date();

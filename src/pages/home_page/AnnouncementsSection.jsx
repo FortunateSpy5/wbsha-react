@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/home/announcements-section.scss";
 import SectionTitle from "./SectionTitle";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const AnnouncementsSection = () => {
@@ -10,7 +10,14 @@ const AnnouncementsSection = () => {
 	useEffect(() => {
 		const fetchAnnouncements = async () => {
 			try {
-				const data = await getDocs(collection(db, "announcements"));
+				let data;
+				try {
+					const q = query(collection(db, "announcements"), orderBy("date", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(collection(db, "announcements"), limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const mappedData = data.docs.map((doc) => {
 					const docData = doc.data();
 					let parsedDate = new Date();

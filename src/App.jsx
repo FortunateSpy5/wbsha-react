@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles/app.scss";
 
 // Lazy loaded page components
-const HomePage = lazy(() => import("./pages/HomePage"));
+import HomePage from "./pages/HomePage";
 const LoginPage = lazy(() => import("./pages/LoginPage").then(module => ({ default: module.LoginPage })));
 const AdminPage = lazy(() => import("./pages/AdminPage").then(module => ({ default: module.AdminPage })));
 const AboutPage = lazy(() => import("./pages/AboutPage").then(module => ({ default: module.AboutPage })));
