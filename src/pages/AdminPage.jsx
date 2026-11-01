@@ -17,7 +17,7 @@ import "../styles/admin/admin-page.scss";
 
 export const AdminPage = () => {
 	const navigate = useNavigate();
-	const [user] = useAuthState(auth);
+	const [user, loading] = useAuthState(auth);
 	const [activeTab, setActiveTab] = useState("overview");
 	const [optimizing, setOptimizing] = useState(false);
 	const [optimizeStatus, setOptimizeStatus] = useState(null);
@@ -52,6 +52,7 @@ export const AdminPage = () => {
 	const [loadingStats, setLoadingStats] = useState(false);
 
 	useEffect(() => {
+		if (loading) return;
 		if (!user) {
 			navigate("/login");
 		} else {

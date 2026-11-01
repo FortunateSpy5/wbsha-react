@@ -65,8 +65,8 @@ export const NewsPage = () => {
 	// Memoize filtered calculations
 	const { featuredArticle, showSpotlight, filteredNews } = useMemo(() => {
 		const featured = news.find((item) => item.isFeatured) || news[0];
-		const spotlight = featured && currentPage === 1 && activeCategory === "all" && !deferredSearch;
-		const other = news.filter((item) => !spotlight || item.id !== featured.id);
+		const isSpotlightEligible = Boolean(featured && activeCategory === "all" && !deferredSearch);
+		const other = news.filter((item) => !isSpotlightEligible || item.id !== featured.id);
 
 		const searchLower = deferredSearch.toLowerCase().trim();
 		const filtered = other.filter((item) => {
@@ -77,7 +77,7 @@ export const NewsPage = () => {
 			return matchesCategory && matchesSearch;
 		});
 
-		return { featuredArticle: featured, showSpotlight: spotlight, filteredNews: filtered };
+		return { featuredArticle: featured, showSpotlight: isSpotlightEligible && currentPage === 1, filteredNews: filtered };
 	}, [news, currentPage, activeCategory, deferredSearch]);
 
 	// Pagination math
@@ -168,6 +168,7 @@ export const NewsPage = () => {
 								<input
 									type="text"
 									placeholder="Search articles..."
+									aria-label="Search articles"
 									value={searchTerm}
 									onChange={(e) => {
 										setSearchTerm(e.target.value);

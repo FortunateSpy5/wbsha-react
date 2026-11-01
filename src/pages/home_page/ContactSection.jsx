@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/home/contact-section.scss";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const ContactSection = () => {
@@ -27,7 +27,7 @@ const ContactSection = () => {
 		try {
 			await addDoc(collection(db, "contactSubmissions"), {
 				...formData,
-				createdAt: new Date(),
+				createdAt: serverTimestamp(),
 			});
 			setSubmitStatus("success");
 			setFormData({ name: "", email: "", phone: "", message: "" });
@@ -49,7 +49,6 @@ const ContactSection = () => {
 							type="text"
 							className="form-control border-0 rounded-0"
 							id="name"
-							aria-describedby="Full Name"
 							placeholder="Enter full name"
 							value={formData.name}
 							onChange={handleChange}
@@ -61,7 +60,6 @@ const ContactSection = () => {
 							type="email"
 							className="form-control border-0 rounded-0"
 							id="email"
-							aria-describedby="Email"
 							placeholder="Enter email address"
 							value={formData.email}
 							onChange={handleChange}
@@ -73,7 +71,6 @@ const ContactSection = () => {
 							type="text"
 							className="form-control border-0 rounded-0"
 							id="phone"
-							aria-describedby="Phone Number"
 							placeholder="Enter phone number"
 							value={formData.phone}
 							onChange={handleChange}

@@ -303,11 +303,11 @@ export const CompetitionDetailPage = () => {
 
 				{/* Shared Lightbox Overlay */}
 				{lightboxIndex !== null && lightboxImages.length > 0 && (
-					<div className="lightbox-modal" onClick={closeLightbox}>
-						<button className="lightbox-close" onClick={closeLightbox}>
+					<div className="lightbox-modal" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Tournament Photo Lightbox">
+						<button className="lightbox-close" onClick={closeLightbox} aria-label="Close lightbox">
 							&times;
 						</button>
-						<button className="lightbox-nav prev" onClick={handlePrev}>
+						<button className="lightbox-nav prev" onClick={handlePrev} aria-label="Previous photo">
 							&#10094;
 						</button>
 						<div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
@@ -320,7 +320,7 @@ export const CompetitionDetailPage = () => {
 								{lightboxGroupTitle && <p>{lightboxGroupTitle}</p>}
 							</div>
 						</div>
-						<button className="lightbox-nav next" onClick={handleNext}>
+						<button className="lightbox-nav next" onClick={handleNext} aria-label="Next photo">
 							&#10095;
 						</button>
 					</div>

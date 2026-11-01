@@ -17,7 +17,7 @@ body {
 	width: 100%;
 	overflow-x: hidden;
 
-	.main-content {
+	> .main-content {
 		margin-top: 4rem;
 		flex: 1;
 	}

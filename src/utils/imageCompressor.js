@@ -5,7 +5,7 @@
  * Non-image files (such as PDFs or docs) pass through untouched.
  */
 export const compressImage = async (file, options = {}) => {
-	if (!file || !file.type || !file.type.startsWith("image/") || file.type === "image/svg+xml") {
+	if (!file || !file.type || !file.type.startsWith("image/") || file.type === "image/svg+xml" || file.type === "image/gif") {
 		return file;
 	}
 

@@ -10,7 +10,7 @@ const HeroSection = () => {
     useEffect(() => {
         const heroRef = collection(db, "heroes");
         // Check if heroes are already cached in sessionStorage
-        const cachedHeroes = sessionStorage.getItem("heroes");
+        const cachedHeroes = sessionStorage.getItem("home_heroes");
         if (cachedHeroes) {
             setCarousel(JSON.parse(cachedHeroes));
         } else {
@@ -22,7 +22,7 @@ const HeroSection = () => {
                         .map((doc) => doc.data())
                         .sort((a, b) => a.order - b.order);
                     setCarousel(sortedData);
-                    sessionStorage.setItem("heroes", JSON.stringify(sortedData));
+                    sessionStorage.setItem("home_heroes", JSON.stringify(sortedData));
                 } catch (error) {
                     console.error("Error fetching heroes:", error);
                 }

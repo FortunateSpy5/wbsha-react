@@ -20,7 +20,11 @@ export const ContactSubmissionsAdmin = () => {
 				return {
 					...docData,
 					id: doc.id,
-					date: docData.date ? new Date(docData.date) : new Date(),
+					date: (() => {
+					const raw = docData.createdAt || docData.date;
+					if (!raw) return new Date(0);
+					return raw.toDate ? raw.toDate() : new Date(raw);
+				})(),
 				};
 			});
 			// Sort descending by date
@@ -132,6 +136,14 @@ export const ContactSubmissionsAdmin = () => {
 									</button>
 								</div>
 								<div className="detail-meta-grid">
+									{selectedSubmission.phone && (
+										<div>
+											<strong>Phone:</strong>{" "}
+											<a href={"tel:" + selectedSubmission.phone} className="email-link">
+												{selectedSubmission.phone}
+											</a>
+										</div>
+									)}
 									<div>
 										<strong>From:</strong> {selectedSubmission.name}
 									</div>
@@ -153,16 +165,18 @@ export const ContactSubmissionsAdmin = () => {
 										})}
 									</div>
 								</div>
-								<div className="detail-subject">
-									<strong>Subject:</strong> {selectedSubmission.subject}
-								</div>
+								{selectedSubmission.subject && (
+									<div className="detail-subject">
+										<strong>Subject:</strong> {selectedSubmission.subject}
+									</div>
+								)}
 								<div className="detail-message-body">
 									<h3>Message:</h3>
 									<div className="message-content">{selectedSubmission.message}</div>
 								</div>
 								<div className="detail-reply-action">
 									<a
-										href={`mailto:${selectedSubmission.email}?subject=RE: ${encodeURIComponent(selectedSubmission.subject)}`}
+										href={`mailto:${selectedSubmission.email}?subject=${encodeURIComponent(selectedSubmission.subject ? "RE: " + selectedSubmission.subject : "RE: Inquiry from " + selectedSubmission.name)}`}
 										className="reply-btn button"
 									>
 										✉️ Reply via Email

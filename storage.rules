@@ -1,17 +1,53 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    // Helper function to check if user is authenticated as admin
+    // Helper function to check if user is authenticated as admin with verified email
     function isAdmin() {
       return request.auth != null && (
-        request.auth.token.email in ['msoumotanu@gmail.com'] ||
+        (request.auth.token.email in ['msoumotanu@gmail.com'] && request.auth.token.email_verified == true) ||
         request.auth.token.admin == true
       );
     }
 
+    // Public read on all assets
     match /{allPaths=**} {
       allow read: if true;
-      allow write: if isAdmin();
+    }
+
+    // Root-level images (e.g. home_about.jpeg)
+    match /{fileName} {
+      allow write: if isAdmin()
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|png|webp|svg\\+xml|gif)');
+    }
+
+    // Image folders (heroes, news, media, competitions)
+    match /{folder}/{fileName} {
+      allow write: if isAdmin()
+                   && (folder in ['heroes', 'news', 'media', 'competitions', 'about'])
+                   && request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|png|webp|svg\\+xml|gif)');
+    }
+
+    // Document folders (documents, announcements, education) - allow PDFs, docs, sheets, and images
+    match /{folder}/{fileName} {
+      allow write: if isAdmin()
+                   && (folder in ['documents', 'announcements', 'education'])
+                   && request.resource.size < 25 * 1024 * 1024
+                   && (
+                     request.resource.contentType.matches('image/(jpeg|png|webp|svg\\+xml)') ||
+                     request.resource.contentType.matches('application/(pdf|msword|vnd\\.openxmlformats-officedocument\\..*)')
+                   );
+    }
+
+    // Nested competition album / match folders
+    match /{folder}/{subfolder}/{fileName} {
+      allow write: if isAdmin()
+                   && request.resource.size < 25 * 1024 * 1024
+                   && (
+                     request.resource.contentType.matches('image/(jpeg|png|webp|svg\\+xml)') ||
+                     request.resource.contentType.matches('application/(pdf|msword|vnd\\.openxmlformats-officedocument\\..*)')
+                   );
     }
   }
 }

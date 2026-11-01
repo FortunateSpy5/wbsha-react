@@ -7,7 +7,12 @@ const Footer = () => {
 	const renderBackToTop = () => {
 		return (
 			<div
-				className="top" role="button" aria-label="Back to top" tabIndex={0} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && window.scrollTo({ top: 0, behavior: "smooth" })}
+				className="top" role="button" aria-label="Back to top" tabIndex={0} onKeyDown={(e) => {
+					if (e.key === "Enter" || e.key === " ") {
+						e.preventDefault();
+						window.scrollTo({ top: 0, behavior: "smooth" });
+					}
+				}}
 				onClick={() => {
 					window.scrollTo({ top: 0, behavior: "smooth" });
 				}}
@@ -133,7 +138,7 @@ const Footer = () => {
 				<div>&#169; {new Date().getFullYear()} West Bengal State Handball Association</div>
 				<div>
 					Website developed by{" "}
-					<a href="https://github.com/FortunateSpy5">Soumotanu Mazumdar</a>
+					<a href="https://github.com/FortunateSpy5" target="_blank" rel="noopener noreferrer">Soumotanu Mazumdar</a>
 				</div>
 			</div>
 		</footer>
