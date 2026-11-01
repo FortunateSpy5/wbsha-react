@@ -97,15 +97,31 @@
 
 			.social {
 				margin-right: 1.2rem;
+				color: #000000;
+				fill: #000000;
 				transition: all $delay-primary linear;
+
+				svg {
+					color: #000000;
+					fill: #000000;
+					shape-rendering: geometricPrecision;
+					transition: all $delay-primary linear;
+				}
 			}
 
-			.social svg {
-				shape-rendering: geometricPrecision;
+			.social:visited {
+				color: #000000;
+				fill: #000000;
 			}
 
 			.social:hover {
+				color: $color-focused;
 				fill: $color-focused;
+
+				svg {
+					color: $color-focused;
+					fill: $color-focused;
+				}
 			}
 		}
 
@@ -143,6 +159,28 @@
 					height: 100%;
 					align-items: center;
 					margin-right: 0;
+					color: #000000;
+					fill: #000000;
+
+					svg {
+						color: #000000;
+						fill: #000000;
+					}
+				}
+
+				.social:visited {
+					color: #000000;
+					fill: #000000;
+				}
+
+				.social:hover {
+					color: $color-focused;
+					fill: $color-focused;
+
+					svg {
+						color: $color-focused;
+						fill: $color-focused;
+					}
 				}
 
 				.social:nth-child(2) {
