@@ -60,6 +60,9 @@
     "form-data": "^3.0.5",
     "proxy-addr": "^2.0.8",
     "shell-quote": "^1.8.5",
-    "undici": "^6.29.1"
+    "undici": "^6.29.1",
+    "nth-check": "^2.1.1",
+    "on-headers": "^1.1.0",
+    "brace-expansion": "^1.1.21"
   }
 }
