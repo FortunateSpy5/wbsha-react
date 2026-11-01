@@ -2,5 +2,5 @@ $delay-primary: 150ms; // Transition delay for hover and focus effects
 $nav-delay: 400ms; // Transition delay for navigation elements
 
 $border-radius-primary: 8px; // Border radius for rounded elements
-$box-shadow-primary: 0 2px 8px rgba(0, 0, 0, 0.1); // Primary box shadow
-$box-shadow-secondary: 0 1px 4px rgba(0, 0, 0, 0.08); // Secondary box shadow
+$box-shadow-primary: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+$box-shadow-secondary: 0 4px 8px 2px rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.2), 0 -4px 8px 2px rgba(0, 0, 0, 0.15), 0 -6px 20px 0 rgba(0, 0, 0, 0.1);
