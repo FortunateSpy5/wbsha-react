@@ -138,7 +138,7 @@ export const CompetitionsPage = () => {
 	return (
 		<div className="main-content competitions-page">
 			<div className="content container">
-				<div className="page-title">Competitions & Tournaments</div>
+				<h1 className="page-title">Competitions & Tournaments</h1>
 				
 				{/* Filtering controls panel */}
 				<div className="competitions-controls">

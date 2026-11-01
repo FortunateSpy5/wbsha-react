@@ -12,6 +12,7 @@ import HeroSection from "./home_page/HeroSection";
 const HomePage = () => {
 	return (
 		<div className="main-content">
+			<h1 className="visually-hidden">West Bengal State Handball Association (WBSHA)</h1>
 			<HeroSection />
 			<AboutSection />
 			<NewsSection />

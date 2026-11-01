@@ -79,7 +79,7 @@ export const AnnouncementsPage = () => {
 	return (
 		<div className="main-content announcements-page">
 			<div className="content container">
-				<div className="page-title">Announcements</div>
+				<h1 className="page-title">Announcements</h1>
 
 				<div className="announcements-controls">
 					<div className="year-filter-box">

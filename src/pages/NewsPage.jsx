@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useDeferredValue } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { NewsDetailModal } from "./general/NewsDetailModal";
@@ -59,21 +59,26 @@ export const NewsPage = () => {
 		}
 	}, [news]);
 
-	// Highlight the featured story
-	const featuredArticle = news.find((item) => item.isFeatured) || news[0];
+	// Defer search term to keep keystrokes completely unblocked
+	const deferredSearch = useDeferredValue(searchTerm);
 
-	// Exclude spotlight article from grid listing on Page 1
-	const showSpotlight = featuredArticle && currentPage === 1 && activeCategory === "all" && !searchTerm;
-	const otherNews = news.filter((item) => !showSpotlight || item.id !== featuredArticle.id);
+	// Memoize filtered calculations
+	const { featuredArticle, showSpotlight, filteredNews } = useMemo(() => {
+		const featured = news.find((item) => item.isFeatured) || news[0];
+		const spotlight = featured && currentPage === 1 && activeCategory === "all" && !deferredSearch;
+		const other = news.filter((item) => !spotlight || item.id !== featured.id);
 
-	// Client-side category and live search matching
-	const filteredNews = otherNews.filter((item) => {
-		const matchesCategory = activeCategory === "all" || item.category === activeCategory;
-		const matchesSearch = 
-			item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-			item.content.toLowerCase().includes(searchTerm.toLowerCase());
-		return matchesCategory && matchesSearch;
-	});
+		const searchLower = deferredSearch.toLowerCase().trim();
+		const filtered = other.filter((item) => {
+			const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+			const matchesSearch = !searchLower || 
+				item.title?.toLowerCase().includes(searchLower) || 
+				item.content?.toLowerCase().includes(searchLower);
+			return matchesCategory && matchesSearch;
+		});
+
+		return { featuredArticle: featured, showSpotlight: spotlight, filteredNews: filtered };
+	}, [news, currentPage, activeCategory, deferredSearch]);
 
 	// Pagination math
 	const indexOfLastItem = currentPage * itemsPerPage;
@@ -84,7 +89,7 @@ export const NewsPage = () => {
 	return (
 		<div className="main-content news-page">
 			<div className="content container">
-				<div className="page-title">News</div>
+				<h1 className="page-title">News</h1>
 				
 				{loading ? (
 					<div className="skeleton-news-grid">

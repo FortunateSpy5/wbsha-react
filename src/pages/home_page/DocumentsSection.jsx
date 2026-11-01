@@ -1,17 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../../styles/home/documents-section.scss";
 import SectionTitle from "./SectionTitle";
 import Button from "../general/Button";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const DocumentsSection = () => {
 	const [documents, setDocuments] = useState([]);
+	const [inView, setInView] = useState(false);
+	const sectionRef = useRef(null);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("home_documents");
+		if (cached) {
+			try {
+				setDocuments(JSON.parse(cached));
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("home_documents");
+			}
+		}
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setInView(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "300px" }
+		);
+
+		if (sectionRef.current) {
+			observer.observe(sectionRef.current);
+		}
+
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!inView || documents.length > 0) return;
+
 		const fetchDocuments = async () => {
 			try {
-				const data = await getDocs(collection(db, "documents"));
+				let data;
+				try {
+					const q = query(collection(db, "documents"), orderBy("date", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(collection(db, "documents"), limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const mappedData = data.docs.map((doc) => {
 					const docData = doc.data();
 					return {
@@ -22,15 +61,16 @@ const DocumentsSection = () => {
 				});
 				const sortedData = mappedData.sort((a, b) => b.date - a.date).slice(0, 4);
 				setDocuments(sortedData);
+				sessionStorage.setItem("home_documents", JSON.stringify(sortedData));
 			} catch (error) {
 				console.error("Error fetching documents for home page:", error);
 			}
 		};
 		fetchDocuments();
-	}, []);
+	}, [inView, documents.length]);
 
 	return (
-		<div className="documents-section-home">
+		<div className="documents-section-home" ref={sectionRef}>
 			<div className="container">
 				<SectionTitle title="Documents" text="Official Archives" link="/documents" />
 				{documents.length === 0 ? (

@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/news/news-detail-modal.scss";
 
 export const NewsDetailModal = ({ newsItem, onClose }) => {
-	const [copied, setCopied] = React.useState(false);
-	
+	const [copied, setCopied] = useState(false);
+
+	useEffect(() => {
+		if (!newsItem) return;
+		const handleKeyDown = (e) => {
+			if (e.key === "Escape") {
+				onClose();
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		const originalOverflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			document.body.style.overflow = originalOverflow;
+		};
+	}, [newsItem, onClose]);
+
 	if (!newsItem) return null;
 
 	const formattedDate = new Date(newsItem.date).toLocaleDateString(undefined, {
@@ -27,8 +43,18 @@ export const NewsDetailModal = ({ newsItem, onClose }) => {
 	};
 
 	return (
-		<div className="news-detail-modal-overlay" onClick={onClose}>
-			<button className="modal-close-btn" onClick={onClose}>
+		<div
+			className="news-detail-modal-overlay"
+			onClick={onClose}
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="news-modal-title"
+		>
+			<button
+				className="modal-close-btn"
+				onClick={onClose}
+				aria-label="Close news modal"
+			>
 				&times;
 			</button>
 			<div className="modal-container" onClick={(e) => e.stopPropagation()}>
@@ -37,7 +63,7 @@ export const NewsDetailModal = ({ newsItem, onClose }) => {
 				</div>
 				<div className="modal-content">
 					<div className="modal-date">📅 Published on: {formattedDate}</div>
-					<h2 className="modal-title">{newsItem.title}</h2>
+					<h2 className="modal-title" id="news-modal-title">{newsItem.title}</h2>
 					<div className="modal-body-text">{newsItem.content}</div>
 
 					<div className="modal-share-panel">

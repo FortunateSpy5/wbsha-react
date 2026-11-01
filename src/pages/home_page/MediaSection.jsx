@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../../styles/home/media-section.scss";
 import SectionTitle from "./SectionTitle";
 import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
@@ -6,6 +6,8 @@ import { db } from "../../config/firebase";
 
 const MediaSection = () => {
 	const [mediaItems, setMediaItems] = useState([]);
+	const [inView, setInView] = useState(false);
+	const sectionRef = useRef(null);
 
 	useEffect(() => {
 		const cached = sessionStorage.getItem("home_media");
@@ -17,6 +19,26 @@ const MediaSection = () => {
 				sessionStorage.removeItem("home_media");
 			}
 		}
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setInView(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "300px" }
+		);
+
+		if (sectionRef.current) {
+			observer.observe(sectionRef.current);
+		}
+
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!inView || mediaItems.length > 0) return;
 
 		const mediaRef = collection(db, "media");
 		const fetchMedia = async () => {
@@ -39,7 +61,7 @@ const MediaSection = () => {
 						};
 					})
 					.sort((a, b) => b.createdAt - a.createdAt)
-					.slice(0, 6); // Latest 6 images
+					.slice(0, 6);
 				setMediaItems(sortedData);
 				sessionStorage.setItem("home_media", JSON.stringify(sortedData));
 			} catch (error) {
@@ -47,7 +69,7 @@ const MediaSection = () => {
 			}
 		};
 		fetchMedia();
-	}, []);
+	}, [inView, mediaItems.length]);
 
 	const renderImages = () => {
 		const num = ["one", "two", "three", "four", "five", "six"];
@@ -68,7 +90,7 @@ const MediaSection = () => {
 	};
 
 	return (
-		<div className="media-section">
+		<div className="media-section" ref={sectionRef}>
 			<SectionTitle title="Media" text="All Media" link="/media" />
 			{mediaItems.length === 0 ? (
 				<div style={{ textAlign: "center", padding: "2rem" }}>

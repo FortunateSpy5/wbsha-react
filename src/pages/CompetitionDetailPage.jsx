@@ -113,7 +113,7 @@ export const CompetitionDetailPage = () => {
 					</Link>
 				</div>
 
-				<div className="page-title">{competition.title}</div>
+				<h1 className="page-title">{competition.title}</h1>
 
 				{competition.mainImageUrl && (
 					<div className="competition-main-banner" style={{ width: "100%", height: "300px", borderRadius: "8px", overflow: "hidden", marginBottom: "2rem", border: "1px solid #e2e8f0" }}>

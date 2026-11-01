@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../../styles/home/education-section.scss";
 import SectionTitle from "./SectionTitle";
 import Button from "../general/Button";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const BookIcon = () => (
@@ -63,11 +63,50 @@ const DownloadIcon = () => (
 
 const EducationSection = () => {
 	const [items, setItems] = useState([]);
+	const [inView, setInView] = useState(false);
+	const sectionRef = useRef(null);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("home_education");
+		if (cached) {
+			try {
+				setItems(JSON.parse(cached));
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("home_education");
+			}
+		}
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					setInView(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "300px" }
+		);
+
+		if (sectionRef.current) {
+			observer.observe(sectionRef.current);
+		}
+
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!inView || items.length > 0) return;
+
 		const fetchEducation = async () => {
 			try {
-				const data = await getDocs(collection(db, "education"));
+				let data;
+				try {
+					const q = query(collection(db, "education"), orderBy("date", "desc"), limit(6));
+					data = await getDocs(q);
+				} catch (queryErr) {
+					const fallbackQ = query(collection(db, "education"), limit(12));
+					data = await getDocs(fallbackQ);
+				}
 				const mappedData = data.docs
 					.map((doc) => {
 						const docData = doc.data();
@@ -80,15 +119,16 @@ const EducationSection = () => {
 					.sort((a, b) => b.date - a.date)
 					.slice(0, 4);
 				setItems(mappedData);
+				sessionStorage.setItem("home_education", JSON.stringify(mappedData));
 			} catch (error) {
 				console.error("Error fetching education for home page:", error);
 			}
 		};
 		fetchEducation();
-	}, []);
+	}, [inView, items.length]);
 
 	return (
-		<div className="education-section-home">
+		<div className="education-section-home" ref={sectionRef}>
 			<div className="container">
 				<SectionTitle title="Education" text="View All" link="/education" />
 				{items.length === 0 ? (

@@ -18,7 +18,7 @@ export const LoginPage = () => {
 	return (
 		<div className="main-content login-page">
 			<div className="login">
-				<h2 className="page-heading">Dashboard Administration</h2>
+				<h1 className="page-heading">Dashboard Administration</h1>
 				<div className="login-text">
 					<p>
 						Access to the administrator dashboard is restricted to authorized association members. Please authenticate using your official registered Google account below to proceed.

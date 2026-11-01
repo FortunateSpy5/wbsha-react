@@ -40,7 +40,7 @@ export const DocumentsPage = () => {
 	return (
 		<div className="main-content documents-page">
 			<div className="content container">
-				<div className="page-title">Official Documents</div>
+				<h1 className="page-title">Official Documents</h1>
 				{loading ? (
 					<div className="skeleton-documents-list">
 						{[...Array(4)].map((_, i) => (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../config/firebase";
 import "../styles/media/media-page.scss";
@@ -52,9 +52,31 @@ export const MediaPage = () => {
 		fetchMedia();
 	}, []);
 
-	const filteredMedia = selectedAlbum === "All"
-		? mediaItems
-		: mediaItems.filter((item) => item.album === selectedAlbum);
+	const filteredMedia = useMemo(() => {
+		return selectedAlbum === "All"
+			? mediaItems
+			: mediaItems.filter((item) => item.album === selectedAlbum);
+	}, [selectedAlbum, mediaItems]);
+
+	useEffect(() => {
+		if (lightboxIndex === null) return;
+		const handleKeyDown = (e) => {
+			if (e.key === "Escape") setLightboxIndex(null);
+			if (e.key === "ArrowLeft") {
+				setLightboxIndex((prev) => (prev === 0 ? filteredMedia.length - 1 : prev - 1));
+			}
+			if (e.key === "ArrowRight") {
+				setLightboxIndex((prev) => (prev === filteredMedia.length - 1 ? 0 : prev + 1));
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		const originalOverflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			document.body.style.overflow = originalOverflow;
+		};
+	}, [lightboxIndex, filteredMedia.length]);
 
 	const displayedMedia = filteredMedia.slice(0, visibleCount);
 
@@ -75,7 +97,7 @@ export const MediaPage = () => {
 	return (
 		<div className="main-content media-page">
 			<div className="content container">
-				<div className="page-title">Media Gallery</div>
+				<h1 className="page-title">Media Gallery</h1>
 				{loading ? (
 					<div className="skeleton-media-grid">
 						{[...Array(6)].map((_, i) => (
@@ -140,11 +162,11 @@ export const MediaPage = () => {
 						)}
 
 						{lightboxIndex !== null && (
-							<div className="lightbox-modal" onClick={closeLightbox}>
-								<button className="lightbox-close" onClick={closeLightbox}>
+							<div className="lightbox-modal" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+								<button className="lightbox-close" onClick={closeLightbox} aria-label="Close photo lightbox">
 									&times;
 								</button>
-								<button className="lightbox-nav prev" onClick={handlePrev}>
+								<button className="lightbox-nav prev" onClick={handlePrev} aria-label="Previous photo">
 									&#10094;
 								</button>
 								<div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
@@ -157,7 +179,7 @@ export const MediaPage = () => {
 										<p>{filteredMedia[lightboxIndex].album}</p>
 									</div>
 								</div>
-								<button className="lightbox-nav next" onClick={handleNext}>
+								<button className="lightbox-nav next" onClick={handleNext} aria-label="Next photo">
 									&#10095;
 								</button>
 							</div>

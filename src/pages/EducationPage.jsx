@@ -58,7 +58,7 @@ export const EducationPage = () => {
 	return (
 		<div className="main-content education-page">
 			<div className="content container">
-				<div className="page-title">Education</div>
+				<h1 className="page-title">Education</h1>
 
 				{loading ? (
 					<div className="skeleton-education-list">

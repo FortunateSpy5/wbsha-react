@@ -31,7 +31,7 @@ export const AboutPage = () => {
 	return (
 		<div className="main-content about-page">
 			<div className="content container">
-				<div className="page-title">About Us</div>
+				<h1 className="page-title">About Us</h1>
 				
 				{/* Dynamic Sections */}
 				{loading ? (
