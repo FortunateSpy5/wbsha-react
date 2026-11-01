@@ -33,7 +33,7 @@ const AboutSection = () => {
         <div className="about-section">
             <div className="content container">
                 <div>
-                    <div className="title">About Us</div>
+                    <h2 className="title">About Us</h2>
                     <div className="text">
                         <p>
                             West Bengal State Handball Association (WBSHA) was

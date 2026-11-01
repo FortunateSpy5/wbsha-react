@@ -37,7 +37,8 @@ const App = () => {
 				<ScrollToTop />
 				<Navbar />
 				<Suspense fallback={<PageLoader />}>
-					<Routes>
+					<main id="main-content" className="main-content">
+						<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/about" element={<AboutPage />} />
@@ -51,6 +52,7 @@ const App = () => {
 						<Route path="/competitions/:id" element={<CompetitionDetailPage />} />
 						<Route path="*" element={<HomePage />} />
 					</Routes>
+					</main>
 				</Suspense>
 				<Footer />
 			</BrowserRouter>

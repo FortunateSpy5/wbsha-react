@@ -33,6 +33,7 @@ const Footer = () => {
 					href={item.link}
 					className="social"
 					aria-label={item.name}
+					title={item.name}
 					target="_blank"
 					rel="noopener noreferrer"
 				>

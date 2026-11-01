@@ -41,7 +41,7 @@ const ContactSection = () => {
 	const renderForm = () => {
 		return (
 			<div className="right">
-				<div className="text">Get in Touch</div>
+				<h3 className="text">Get in Touch</h3>
 				<form onSubmit={handleSubmit}>
 					<div className="group">
 						<label htmlFor="name">Full Name</label>
@@ -116,7 +116,7 @@ const ContactSection = () => {
 		<div className="contact-section">
 			<div className="container">
 				<div className="left">
-					<div className="title">Contact Us</div>
+					<h2 className="title">Contact Us</h2>
 					<div className="details">
 						<p>
 							Have questions about handball in West Bengal? Want to

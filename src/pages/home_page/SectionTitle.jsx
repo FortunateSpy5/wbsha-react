@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SectionTitle = (props) => {
 	return (
 		<div className="container section-title">
-			<div className="title">{props.title}</div>
+			<h2 className="title">{props.title}</h2>
 			<div className="link">
 				<Link to={props.link}>{props.text}</Link>
 				<svg

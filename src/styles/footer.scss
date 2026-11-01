@@ -36,7 +36,7 @@
 			text-transform: uppercase;
 			font-weight: 600;
 			margin-bottom: 0.2rem;
-			color: $color-focused;
+			color: #38bdf8;
 		}
 
 		.socials {
@@ -45,7 +45,7 @@
 			color: $color-secondary;
 
 			.brand {
-				color: $color-focused;
+				color: #38bdf8;
 				font-size: 1.5rem;
 				margin-bottom: 0.2rem;
 			}
@@ -135,11 +135,11 @@
 			padding: 1.5rem 1rem 1rem 1rem;
 
 			a {
-				color: $color-focused;
+				color: #38bdf8;
 			}
 
 			a:hover {
-				color: $color-focused;
+				color: lighten(#38bdf8, 10%);
 				cursor: pointer;
 			}
 		}
