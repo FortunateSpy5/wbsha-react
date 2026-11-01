@@ -100,6 +100,10 @@
 				transition: all $delay-primary linear;
 			}
 
+			.social svg {
+				shape-rendering: geometricPrecision;
+			}
+
 			.social:hover {
 				fill: $color-focused;
 			}
