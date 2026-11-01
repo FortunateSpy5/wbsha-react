@@ -14,6 +14,7 @@ import {
 	getDownloadURL,
 	deleteObject,
 } from "firebase/storage";
+import { compressImage, STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/about-admin.scss";
 
 export const AboutAdmin = () => {
@@ -131,9 +132,10 @@ export const AboutAdmin = () => {
 
 			if (memberImageFile) {
 				// Upload new image
-				const fileName = `${Date.now()}_${memberImageFile.name}`;
+				const processedMemberImg = await compressImage(memberImageFile, { maxWidth: 800, maxHeight: 800, quality: 0.8 });
+				const fileName = `${Date.now()}_${processedMemberImg.name}`;
 				const storageRef = ref(storage, `about/members/${fileName}`);
-				await uploadBytes(storageRef, memberImageFile);
+				await uploadBytes(storageRef, processedMemberImg, STORAGE_CACHE_METADATA);
 				finalImageUrl = await getDownloadURL(storageRef);
 
 				// If editing and had a previous picture, we could delete it, but for safety we can proceed

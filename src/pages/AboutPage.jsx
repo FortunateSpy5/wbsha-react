@@ -68,7 +68,13 @@ export const AboutPage = () => {
 													}}
 												>
 													{member.pictureUrl ? (
-														<img src={member.pictureUrl} alt={member.name} className="member-photo" />
+														<img 
+															src={member.pictureUrl} 
+															alt={member.name} 
+															className="member-photo" 
+															loading="lazy" 
+															decoding="async" 
+														/>
 													) : (
 														<div className="member-photo-placeholder">
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="#94a3b8">

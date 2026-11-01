@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/announcements-admin.scss";
 
 export const AnnouncementsAdmin = () => {
@@ -79,7 +80,7 @@ export const AnnouncementsAdmin = () => {
 			if (pdfUpload) {
 				const uniquePdfName = `${Date.now()}_${pdfUpload.name}`;
 				const storageRef = ref(storage, `announcements/${uniquePdfName}`);
-				const snapshot = await uploadBytes(storageRef, pdfUpload);
+				const snapshot = await uploadBytes(storageRef, pdfUpload, STORAGE_CACHE_METADATA);
 				pdfUrl = await getDownloadURL(snapshot.ref);
 				pdfName = pdfUpload.name;
 

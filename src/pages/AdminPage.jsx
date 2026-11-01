@@ -12,12 +12,30 @@ import { DocumentsAdmin } from "./admin_page/DocumentsAdmin";
 import { EducationAdmin } from "./admin_page/EducationAdmin";
 import { ContactSubmissionsAdmin } from "./admin_page/ContactSubmissionsAdmin";
 import { AboutAdmin } from "./admin_page/AboutAdmin";
+import { optimizeExistingStorageFiles } from "../utils/storageOptimizer";
 import "../styles/admin/admin-page.scss";
 
 export const AdminPage = () => {
 	const navigate = useNavigate();
 	const [user] = useAuthState(auth);
 	const [activeTab, setActiveTab] = useState("overview");
+	const [optimizing, setOptimizing] = useState(false);
+	const [optimizeStatus, setOptimizeStatus] = useState(null);
+
+	const handleOptimizeStorage = async () => {
+		setOptimizing(true);
+		setOptimizeStatus("Scanning and updating file caching headers in Firebase Storage...");
+		try {
+			const updatedCount = await optimizeExistingStorageFiles((count, fileName) => {
+				setOptimizeStatus(`Updating caching headers... updated ${count} files (latest: ${fileName})`);
+			});
+			setOptimizeStatus(`✅ Complete! Successfully checked and applied 1-year browser caching (updated ${updatedCount} files).`);
+		} catch (err) {
+			console.error("Storage optimization error:", err);
+			setOptimizeStatus("⚠️ Error optimizing storage files. Check browser console.");
+		}
+		setOptimizing(false);
+	};
 
 	// Overview counts
 	const [stats, setStats] = useState({
@@ -161,6 +179,35 @@ export const AdminPage = () => {
 						</div>
 					</div>
 				)}
+
+				<div className="storage-optimization-panel" style={{
+					marginTop: "2.5rem",
+					padding: "1.5rem",
+					background: "#f0f9ff",
+					border: "1px solid #bae6fd",
+					borderRadius: "8px",
+					color: "#0369a1"
+				}}>
+					<h3 style={{ margin: "0 0 0.5rem 0", fontSize: "1.15rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+						⚡ Bandwidth & Storage Cache Optimizer
+					</h3>
+					<p style={{ margin: "0 0 1rem 0", fontSize: "0.9rem", color: "#334155" }}>
+						Retroactively applies 1-year browser and CDN caching (<code>Cache-Control: public, max-age=31536000, immutable</code>) to all 104 existing images and files in Firebase Storage to eliminate repetitive bandwidth spikes.
+					</p>
+					<button
+						onClick={handleOptimizeStorage}
+						disabled={optimizing}
+						className="button"
+						style={{ padding: "0.6rem 1.25rem", cursor: optimizing ? "not-allowed" : "pointer" }}
+					>
+						{optimizing ? "Optimizing Storage Files..." : "Run Cache Optimizer on All Existing Files"}
+					</button>
+					{optimizeStatus && (
+						<div style={{ marginTop: "1rem", fontSize: "0.9rem", fontWeight: "600", color: optimizeStatus.includes("✅") ? "#15803d" : "#0284c7" }}>
+							{optimizeStatus}
+						</div>
+					)}
+				</div>
 			</div>
 		);
 	};

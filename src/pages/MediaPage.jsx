@@ -9,8 +9,23 @@ export const MediaPage = () => {
 	const [albums, setAlbums] = useState([]);
 	const [selectedAlbum, setSelectedAlbum] = useState("All");
 	const [lightboxIndex, setLightboxIndex] = useState(null); // Index in the filtered list
+	const [visibleCount, setVisibleCount] = useState(18);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("media_data");
+		if (cached) {
+			try {
+				const parsed = JSON.parse(cached);
+				setMediaItems(parsed);
+				const uniqueAlbums = ["All", ...new Set(parsed.map((item) => item.album))];
+				setAlbums(uniqueAlbums);
+				setLoading(false);
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("media_data");
+			}
+		}
+
 		const fetchMedia = async () => {
 			try {
 				const data = await getDocs(collection(db, "media"));
@@ -25,6 +40,7 @@ export const MediaPage = () => {
 				// Sort by createdAt descending
 				const sortedData = mappedData.sort((a, b) => b.createdAt - a.createdAt);
 				setMediaItems(sortedData);
+				sessionStorage.setItem("media_data", JSON.stringify(sortedData));
 
 				const uniqueAlbums = ["All", ...new Set(sortedData.map((item) => item.album))];
 				setAlbums(uniqueAlbums);
@@ -39,6 +55,8 @@ export const MediaPage = () => {
 	const filteredMedia = selectedAlbum === "All"
 		? mediaItems
 		: mediaItems.filter((item) => item.album === selectedAlbum);
+
+	const displayedMedia = filteredMedia.slice(0, visibleCount);
 
 	const handlePrev = (e) => {
 		e.stopPropagation();
@@ -80,6 +98,7 @@ export const MediaPage = () => {
 									onClick={() => {
 										setSelectedAlbum(album);
 										setLightboxIndex(null);
+										setVisibleCount(18);
 									}}
 								>
 									{album}
@@ -88,13 +107,18 @@ export const MediaPage = () => {
 						</div>
 
 						<div className="media-grid">
-							{filteredMedia.map((item, index) => (
+							{displayedMedia.map((item, index) => (
 								<div
 									key={item.id || index}
 									className="media-card"
 									onClick={() => setLightboxIndex(index)}
 								>
-									<img src={item.imageUrl} alt={item.title} />
+									<img 
+										src={item.imageUrl} 
+										alt={item.title} 
+										loading="lazy" 
+										decoding="async" 
+									/>
 									<div className="overlay">
 										<div className="image-title">{item.title}</div>
 										<div className="image-album">{item.album}</div>
@@ -102,6 +126,18 @@ export const MediaPage = () => {
 								</div>
 							))}
 						</div>
+
+						{visibleCount < filteredMedia.length && (
+							<div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+								<button
+									className="button"
+									onClick={() => setVisibleCount((prev) => prev + 18)}
+									style={{ padding: "0.75rem 2rem", cursor: "pointer" }}
+								>
+									Load More Photos ({filteredMedia.length - visibleCount} remaining)
+								</button>
+							</div>
+						)}
 
 						{lightboxIndex !== null && (
 							<div className="lightbox-modal" onClick={closeLightbox}>

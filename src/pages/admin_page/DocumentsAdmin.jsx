@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/documents-admin.scss";
 
 export const DocumentsAdmin = () => {
@@ -85,7 +86,7 @@ export const DocumentsAdmin = () => {
 			if (fileUpload) {
 				const uniqueFileName = `${Date.now()}_${fileUpload.name}`;
 				const storageRef = ref(storage, `documents/${uniqueFileName}`);
-				const snapshot = await uploadBytes(storageRef, fileUpload);
+				const snapshot = await uploadBytes(storageRef, fileUpload, STORAGE_CACHE_METADATA);
 				fileUrl = await getDownloadURL(snapshot.ref);
 				fileName = fileUpload.name;
 

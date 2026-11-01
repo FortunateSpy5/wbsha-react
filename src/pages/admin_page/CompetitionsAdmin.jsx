@@ -17,6 +17,7 @@ import {
 	getDownloadURL,
 	deleteObject,
 } from "firebase/storage";
+import { compressImage, STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/competitions-admin.scss";
 
 export const CompetitionsAdmin = () => {
@@ -101,9 +102,10 @@ export const CompetitionsAdmin = () => {
 				if (editingCompetition?.mainImageUrl) {
 					await deleteObject(ref(storage, editingCompetition.mainImageUrl)).catch(err => console.warn(err));
 				}
-				const fileName = `${Date.now()}_${mainImageFile.name}`;
+				const processedBanner = await compressImage(mainImageFile, { maxWidth: 1920, maxHeight: 1080 });
+				const fileName = `${Date.now()}_${processedBanner.name}`;
 				const storageRef = ref(storage, `competitions/banners/${fileName}`);
-				await uploadBytes(storageRef, mainImageFile);
+				await uploadBytes(storageRef, processedBanner, STORAGE_CACHE_METADATA);
 				mainImageUrl = await getDownloadURL(storageRef);
 			}
 
@@ -376,9 +378,10 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 		}
 		setIsUploading(true);
 		try {
-			const fileName = `${Date.now()}_${imageUpload.name}`;
+			const processedImage = await compressImage(imageUpload, { maxWidth: 1600, quality: 0.8 });
+			const fileName = `${Date.now()}_${processedImage.name}`;
 			const storageRef = ref(storage, `competitions/albums/${fileName}`);
-			await uploadBytes(storageRef, imageUpload);
+			await uploadBytes(storageRef, processedImage, STORAGE_CACHE_METADATA);
 			const url = await getDownloadURL(storageRef);
 
 			const updatedPicGroups = competition.picGroups.map(group =>
@@ -429,9 +432,10 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 		try {
 			let groupPhotoUrl = null;
 			if (squadPhoto) {
-				const fileName = `${Date.now()}_${squadPhoto.name}`;
+				const processedSquad = await compressImage(squadPhoto, { maxWidth: 1600, quality: 0.8 });
+				const fileName = `${Date.now()}_${processedSquad.name}`;
 				const storageRef = ref(storage, `competitions/teams/squads/${fileName}`);
-				await uploadBytes(storageRef, squadPhoto);
+				await uploadBytes(storageRef, processedSquad, STORAGE_CACHE_METADATA);
 				groupPhotoUrl = await getDownloadURL(storageRef);
 			}
 
@@ -492,9 +496,10 @@ const CompetitionAdminCard = ({ competition, onEdit, onDelete, onRefresh }) => {
 		}
 		setIsUploading(true);
 		try {
-			const fileName = `${Date.now()}_${teamImageUpload.name}`;
+			const processedTeamImg = await compressImage(teamImageUpload, { maxWidth: 1600, quality: 0.8 });
+			const fileName = `${Date.now()}_${processedTeamImg.name}`;
 			const storageRef = ref(storage, `competitions/teams/pics/${fileName}`);
-			await uploadBytes(storageRef, teamImageUpload);
+			await uploadBytes(storageRef, processedTeamImg, STORAGE_CACHE_METADATA);
 			const url = await getDownloadURL(storageRef);
 
 			const updatedTeams = competition.teams.map(team =>

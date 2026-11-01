@@ -52,18 +52,34 @@ const HeroSection = () => {
     };
 
     const renderInner = () => {
-        return carousel.map((item, index) => (
-            <div
-                className={`item ${index === current ? "" : "hidden"}`}
-                key={index}
-        	>
-                <img src={item.url} alt={item.title} />
-                <div className="caption">
-                    <div className="title">{item.title}</div>
-                    <div className="description">{item.description}</div>
+        return carousel.map((item, index) => {
+            // Only load images for current slide and adjacent slides
+            const isNearby = 
+                index === current || 
+                Math.abs(index - current) <= 1 || 
+                (index === 0 && current === carousel.length - 1) || 
+                (index === carousel.length - 1 && current === 0);
+
+            return (
+                <div
+                    className={`item ${index === current ? "" : "hidden"}`}
+                    key={index}
+                >
+                    {isNearby && (
+                        <img 
+                            src={item.url} 
+                            alt={item.title} 
+                            loading={index === 0 ? "eager" : "lazy"} 
+                            decoding="async" 
+                        />
+                    )}
+                    <div className="caption">
+                        <div className="title">{item.title}</div>
+                        <div className="description">{item.description}</div>
+                    </div>
                 </div>
-            </div>
-        ));
+            );
+        });
     };
 
     return (

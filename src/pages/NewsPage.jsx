@@ -14,6 +14,17 @@ export const NewsPage = () => {
 	const itemsPerPage = 9;
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("news_data");
+		if (cached) {
+			try {
+				setNews(JSON.parse(cached));
+				setLoading(false);
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("news_data");
+			}
+		}
+
 		const fetchNews = async () => {
 			try {
 				const data = await getDocs(collection(db, "news"));
@@ -27,6 +38,7 @@ export const NewsPage = () => {
 				});
 				const sortedData = mappedData.sort((a, b) => b.date - a.date);
 				setNews(sortedData);
+				sessionStorage.setItem("news_data", JSON.stringify(sortedData));
 			} catch (error) {
 				console.error("Error fetching news:", error);
 			}
@@ -101,7 +113,12 @@ export const NewsPage = () => {
 								<div className="spotlight-badge">🔥 Featured Story</div>
 								<div className="spotlight-layout">
 									<div className="spotlight-image" onClick={() => setSelectedNews(featuredArticle)}>
-										<img src={featuredArticle.imageUrl} alt={featuredArticle.title} />
+										<img 
+											src={featuredArticle.imageUrl} 
+											alt={featuredArticle.title} 
+											loading="eager" 
+											decoding="async" 
+										/>
 									</div>
 									<div className="spotlight-body">
 										<div className="spotlight-date">
@@ -167,7 +184,12 @@ export const NewsPage = () => {
 								{currentNews.map((item) => (
 									<div key={item.id} className="news-card">
 										<div className="news-image" onClick={() => setSelectedNews(item)} style={{ cursor: "pointer" }}>
-											<img src={item.imageUrl} alt={item.title} />
+											<img 
+												src={item.imageUrl} 
+												alt={item.title} 
+												loading="lazy" 
+												decoding="async" 
+											/>
 										</div>
 										<div className="news-body">
 											<div className="news-date">{new Date(item.date).toLocaleDateString()}</div>

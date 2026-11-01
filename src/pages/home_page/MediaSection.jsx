@@ -8,6 +8,16 @@ const MediaSection = () => {
 	const [mediaItems, setMediaItems] = useState([]);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("home_media");
+		if (cached) {
+			try {
+				setMediaItems(JSON.parse(cached));
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("home_media");
+			}
+		}
+
 		const mediaRef = collection(db, "media");
 		const fetchMedia = async () => {
 			try {
@@ -24,6 +34,7 @@ const MediaSection = () => {
 					.sort((a, b) => b.createdAt - a.createdAt)
 					.slice(0, 6); // Latest 6 images
 				setMediaItems(sortedData);
+				sessionStorage.setItem("home_media", JSON.stringify(sortedData));
 			} catch (error) {
 				console.error("Error fetching media for home page:", error);
 			}
@@ -42,6 +53,8 @@ const MediaSection = () => {
 					alt={item.title || "gallery"}
 					style={{ gridArea: num[index] }}
 					key={item.id || index}
+					loading="lazy"
+					decoding="async"
 				/>
 			);
 		});

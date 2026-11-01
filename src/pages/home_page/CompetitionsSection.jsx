@@ -9,6 +9,21 @@ const CompetitionsSection = () => {
 	const [competitions, setCompetitions] = useState([]);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("home_competitions");
+		if (cached) {
+			try {
+				const parsed = JSON.parse(cached);
+				setCompetitions(parsed.map(c => ({
+					...c,
+					startDate: new Date(c.startDate),
+					endDate: c.endDate ? new Date(c.endDate) : null
+				})));
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("home_competitions");
+			}
+		}
+
 		const fetchCompetitions = async () => {
 			try {
 				const data = await getDocs(collection(db, "competitions"));
@@ -31,6 +46,7 @@ const CompetitionsSection = () => {
 				});
 				const sortedData = mappedData.sort((a, b) => b.startDate - a.startDate).slice(0, 3);
 				setCompetitions(sortedData);
+				sessionStorage.setItem("home_competitions", JSON.stringify(sortedData));
 			} catch (error) {
 				console.error("Error fetching competitions for home page:", error);
 			}
@@ -58,25 +74,16 @@ const CompetitionsSection = () => {
 							<div className="card-bg-gradient" />
 							<div className="card-info">
 								<span className="comp-dates-badge">
-									{new Date(comp.startDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-									{comp.endDate && ` - ${new Date(comp.endDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`}
+									{comp.startDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+									{comp.endDate ? ` - ${comp.endDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}` : ` ${comp.startDate.getFullYear()}`}
 								</span>
 								<h3 className="comp-title">{comp.title}</h3>
-								{comp.venue && (
-									<div className="comp-venue">
-										<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: "4px", verticalAlign: "middle"}}>
-											<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-											<circle cx="12" cy="10" r="3" />
-										</svg>
-										{comp.venue}
-									</div>
-								)}
-								<p className="comp-desc">
-									{comp.content.replace(/<[^>]+>/g, "").substring(0, 110)}...
-								</p>
-								<Link to={`/competitions/${comp.id}`} className="view-details-btn">
-									View Roster & Standings &rarr;
-								</Link>
+								{comp.venue && <p className="comp-venue">📍 {comp.venue}</p>}
+								<div className="card-actions">
+									<Link to={`/competitions/${comp.id}`} className="view-details-btn">
+										View Details &rarr;
+									</Link>
+								</div>
 							</div>
 						</div>
 					))}

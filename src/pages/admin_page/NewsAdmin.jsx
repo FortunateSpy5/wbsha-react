@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection, getDocs, updateDoc, deleteDoc, doc, query, where } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { compressImage, STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/news-admin.scss";
 
 export const NewsAdmin = () => {
@@ -92,9 +93,10 @@ export const NewsAdmin = () => {
 			let imageUrl = editingNews?.imageUrl || null;
 
 			if (imageUpload) {
-				const imageName = `${Date.now()}_${imageUpload.name}`;
+				const processedImage = await compressImage(imageUpload, { maxWidth: 1400, quality: 0.8 });
+				const imageName = `${Date.now()}_${processedImage.name}`;
 				const storageRef = ref(storage, `news/${imageName}`);
-				const snapshot = await uploadBytes(storageRef, imageUpload);
+				const snapshot = await uploadBytes(storageRef, processedImage, STORAGE_CACHE_METADATA);
 				imageUrl = await getDownloadURL(snapshot.ref);
 
 				// Delete old image if editing

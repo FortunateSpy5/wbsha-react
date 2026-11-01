@@ -10,6 +10,16 @@ const NewsSection = () => {
 	const [selectedNews, setSelectedNews] = useState(null);
 
 	useEffect(() => {
+		const cached = sessionStorage.getItem("home_news");
+		if (cached) {
+			try {
+				setNews(JSON.parse(cached));
+				return;
+			} catch (e) {
+				sessionStorage.removeItem("home_news");
+			}
+		}
+
 		const newsRef = collection(db, "news");
 		const fetchNews = async () => {
 			try {
@@ -23,6 +33,7 @@ const NewsSection = () => {
 					.sort((a, b) => b.date - a.date)
 					.slice(0, 6); // Latest 6 news items
 				setNews(sortedData);
+				sessionStorage.setItem("home_news", JSON.stringify(sortedData));
 			} catch (error) {
 				console.error("Error fetching news for home page:", error);
 			}

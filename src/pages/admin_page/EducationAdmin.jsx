@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection, getDocs, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import { compressImage, STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/education-admin.scss";
 
 export const EducationAdmin = () => {
@@ -89,11 +90,12 @@ export const EducationAdmin = () => {
 			let fileName = editingItem?.fileName || null;
 
 			if (selectedType === "download" && fileUpload) {
-				const uniqueName = `${Date.now()}_${fileUpload.name}`;
+				const processedFile = await compressImage(fileUpload, { maxWidth: 1600, quality: 0.8 });
+				const uniqueName = `${Date.now()}_${processedFile.name}`;
 				const storageRef = ref(storage, `education/${uniqueName}`);
-				const snapshot = await uploadBytes(storageRef, fileUpload);
+				const snapshot = await uploadBytes(storageRef, processedFile, STORAGE_CACHE_METADATA);
 				fileUrl = await getDownloadURL(snapshot.ref);
-				fileName = fileUpload.name;
+				fileName = processedFile.name;
 
 				if (editingItem?.fileUrl) {
 					const oldUrl = editingItem.fileUrl;

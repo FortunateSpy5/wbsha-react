@@ -117,7 +117,13 @@ export const CompetitionDetailPage = () => {
 
 				{competition.mainImageUrl && (
 					<div className="competition-main-banner" style={{ width: "100%", height: "300px", borderRadius: "8px", overflow: "hidden", marginBottom: "2rem", border: "1px solid #e2e8f0" }}>
-						<img src={competition.mainImageUrl} alt={`${competition.title} Banner`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+						<img 
+							src={competition.mainImageUrl} 
+							alt={`${competition.title} Banner`} 
+							style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+							loading="eager" 
+							decoding="async" 
+						/>
 					</div>
 				)}
 
@@ -204,7 +210,12 @@ export const CompetitionDetailPage = () => {
 
 											{team.groupPhotoUrl && (
 												<div className="team-group-photo-box">
-													<img src={team.groupPhotoUrl} alt={`${team.name} Squad`} />
+													<img 
+														src={team.groupPhotoUrl} 
+														alt={`${team.name} Squad`} 
+														loading="lazy" 
+														decoding="async" 
+													/>
 												</div>
 											)}
 
@@ -234,7 +245,12 @@ export const CompetitionDetailPage = () => {
 																className="team-pic-card"
 																onClick={() => openLightbox(team.pics, idx, `${team.name} Action`)}
 															>
-																<img src={pic.url} alt={pic.title} />
+																<img 
+																	src={pic.url} 
+																	alt={pic.title} 
+																	loading="lazy" 
+																	decoding="async" 
+																/>
 																<div className="img-overlay">
 																	<span className="img-caption">{pic.title}</span>
 																</div>
@@ -266,7 +282,12 @@ export const CompetitionDetailPage = () => {
 													className="pic-card"
 													onClick={() => openLightbox(group.pics, picIdx, group.title)}
 												>
-													<img src={pic.url} alt={pic.title} />
+													<img 
+														src={pic.url} 
+														alt={pic.title} 
+														loading="lazy" 
+														decoding="async" 
+													/>
 													<div className="pic-overlay">
 														<span className="pic-title">{pic.title}</span>
 													</div>

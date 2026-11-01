@@ -17,6 +17,7 @@ import {
 	getDownloadURL,
 	deleteObject,
 } from "firebase/storage";
+import { compressImage, STORAGE_CACHE_METADATA } from "../../utils/imageCompressor";
 import "../../styles/admin/hero-admin.scss";
 
 export const HeroAdmin = () => {
@@ -96,10 +97,11 @@ export const HeroAdmin = () => {
 			let url = editingHero?.url || null;
 
 			if (imageUpload) {
-				// Upload new image
-				const imageName = `${Date.now()}_${imageUpload.name}`;
+				// Compress and upload new image with long-term caching
+				const processedImage = await compressImage(imageUpload, { maxWidth: 1920, maxHeight: 1080 });
+				const imageName = `${Date.now()}_${processedImage.name}`;
 				const storageRef = ref(storage, `heroes/${imageName}`);
-				const snapshot = await uploadBytes(storageRef, imageUpload);
+				const snapshot = await uploadBytes(storageRef, processedImage, STORAGE_CACHE_METADATA);
 				url = await getDownloadURL(snapshot.ref);
 
 				// Delete old image if editing
